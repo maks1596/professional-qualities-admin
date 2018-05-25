@@ -1,0 +1,65 @@
+#include "UsersModel.h"
+
+#include <QJsonArray>
+#include <QJsonValue>
+
+#include "Requester/Requester.h"
+#include "Entities/User/User.h"
+
+//  :: Constants ::
+
+const QString GET_USERS_API = "users";
+const QString GET_USER_API = "users/%1";
+const QString DELETE_USER_API = GET_USER_API;
+
+//  :: Lifecycle ::
+
+UsersModel::UsersModel(QObject *parent/*= nullptr*/)
+	: BaseModel(parent) {}
+
+//  :: Public methods ::
+
+void UsersModel::getUsers() const {
+	auto *requester = makeRequester();
+	connect(requester, SIGNAL(success(QJsonArray)),
+			this, SLOT(jsonUsersGot(QJsonArray)));
+	requester->sendRequest(GET_USERS_API);
+}
+
+
+void UsersModel::getUser(int userId) const {
+	auto *requester = makeRequester();
+	connect(requester, SIGNAL(success(QJsonObject)),
+			this, SLOT(jsonUserGot(QJsonObject)));
+	requester->sendRequest(GET_USER_API.arg(userId));
+}
+
+void UsersModel::deleteUser(int userId) const {
+	auto *requester = makeRequester();
+	connect(requester, SIGNAL(success(QJsonArray)),
+			this, SIGNAL(userDeleted()));
+	requester->sendRequest(DELETE_USER_API.arg(userId),
+						   RequestType::DELET);
+}
+
+//  :: Private slots ::
+
+void UsersModel::jsonUsersGot(const QJsonArray &jsonUsers) {
+	QList<User> users;
+
+	for (const auto &jsonValue : jsonUsers) {
+		if (jsonValue.isObject()) {
+			QJsonObject jsonObject = jsonValue.toObject();
+			User user;
+			user.initWithJsonObject(jsonObject);
+			users.append(user);
+		}
+	}
+	emit usersGot(users);
+}
+
+void UsersModel::jsonUserGot(const QJsonObject &jsonUser) {
+	User user;
+	user.initWithJsonObject(jsonUser);
+	emit userGot(user);
+}

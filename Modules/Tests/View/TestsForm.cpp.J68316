@@ -1,0 +1,49 @@
+#include "TestsForm.h"
+#include "ui_TestsForm.h"
+
+#include <QSqlDatabase>
+#include <QStringList>
+#include <QMessageBox>
+
+#include "DatabaseHelper.h"
+
+TestsForm::TestsForm(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::TestsForm)
+{
+    ui->setupUi(this);
+    ui->tests->setModel(new QSqlQueryModel(this));
+    ui->tests->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    update();
+
+    connect(ui->toMainMenuBtn, &QPushButton::clicked,
+            this, &TestsForm::toMainMenuBtnClicked);
+    connect(ui->addTestBtn, &QPushButton::clicked,
+            this, &TestsForm::addTestBtnClicked);
+    connect(ui->tests, &QTableView::doubleClicked,
+            [&](const QModelIndex &index)
+            { emit testDoubleClicked(index.data().toString()); });
+    connect(ui->tests, &QTableView::clicked,
+            this, &TestsForm::onTestsClicked);
+}
+
+TestsForm::~TestsForm() {
+    delete ui;
+}
+
+void TestsForm::update() {
+    QSqlQueryModel *model = (QSqlQueryModel *)ui->tests->model();
+    model->setQuery("SELECT *, 'Удалить' AS Удаление FROM getAllTests();");
+    model->removeColumn(0);
+}
+
+void TestsForm::onTestsClicked(const QModelIndex &idx) {
+    if(idx.isValid()) {
+        if(idx.column() == 1) {
+            auto model = ui->tests->model();
+            QModelIndex nameIdx = model->index(idx.row(), 0);
+            QString testName = nameIdx.data().toString();
+            emit removeTest(testName);
+        }
+    }
+}
