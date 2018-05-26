@@ -4,6 +4,7 @@
 
 namespace Ui {
 class TestsStatisticsForm;
+class PassedTestsForm;
 }
 
 class PassedTestsForm : public QWidget {
@@ -17,5 +18,5 @@ signals:
     void backButtonClicked();
 
 private:
-    Ui::TestsStatisticsForm *ui;
+    Ui::PassedTestsForm *ui;
 };

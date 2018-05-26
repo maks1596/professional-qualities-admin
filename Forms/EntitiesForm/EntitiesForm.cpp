@@ -147,7 +147,7 @@ void EntitiesForm::setItem(uint row, uint column, const QString &text) {
 
 inline
 int EntitiesForm::getEntityID(const QModelIndex &idx) const {
-    if(!idx.isValid()) { return 0; }
+    if (!idx.isValid()) { return 0; }
 	return m_entites.at(idx.row()).getId();
 }
 
