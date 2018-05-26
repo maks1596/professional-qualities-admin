@@ -10,7 +10,7 @@ class PassedTestsService : BaseService {
 public:
     PassedTestsService(QObject *parent = nullptr);
 
-    void getPreviews();
+    void getPreviews() const;
 
 signals:
     void previewsGot(const QList<PassedTestPreview> &previews);

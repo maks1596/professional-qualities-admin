@@ -4,9 +4,18 @@
 
 #include "Entities/PassedTestPreview/PassedTestPreview.h"
 
+class QTimer;
+class PassedTestPreview;
+class PassedTestsService;
+
 class PassedTestsModel : public QAbstractTableModel {
+    Q_OBJECT
+
 public:
+    //  :: Lifecycle ::
     PassedTestsModel(QObject *parent = nullptr);
+
+    //  :: QAbstractTableModel ::
 
     int rowCount(const QModelIndex &parent) const override;
     int columnCount(const QModelIndex &parent) const override;
@@ -14,6 +23,20 @@ public:
 
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
+    //  :: Accessors ::
+    QList<PassedTestPreview> getPassedTestPreviews() const;
+    void setPassedTestPreviews(const QList<PassedTestPreview> &previews);
+
+public slots:
+    void startUpdating() const;
+    void stopUpdating() const;
+
 private:
+    void initService();
+    void initTimer();
+    void emitDataChanged();
+
     QList<PassedTestPreview> m_previews;
+    QTimer *m_timer;
+    PassedTestsService *m_service;
 };

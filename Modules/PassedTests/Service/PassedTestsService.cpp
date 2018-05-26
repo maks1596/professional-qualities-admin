@@ -17,7 +17,7 @@ PassedTestsService::PassedTestsService(QObject *parent/*= nullptr*/)
 
 //  :: Public methods ::
 
-void PassedTestsService::getPreviews() {
+void PassedTestsService::getPreviews() const {
     auto requester = makeRequester();
     connect(requester, SIGNAL(success(QJsonArray)),
             SLOT(onPreviewsGot(QJsonArray)));

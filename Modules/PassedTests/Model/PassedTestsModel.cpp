@@ -1,5 +1,11 @@
 #include "PassedTestsModel.h"
 
+#include <QTimer>
+
+#include "Entities/PassedTestPreview/PassedTestPreview.h"
+
+#include "../Service/PassedTestsService.h"
+
 //  :: Constants ::
 
 enum ColumnIndex {
@@ -13,13 +19,18 @@ const QStringList kHorizontalHeaders {
     "Пройден"
 };
 
+const int UPDATE_INTERVAL = 5000;
+
 //  :: Lifecycle ::
 
 PassedTestsModel::PassedTestsModel(QObject *parent/*= nullptr*/)
-    : QAbstractTableModel(parent) {
-    m_previews << PassedTestPreview(1, "1", 1)
-               << PassedTestPreview(2, "2", 2)
-               << PassedTestPreview(3, "3", 3);
+    : QAbstractTableModel(parent)
+{
+    initService();
+    initTimer();
+    connect(m_timer, &QTimer::timeout,
+            m_service, &PassedTestsService::getPreviews);
+    startUpdating();
 }
 
 //  :: QAbstractTableModel ::
@@ -57,3 +68,48 @@ QVariant PassedTestsModel::headerData(int section,
     }
     return QVariant();
 }
+
+//  :: Public accessors ::
+//  :: Passed test previews ::
+QList<PassedTestPreview> PassedTestsModel::getPassedTestPreviews() const {
+    return m_previews;
+}
+void PassedTestsModel::setPassedTestPreviews(const QList<PassedTestPreview> &previews) {
+    m_previews = previews;
+    emitDataChanged();
+}
+
+//  :: Public slots ::
+
+void PassedTestsModel::startUpdating() const {
+    m_service->getPreviews();
+    m_timer->start();
+}
+
+void PassedTestsModel::stopUpdating() const {
+    m_timer->stop();
+}
+
+//  :: Private methods ::
+
+inline
+void PassedTestsModel::initService() {
+    m_service = new PassedTestsService(this);
+    connect(m_service, &PassedTestsService::previewsGot,
+            this, &PassedTestsModel::setPassedTestPreviews);
+}
+
+inline
+void PassedTestsModel::initTimer() {
+    m_timer = new QTimer(this);
+    m_timer->setInterval(UPDATE_INTERVAL);
+}
+
+inline
+void PassedTestsModel::emitDataChanged() {
+    auto topLeft = index(0, 0);
+    auto bottomRight = index(m_previews.size() - 1,
+                             NUMBER_OF_COLUMNS - 1);
+    emit dataChanged(topLeft, bottomRight);
+}
+
