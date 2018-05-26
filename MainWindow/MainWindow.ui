@@ -15,18 +15,6 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
@@ -103,6 +91,13 @@
            </widget>
           </item>
          </layout>
+        </item>
+        <item>
+         <widget class="QCommandLinkButton" name="statisticsButton">
+          <property name="text">
+           <string>Статистика</string>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="verticalSpacer">

@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
             this, &MainWindow::onUsersBtnClicked);
     connect(ui->testsBtn, &QCommandLinkButton::clicked,
             this, &MainWindow::onTestsBtnClicked);
+    connect(ui->statisticsButton, &QCommandLinkButton::clicked,
+            this, &MainWindow::onStatisticsButtonClicled);
 
     connect(ui->addTestBtn, SIGNAL(clicked()),
             this, SLOT(createTestForm()));
@@ -38,7 +40,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-// ------------------- Пользователи -------------------
+//  :: Пользователи ::
 
 void MainWindow::onUsersBtnClicked() {
     UsersForm *users = new UsersForm(this);
@@ -68,7 +70,7 @@ void MainWindow::onCancelUserEditing() {
     }
 }
 
-// --------------------------- Тесты ---------------------------
+//  :: Тесты ::
 
 void MainWindow::onTestsBtnClicked() {
     TestsForm *tests = new TestsForm(this);
@@ -104,6 +106,13 @@ void MainWindow::onCancelTestEditing() {
 void MainWindow::onTestRead(const Test &test) {
     popWidget();
     createTestForm(test);
+}
+
+//  :: Статистика ::
+
+void MainWindow::onStatisticsButtonClicled()
+{
+    showStatusMessage("Нажата кнопка \"Статистика\"");
 }
 
 //  :: Private slots ::

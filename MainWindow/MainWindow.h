@@ -19,6 +19,7 @@ public:
 private slots:
     void onUsersBtnClicked();
     void onTestsBtnClicked();
+    void onStatisticsButtonClicled();
     void onBackToMainMenu();
 
     void createUserForm(const User &user = User());
