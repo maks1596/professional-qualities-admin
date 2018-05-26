@@ -6,12 +6,12 @@ namespace Ui {
 class TestsStatisticsForm;
 }
 
-class TestsStatisticsForm : public QWidget {
+class PassedTestsForm : public QWidget {
     Q_OBJECT
 
 public:
-    explicit TestsStatisticsForm(QWidget *parent = nullptr);
-    ~TestsStatisticsForm();
+    explicit PassedTestsForm(QWidget *parent = nullptr);
+    ~PassedTestsForm();
 
 signals:
     void backButtonClicked();

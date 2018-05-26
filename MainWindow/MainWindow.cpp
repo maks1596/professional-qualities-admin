@@ -8,7 +8,7 @@
 #include "Modules/Users/View/UsersForm.h"
 #include "Modules/TestEditing/View/TestEditingForm.h"
 #include "Modules/Tests/View/TestsForm.h"
-#include "Modules/TestsStatistics/View/TestsStatisticsForm.h"
+#include "Modules/PassedTests/View/PassedTestsForm.h"
 
 //  :: Constants ::
 
@@ -111,10 +111,10 @@ void MainWindow::onTestRead(const Test &test) {
 //  :: Статистика ::
 
 void MainWindow::onStatisticsButtonClicled() {
-    auto statisticsForm = new TestsStatisticsForm(this);
-    connect(statisticsForm, &TestsStatisticsForm::backButtonClicked,
+    auto passedTestsForm = new PassedTestsForm(this);
+    connect(passedTestsForm, &PassedTestsForm::backButtonClicked,
             this, &MainWindow::onBackToMainMenu);
-    pushWidget(statisticsForm);
+    pushWidget(passedTestsForm);
 }
 
 //  :: Private slots ::
