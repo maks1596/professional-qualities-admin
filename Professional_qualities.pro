@@ -77,7 +77,8 @@ SOURCES += main.cpp\
     Entities/ShortTestInfo/ShortTestInfo.cpp \
     Modules/TestEditing/Model/TestEditingModel.cpp \
     Modules/Autorization/Model/AutorizationModel.cpp \
-    Entities/AutorizationData/AutorizationData.cpp
+    Entities/AutorizationData/AutorizationData.cpp \
+    Modules/TestsStatistics/View/TestsStatisticsForm.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -135,7 +136,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/ShortTestInfo/ShortTestInfo.h \
     Modules/TestEditing/Model/TestEditingModel.h \
     Modules/Autorization/Model/AutorizationModel.h \
-    Entities/AutorizationData/AutorizationData.h
+    Entities/AutorizationData/AutorizationData.h \
+    Modules/TestsStatistics/View/TestsStatisticsForm.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
@@ -151,7 +153,11 @@ FORMS    += MainWindow/MainWindow.ui \
     Forms/AddAppraisedRangeForm/AddAppraisedRangeForm.ui \
     Modules/Autorization/View/LoginForm.ui \
     Forms/UserForm/UserForm.ui \
-    Forms/EntitiesForm/EntitiesForm.ui
+    Forms/EntitiesForm/EntitiesForm.ui \
+    Modules/TestsStatistics/View/TestsStatisticsForm.ui
 
 # Для статической сборки
 QMAKE_LFLAGS_RELEASE += -static -static-libgcc
+
+RESOURCES += \
+    resources/images/images.qrc

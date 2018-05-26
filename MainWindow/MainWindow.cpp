@@ -4,11 +4,11 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-#include "Modules/Users/View/UsersForm.h"
 #include "Forms/UserForm/UserForm.h"
-
-#include "Modules/Tests/View/TestsForm.h"
+#include "Modules/Users/View/UsersForm.h"
 #include "Modules/TestEditing/View/TestEditingForm.h"
+#include "Modules/Tests/View/TestsForm.h"
+#include "Modules/TestsStatistics/View/TestsStatisticsForm.h"
 
 //  :: Constants ::
 
@@ -110,9 +110,11 @@ void MainWindow::onTestRead(const Test &test) {
 
 //  :: Статистика ::
 
-void MainWindow::onStatisticsButtonClicled()
-{
-    showStatusMessage("Нажата кнопка \"Статистика\"");
+void MainWindow::onStatisticsButtonClicled() {
+    auto statisticsForm = new TestsStatisticsForm(this);
+    connect(statisticsForm, &TestsStatisticsForm::backButtonClicked,
+            this, &MainWindow::onBackToMainMenu);
+    pushWidget(statisticsForm);
 }
 
 //  :: Private slots ::
