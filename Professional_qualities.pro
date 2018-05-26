@@ -71,7 +71,6 @@ SOURCES += main.cpp\
     Entities/Entity/Entity.cpp \
     Entities/Gender/Gender.cpp \
     Modules/CreateUser/Model/CreateUserModel.cpp \
-    BaseModel/BaseModel.cpp \
     Modules/UpdateUserData/Model/UpdateUserDataModel.cpp \
     Modules/Tests/Model/TestsModel.cpp \
     Entities/ShortTestInfo/ShortTestInfo.cpp \
@@ -81,7 +80,8 @@ SOURCES += main.cpp\
     Modules/PassedTests/View/PassedTestsForm.cpp \
     Modules/PassedTests/Model/PassedTestsModel.cpp \
     Entities/PassedTestPreview/PassedTestPreview.cpp \
-    Modules/PassedTests/Service/PassedTestsService.cpp
+    Modules/PassedTests/Service/PassedTestsService.cpp \
+    BaseService/BaseService.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -133,7 +133,6 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/Entity/Entity.h \
     Entities/Gender/Gender.h \
     Modules/CreateUser/Model/CreateUserModel.h \
-    BaseModel/BaseModel.h \
     Modules/UpdateUserData/Model/UpdateUserDataModel.h \
     Modules/Tests/Model/TestsModel.h \
     Entities/ShortTestInfo/ShortTestInfo.h \
@@ -143,7 +142,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/PassedTests/View/PassedTestsForm.h \
     Modules/PassedTests/Model/PassedTestsModel.h \
     Entities/PassedTestPreview/PassedTestPreview.h \
-    Modules/PassedTests/Service/PassedTestsService.h
+    Modules/PassedTests/Service/PassedTestsService.h \
+    BaseService/BaseService.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \

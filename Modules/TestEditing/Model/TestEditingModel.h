@@ -1,11 +1,11 @@
 #pragma once
 
-#include "BaseModel/BaseModel.h"
+#include "BaseService/BaseService.h"
 
 class ShortTestInfo;
 class Test;
 
-class TestEditingModel : public BaseModel {
+class TestEditingModel : public BaseService {
 Q_OBJECT
 
 public:

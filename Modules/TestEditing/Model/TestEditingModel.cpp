@@ -13,7 +13,7 @@ const QString DELETE_TEST_API = "tests/%1";
 //  :: Lifecycle ::
 
 TestEditingModel::TestEditingModel(QObject *parent/*= nullptr*/)
-	: BaseModel(parent) { }
+	: BaseService(parent) { }
 
 //  :: Public methods ::
 

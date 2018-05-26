@@ -1,10 +1,10 @@
 #pragma once
 
-#include "BaseModel/BaseModel.h"
+#include "BaseService/BaseService.h"
 
 class AutorizationData;
 
-class AutorizationModel : public BaseModel {
+class AutorizationModel : public BaseService {
 Q_OBJECT
 public:
 	AutorizationModel(QObject *parent = nullptr);

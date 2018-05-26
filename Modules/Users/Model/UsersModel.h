@@ -1,10 +1,10 @@
 #pragma once
 
-#include "BaseModel/BaseModel.h"
+#include "BaseService/BaseService.h"
 
 class User;
 
-class UsersModel : public BaseModel {
+class UsersModel : public BaseService {
 Q_OBJECT
 
 public:

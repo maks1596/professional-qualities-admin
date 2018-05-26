@@ -15,7 +15,7 @@ const QString GET_PROFESSIONS_API = "users/professions";
 //  :: Lifecycle
 
 CreateUserModel::CreateUserModel(QObject *parent/*= nullptr*/)
-	: BaseModel(parent) {}
+	: BaseService(parent) {}
 
 //  :: Public methods ::
 

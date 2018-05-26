@@ -1,8 +1,8 @@
 #pragma once
 
-#include "BaseModel/BaseModel.h"
+#include "BaseService/BaseService.h"
 
-class PassedTestsService : BaseModel {
+class PassedTestsService : BaseService {
     Q_OBJECT
 
 public:

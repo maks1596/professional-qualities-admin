@@ -16,7 +16,7 @@ const QString DELETE_TEST_API = "tests/%1";
 //  :: Lifeccyle ::
 
 TestsModel::TestsModel(QObject *parent/*= nullptr*/)
-	: BaseModel(parent) {}
+	: BaseService(parent) {}
 
 //  :: Public methods ::
 
@@ -40,7 +40,7 @@ void TestsModel::deleteTest(int id) const {
 			SIGNAL(testDeleted()));
 
 	disconnect(requester, &Requester::failure,
-			   this, &BaseModel::error);
+			   this, &BaseService::error);
 	connect(requester, &Requester::failure,
 			this, &TestsModel::testIsUsed);
 

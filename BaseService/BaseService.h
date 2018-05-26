@@ -5,11 +5,11 @@
 class Requester;
 class QString;
 
-class BaseModel : public QObject {
+class BaseService : public QObject {
     Q_OBJECT
 
 public:
-	BaseModel(QObject *parent = nullptr);
+	BaseService(QObject *parent = nullptr);
 
 signals:
 	void error(const QString &message);

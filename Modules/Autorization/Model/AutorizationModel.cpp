@@ -10,7 +10,7 @@ const QString AUTORIZE_AS_ADMIN = "autorization/admin";
 //  :: Lifecycle ::
 
 AutorizationModel::AutorizationModel(QObject *parent/*= nullptr*/)
-	: BaseModel(parent) { }
+	: BaseService(parent) { }
 
 void AutorizationModel::autorizeAsAdmin(const QString &login,
 										const QString &password) {

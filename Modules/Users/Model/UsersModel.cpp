@@ -15,7 +15,7 @@ const QString DELETE_USER_API = GET_USER_API;
 //  :: Lifecycle ::
 
 UsersModel::UsersModel(QObject *parent/*= nullptr*/)
-	: BaseModel(parent) {}
+	: BaseService(parent) {}
 
 //  :: Public methods ::
 

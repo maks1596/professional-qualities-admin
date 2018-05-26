@@ -13,7 +13,7 @@ const QString GET_PREVIEWS_API = "statistics";
 //  :: Lifecycle ::
 
 PassedTestsModel::PassedTestsModel(QObject *parent/*= nullptr*/)
-    : BaseModel(parent) { }
+    : BaseService(parent) { }
 
 //  :: Public methods ::
 

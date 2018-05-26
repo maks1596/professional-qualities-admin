@@ -10,7 +10,7 @@ const QString PATCH_USER_API = "users";
 //  :: Lifecycle ::
 
 UpdateUserDataModel::UpdateUserDataModel(QObject *parent/*= nullptr*/)
-	: BaseModel(parent) {}
+	: BaseService(parent) {}
 
 //  :: Public methods ::
 
