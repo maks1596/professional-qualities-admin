@@ -6,7 +6,7 @@ class Requester;
 class QString;
 
 class BaseModel : public QObject {
-Q_OBJECT
+    Q_OBJECT
 
 public:
 	BaseModel(QObject *parent = nullptr);

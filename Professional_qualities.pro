@@ -78,7 +78,9 @@ SOURCES += main.cpp\
     Modules/TestEditing/Model/TestEditingModel.cpp \
     Modules/Autorization/Model/AutorizationModel.cpp \
     Entities/AutorizationData/AutorizationData.cpp \
-    Modules/PassedTests/View/PassedTestsForm.cpp
+    Modules/PassedTests/View/PassedTestsForm.cpp \
+    Modules/PassedTests/Model/PassedTestsModel.cpp \
+    Entities/PassedTestPreview/PassedTestPreview.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -137,7 +139,9 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/TestEditing/Model/TestEditingModel.h \
     Modules/Autorization/Model/AutorizationModel.h \
     Entities/AutorizationData/AutorizationData.h \
-    Modules/PassedTests/View/PassedTestsForm.h
+    Modules/PassedTests/View/PassedTestsForm.h \
+    Modules/PassedTests/Model/PassedTestsModel.h \
+    Entities/PassedTestPreview/PassedTestPreview.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
