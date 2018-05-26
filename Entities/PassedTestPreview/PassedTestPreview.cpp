@@ -6,6 +6,14 @@ const QString ID_JSON_KEY = "id";
 const QString NAME_JSON_KEY = "name";
 const QString NUMBER_OF_PASSES_JSON_KEY = "numberOfPasses";
 
+//  :: Lifecycle ::
+
+PassedTestPreview::PassedTestPreview(int id, const QString &name, uint numberOfPasses) {
+    setId(id);
+    setName(name);
+    setNumberOfPasses(numberOfPasses);
+}
+
 //  :: Public accessors ::
 //  :: ID ::
 int PassedTestPreview::getId() const {

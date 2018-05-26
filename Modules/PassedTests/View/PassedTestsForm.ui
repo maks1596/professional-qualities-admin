@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Статистика</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
    <property name="bottomMargin">
     <number>0</number>
    </property>
@@ -56,7 +56,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableWidget" name="passedTestsTableWidget"/>
+    <widget class="QTableView" name="passedTestsTableView"/>
    </item>
   </layout>
  </widget>

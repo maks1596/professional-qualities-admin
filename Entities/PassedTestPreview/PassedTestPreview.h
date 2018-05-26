@@ -4,6 +4,10 @@
 
 class PassedTestPreview : SerializableObject {
 public:
+    //  :: Lifecycle ::
+    PassedTestPreview() = default;
+    PassedTestPreview(int id, const QString &name, uint numberOfPasses);
+
     //  :: Serializable ::
     virtual QJsonObject toJson() const override;
     virtual void initWithJsonObject(const QJsonObject &json) override;
