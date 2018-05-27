@@ -12,6 +12,10 @@ PassedTestsForm::PassedTestsForm(QWidget *parent) :
             this, &PassedTestsForm::backButtonClicked);
 
     ui->passedTestsTableView->setModel(new PassedTestsModel(this));
+    ui->passedTestsTableView->resizeColumnsToContents();
+    ui->passedTestsTableView->horizontalHeader()
+            ->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->passedTestsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 PassedTestsForm::~PassedTestsForm() {

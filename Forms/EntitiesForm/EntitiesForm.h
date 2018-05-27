@@ -47,10 +47,7 @@ protected:
 
 private slots:
     void onEntityClicked(const QModelIndex &idx);
-    void onEntityPressed(const QModelIndex &idx);
     void onEntityDoubleClicked(const QModelIndex &idx);
-
-	void onTimeout();
 
 private:
 	void setRowCount(uint count);
@@ -60,7 +57,6 @@ private:
 	void resizeTable();
 	int deleteColumnIndex() const;
 
-	int m_selectedRow = -1;
 	QTimer m_timer;
 	QList<Entity> m_entites;
     Ui::EntitiesForm *ui;

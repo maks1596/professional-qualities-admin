@@ -26,14 +26,10 @@ EntitiesForm::EntitiesForm(QWidget *parent) :
             this, &EntitiesForm::onEntityClicked);
 	connect(ui->entitiesTableWidget, &QTableView::doubleClicked,
             this, &EntitiesForm::onEntityDoubleClicked);
-
-	connect(ui->entitiesTableWidget, &QTableView::pressed,
-            this, &EntitiesForm::onEntityPressed);
-	connect(ui->entitiesTableWidget, &QTableView::entered,
-            this, &EntitiesForm::onEntityPressed);
+    ui->entitiesTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
 
 	connect(&m_timer, &QTimer::timeout,
-			this, &EntitiesForm::onTimeout);
+            this, &EntitiesForm::update);
 	m_timer.start(UPDATE_TIMING);
 }
 
@@ -100,32 +96,12 @@ void EntitiesForm::onEntityDoubleClicked(const QModelIndex &idx) {
     }
 }
 
-void EntitiesForm::onEntityPressed(const QModelIndex &idx) {
-    if(idx.isValid()) {
-        m_selectedRow = idx.row();
-		ui->entitiesTableWidget->selectRow(m_selectedRow);
-    } else {
-        m_selectedRow = -1;
-    }
-}
-
 void EntitiesForm::onEntityClicked(const QModelIndex &idx) {
     if(idx.isValid()) {
 		if(idx.column() == deleteColumnIndex()) {
             removeEntity(getEntityID(idx));
         }
-    } else {
-        m_selectedRow = -1;
     }
-}
-
-void EntitiesForm::onTimeout() {
-	update();
-	if(m_selectedRow > -1) {
-		ui->entitiesTableWidget->selectRow(m_selectedRow);
-	} else {
-		ui->entitiesTableWidget->clearSelection();
-	}
 }
 
 //  :: Private methods
