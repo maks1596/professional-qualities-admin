@@ -34,7 +34,8 @@ public slots:
 private:
     void initService();
     void initTimer();
-    void emitDataChanged();
+    void checkRowsCountChanged(const QList<PassedTestPreview> &newPreviews);
+    void emitAllDataChanged();
 
     QList<PassedTestPreview> m_previews;
     QTimer *m_timer;

@@ -4,7 +4,7 @@
 
 class PassedTestPreview;
 
-class PassedTestsService : BaseService {
+class PassedTestsService : public BaseService {
     Q_OBJECT
 
 public:

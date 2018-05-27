@@ -1,6 +1,7 @@
 #include "PassedTestsModel.h"
 
 #include <QTimer>
+#include <QDebug>
 
 #include "Entities/PassedTestPreview/PassedTestPreview.h"
 
@@ -75,8 +76,9 @@ QList<PassedTestPreview> PassedTestsModel::getPassedTestPreviews() const {
     return m_previews;
 }
 void PassedTestsModel::setPassedTestPreviews(const QList<PassedTestPreview> &previews) {
+    checkRowsCountChanged(previews);
     m_previews = previews;
-    emitDataChanged();
+    emitAllDataChanged();
 }
 
 //  :: Public slots ::
@@ -106,7 +108,18 @@ void PassedTestsModel::initTimer() {
 }
 
 inline
-void PassedTestsModel::emitDataChanged() {
+void PassedTestsModel::checkRowsCountChanged(const QList<PassedTestPreview> &newPreviews) {
+    if (m_previews.size() < newPreviews.size()) {
+        beginInsertRows(QModelIndex(), m_previews.size(), newPreviews.size() - 1);
+        endInsertRows();
+    } else if (m_previews.size() > newPreviews.size()) {
+        beginRemoveRows(QModelIndex(), newPreviews.size(), m_previews.size() - 1);
+        endRemoveRows();
+    }
+}
+
+inline
+void PassedTestsModel::emitAllDataChanged() {
     auto topLeft = index(0, 0);
     auto bottomRight = index(m_previews.size() - 1,
                              NUMBER_OF_COLUMNS - 1);
