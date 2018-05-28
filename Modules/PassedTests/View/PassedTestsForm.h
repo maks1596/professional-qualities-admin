@@ -18,9 +18,14 @@ public:
     PassedTestsModel *getModel() const;
     void setModel(PassedTestsModel *model);
 
+public slots:
+    void startUpdating();
+    void stopUpdating();
+
 signals:
     void backButtonClicked();
     void passedTestSelected(int id);
+    void error(const QString &errorMessage);
 
 private slots:
     void onPassedTestDoubleClicked(const QModelIndex &index);

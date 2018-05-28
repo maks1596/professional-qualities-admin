@@ -81,7 +81,8 @@ SOURCES += main.cpp\
     Modules/PassedTests/Model/PassedTestsModel.cpp \
     Entities/PassedTestPreview/PassedTestPreview.cpp \
     Modules/PassedTests/Service/PassedTestsService.cpp \
-    BaseService/BaseService.cpp
+    BaseService/BaseService.cpp \
+    Modules/PassedTests/Assembler/PassedTestsAssembler.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -144,7 +145,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/PassedTestPreview/PassedTestPreview.h \
     Modules/PassedTests/Service/PassedTestsService.h \
     BaseService/BaseService.h \
-    Modules/PassedTests/Model/PassedTestsColumnIndex.h
+    Modules/PassedTests/Model/PassedTestsColumnIndex.h \
+    Modules/PassedTests/Assembler/PassedTestsAssembler.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \

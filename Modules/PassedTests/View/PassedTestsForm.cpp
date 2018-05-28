@@ -18,13 +18,6 @@ PassedTestsForm::PassedTestsForm(QWidget *parent) :
     connect(ui->passedTestsTableView, &QTableView::doubleClicked,
             this, &PassedTestsForm::onPassedTestDoubleClicked);
 
-    setModel(new PassedTestsModel(this));
-    ui->passedTestsTableView->setModel(getModel());
-
-    ui->passedTestsTableView->resizeColumnsToContents();
-    ui->passedTestsTableView->horizontalHeader()
-            ->setSectionResizeMode(NAME_COLUMN_INDEX, QHeaderView::Stretch);
-
     // При нажатии на элемент таблицы выделяется целая строка вместо одной ячейки
     ui->passedTestsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
@@ -40,6 +33,20 @@ PassedTestsModel *PassedTestsForm::getModel() const {
 }
 void PassedTestsForm::setModel(PassedTestsModel *model) {
     m_model = model;
+    ui->passedTestsTableView->setModel(model);
+
+    ui->passedTestsTableView->resizeColumnsToContents();
+    ui->passedTestsTableView->horizontalHeader()
+            ->setSectionResizeMode(NAME_COLUMN_INDEX, QHeaderView::Stretch);
+}
+
+//  :: Public slots ::
+
+void PassedTestsForm::startUpdating() {
+    m_model->startUpdating();
+}
+void PassedTestsForm::stopUpdating() {
+    m_model->stopUpdating();
 }
 
 //  :: Private slots ::

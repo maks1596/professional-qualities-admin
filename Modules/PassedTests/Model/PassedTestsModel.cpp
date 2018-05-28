@@ -23,11 +23,7 @@ const int UPDATE_INTERVAL = 5000;
 PassedTestsModel::PassedTestsModel(QObject *parent/*= nullptr*/)
     : QAbstractTableModel(parent)
 {
-    initService();
     initTimer();
-    connect(m_timer, &QTimer::timeout,
-            m_service, &PassedTestsService::getPreviews);
-    startUpdating();
 }
 
 //  :: QAbstractTableModel ::
@@ -58,7 +54,9 @@ QVariant PassedTestsModel::headerData(int section,
                                       int role) const {
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal) {
-            return kHorizontalHeaders[section];
+            if (section < kHorizontalHeaders.size()) {
+                return kHorizontalHeaders[section];
+            }
         } else {
             return section + 1;
         }
@@ -75,6 +73,18 @@ void PassedTestsModel::setPassedTestPreviews(const QList<PassedTestPreview> &pre
     checkRowsCountChanged(previews);
     m_previews = previews;
     emitAllDataChanged();
+}
+
+//  :: Service ::
+PassedTestsService *PassedTestsModel::getService() const {
+    return m_service;
+}
+void PassedTestsModel::setService(PassedTestsService *service) {
+    m_service = service;
+    connect(m_service, &PassedTestsService::previewsGot,
+            this, &PassedTestsModel::setPassedTestPreviews);
+    connect(m_timer, &QTimer::timeout,
+            m_service, &PassedTestsService::getPreviews);
 }
 
 //  :: Public methods ::
@@ -100,13 +110,6 @@ void PassedTestsModel::stopUpdating() const {
 //  :: Private methods ::
 
 inline
-void PassedTestsModel::initService() {
-    m_service = new PassedTestsService(this);
-    connect(m_service, &PassedTestsService::previewsGot,
-            this, &PassedTestsModel::setPassedTestPreviews);
-}
-
-inline
 void PassedTestsModel::initTimer() {
     m_timer = new QTimer(this);
     m_timer->setInterval(UPDATE_INTERVAL);
@@ -130,4 +133,3 @@ void PassedTestsModel::emitAllDataChanged() {
                              NUMBER_OF_COLUMNS - 1);
     emit dataChanged(topLeft, bottomRight);
 }
-

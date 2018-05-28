@@ -8,6 +8,7 @@
 #include "Modules/Users/View/UsersForm.h"
 #include "Modules/TestEditing/View/TestEditingForm.h"
 #include "Modules/Tests/View/TestsForm.h"
+#include "Modules/PassedTests/Assembler/PassedTestsAssembler.h"
 #include "Modules/PassedTests/View/PassedTestsForm.h"
 
 //  :: Constants ::
@@ -111,12 +112,17 @@ void MainWindow::onTestRead(const Test &test) {
 //  :: Статистика ::
 
 void MainWindow::onStatisticsButtonClicled() {
-    auto passedTestsForm = new PassedTestsForm(this);
+    auto passedTestsForm = PassedTestsAssembler::assembly(this);
+
     connect(passedTestsForm, &PassedTestsForm::backButtonClicked,
             this, &MainWindow::onBackToMainMenu);
     connect(passedTestsForm, &PassedTestsForm::passedTestSelected,
             this, &MainWindow::pushTestStatisticsFormToStack);
+    connect(passedTestsForm, &PassedTestsForm::error,
+            this, &MainWindow::showStatusMessage);
+
     pushWidget(passedTestsForm);
+    passedTestsForm->startUpdating();
 }
 
 void MainWindow::pushTestStatisticsFormToStack(int passedTestId) {

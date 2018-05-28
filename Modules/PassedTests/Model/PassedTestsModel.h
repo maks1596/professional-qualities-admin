@@ -27,12 +27,16 @@ public:
     QList<PassedTestPreview> getPassedTestPreviews() const;
     void setPassedTestPreviews(const QList<PassedTestPreview> &previews);
 
+    PassedTestsService *getService() const;
+    void setService(PassedTestsService *service);
+
     /**
      * @brief Возвращает ID пройденного теста, соответствующего переданному индексу
      * @param index - индекс модели
      * @return ID пройденного теста
      */
     int getId(const QModelIndex &index) const;
+
 
 public slots:
     void startUpdating() const;
