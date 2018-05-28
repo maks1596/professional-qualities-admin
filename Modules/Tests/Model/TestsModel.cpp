@@ -6,6 +6,7 @@
 #include "Entities/ShortTestInfo/ShortTestInfo.h"
 #include "Entities/Test/Test.h"
 #include "Requester/Requester.h"
+#include "JsonArraySerialization.h"
 
 //  :: Constants ::
 
@@ -51,20 +52,11 @@ void TestsModel::deleteTest(int id) const {
 //  :: Private slots ::
 
 void TestsModel::jsonTestsGot(const QJsonArray &jsonArray) {
-	QList<ShortTestInfo> tests;
-	for (const auto &jsonShortTestInfo : jsonArray) {
-		if (jsonShortTestInfo.isObject()) {
-			QJsonObject jsonObject = jsonShortTestInfo.toObject();
-			ShortTestInfo test;
-			test.initWithJsonObject(jsonObject);
-			tests.append(test);
-		}
-	}
+    auto tests = serializableObjectsFromJsonArray<QList, ShortTestInfo>(jsonArray);
 	emit testsGot(tests);
 }
 
 void TestsModel::jsonTestGot(const QJsonObject &jsonObject) {
-	Test test;
-	test.initWithJsonObject(jsonObject);
+    auto test = makeWithJsonObject<Test>(jsonObject);
 	emit testGot(test);
 }

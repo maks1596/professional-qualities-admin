@@ -8,6 +8,8 @@
 #include "Entities/Key/GeneralAnswerOptions/GeneralAnswerOptionsKey.h"
 #include "Entities/Key/UniqueAnswerOptions/UniqueAnswerOptionsKey.h"
 
+#include "JsonArraySerialization.h"
+
 //  :: Constants ::
 
 const QString RUS_ALPHABETIC = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
@@ -252,24 +254,10 @@ QJsonObject Test::toJson() const {
 	json[ID_JSON_KEY] = getId();
 	json[NAME_JSON_KEY] = getName();
 	json[INSTRUCTION_JSON_KEY] = getInstruction();
-
-    QJsonArray jsonAnswerOptions;
-	for (const auto &answerOption : getGeneralAnswerOptions()) {
-		jsonAnswerOptions.append(answerOption.toJson());
-    }
-	json[GENERAL_ANSWER_OPTIONS_JSON_KEY] = jsonAnswerOptions;
-
-    QJsonArray jsonQuestions;
-	for (const auto &question : getQuestions()) {
-		jsonQuestions.append(question.toJson());
-    }
-	json[QUESTIONS_JSON_KEY] = jsonQuestions;
-
-    QJsonArray jsonScales;
-	for (const auto &scale : getScales()) {
-		jsonScales.append(scale.toJson());
-    }
-	json[SCALES_JSON_KEY] = jsonScales;
+    json[GENERAL_ANSWER_OPTIONS_JSON_KEY] =
+            jsonArrayFromSerializableObjects(getGeneralAnswerOptions());
+    json[QUESTIONS_JSON_KEY] = jsonArrayFromSerializableObjects(getQuestions());
+    json[SCALES_JSON_KEY] = jsonArrayFromSerializableObjects(getScales());
 
 	return json;
 }
@@ -371,46 +359,13 @@ uint answerOptionToIndex(const AnswerOption &source,
 //  :: Serialization ::
 
 AnswerOptions answerOptionsFromJsonArray(const QJsonArray &jsonArray) {
-	AnswerOptions answerOptions;
-	AnswerOption answerOption;
-
-	for (const auto &jsonAnswerOption : jsonArray) {
-		if (jsonAnswerOption.isObject()) {
-			auto jsonObject = jsonAnswerOption.toObject();
-			answerOption.initWithJsonObject(jsonObject);
-			answerOptions.append(answerOption);
-		}
-	}
-
-	return answerOptions;
+    return serializableObjectsFromJsonArray<QList, AnswerOption>(jsonArray);
 }
 
 Questions questionsFromJsonArray(const QJsonArray &jsonArray) {
-	Questions questions;
-	Question question;
-
-	for (const auto &jsonQuestion : jsonArray) {
-		if (jsonQuestion.isObject()) {
-			auto jsonObject = jsonQuestion.toObject();
-			question.initWithJsonObject(jsonObject);
-			questions.append(question);
-		}
-	}
-
-	return questions;
+    return serializableObjectsFromJsonArray<QList, Question>(jsonArray);
 }
 
 Scales scalesFromJsonArray(const QJsonArray &jsonArray) {
-	Scales scales;
-	Scale scale;
-
-	for (const auto &jsonScale : jsonArray) {
-		if (jsonScale.isObject()) {
-			auto jsonObject = jsonScale.toObject();
-			scale.initWithJsonObject(jsonObject);
-			scales.append(scale);
-		}
-	}
-
-	return scales;
+    return serializableObjectsFromJsonArray<QList, Scale>(jsonArray);
 }

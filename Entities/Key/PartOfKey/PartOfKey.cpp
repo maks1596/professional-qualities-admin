@@ -5,6 +5,7 @@
 
 #include "Entities/Key/GeneralAnswerOptions/PartOfKey/PartOfGeneralAnswerOptionsKey.h"
 #include "Entities/Key/UniqueAnswerOptions/PartOfKey/PartOfUniqueAnswerOptionsKey.h"
+#include "JsonArraySerialization.h"
 
 //  :: Constants ::
 
@@ -135,11 +136,7 @@ const Indexes &PartOfKey::getInternalAnswerOptionIndexes() const {
 //  :: Private functions ::
 
 QJsonArray toJsonArray(const Indexes &list) {
-	QJsonArray jsonArray;
-	for (uint item : list) {
-		jsonArray.append(static_cast<int>(item));
-	}
-	return jsonArray;
+    return jsonArrayFromValues(list);
 }
 
 Indexes fromJsonArray(const QJsonArray &jsonArray) {
@@ -149,5 +146,5 @@ Indexes fromJsonArray(const QJsonArray &jsonArray) {
 			list.append(json.toInt());
 		}
 	}
-	return list;
+    return list;
 }

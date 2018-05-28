@@ -5,6 +5,7 @@
 
 #include "Requester/Requester.h"
 #include "Entities/User/User.h"
+#include "JsonArraySerialization.h"
 
 //  :: Constants ::
 
@@ -45,21 +46,11 @@ void UsersModel::deleteUser(int userId) const {
 //  :: Private slots ::
 
 void UsersModel::jsonUsersGot(const QJsonArray &jsonUsers) {
-	QList<User> users;
-
-	for (const auto &jsonValue : jsonUsers) {
-		if (jsonValue.isObject()) {
-			QJsonObject jsonObject = jsonValue.toObject();
-			User user;
-			user.initWithJsonObject(jsonObject);
-			users.append(user);
-		}
-	}
+    auto users = serializableObjectsFromJsonArray<QList, User>(jsonUsers);
 	emit usersGot(users);
 }
 
 void UsersModel::jsonUserGot(const QJsonObject &jsonUser) {
-	User user;
-	user.initWithJsonObject(jsonUser);
-	emit userGot(user);
+    auto user = makeWithJsonObject<User>(jsonUser);
+    emit userGot(user);
 }

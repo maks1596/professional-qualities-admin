@@ -2,6 +2,8 @@
 
 #include <QJsonArray>
 
+#include "JsonArraySerialization.h"
+
 //  :: Constants ::
 
 const QString ID_JSON_KEY = "id";
@@ -83,13 +85,8 @@ QJsonObject Question::toJson() const {
 	QJsonObject json;
 
 	json[ID_JSON_KEY] = getId();
-	json[FORMULATION_JSON_KEY] = getFormulation();
-
-    QJsonArray jsonAnswerOptions;
-	for (const auto &answerOption : getAnswerOptions()) {
-        jsonAnswerOptions.append(answerOption.toJson());
-    }
-	json[ANSWER_OPTIONS_JSON_KEY] = jsonAnswerOptions;
+    json[FORMULATION_JSON_KEY] = getFormulation();
+    json[ANSWER_OPTIONS_JSON_KEY] = jsonArrayFromSerializableObjects(getAnswerOptions());
 
 	return json;
 }
@@ -105,14 +102,6 @@ void Question::initWithJsonObject(const QJsonObject &json) {
 	if (json.contains(ANSWER_OPTIONS_JSON_KEY) &&
 			json[ANSWER_OPTIONS_JSON_KEY].isArray()) {
 		QJsonArray jsonAnswerOptions = json[ANSWER_OPTIONS_JSON_KEY].toArray();
-        AnswerOption answerOption;
-		getAnswerOptions()->clear();
-
-        for (const auto &jsonAnswerOption : jsonAnswerOptions) {
-            if (jsonAnswerOption.isObject()) {
-                answerOption.initWithJsonObject(jsonAnswerOption.toObject());
-				getAnswerOptions()->append(answerOption);
-            }
-        }
+        setAnswerOptions(serializableObjectsFromJsonArray<QList, AnswerOption>(jsonAnswerOptions));
     }
 }

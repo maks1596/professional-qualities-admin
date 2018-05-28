@@ -5,6 +5,7 @@
 
 #include "Entities/PassedTestPreview/PassedTestPreview.h"
 #include "Requester/Requester.h"
+#include "JsonArraySerialization.h"
 
 //  :: Constants ::
 
@@ -27,12 +28,6 @@ void PassedTestsService::getPreviews() const {
 //  :: Private slots ::
 
 void PassedTestsService::onPreviewsGot(const QJsonArray &jsonPreviews) {
-    QList<PassedTestPreview> previews;
-    for (const auto &jsonValue : jsonPreviews) {
-        if (jsonValue.isObject()) {
-            auto jsonObject = jsonValue.toObject();
-            previews += makeWithJsonObject<PassedTestPreview>(jsonObject);
-        }
-    }
+    auto previews = serializableObjectsFromJsonArray<QList, PassedTestPreview>(jsonPreviews);
     emit previewsGot(previews);
 }

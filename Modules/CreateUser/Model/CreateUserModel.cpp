@@ -41,7 +41,7 @@ void CreateUserModel::jsonProfessionsGot(const QJsonArray &jsonProfessions) cons
 	QStringList professions;
 	for (const auto &jsonValue : jsonProfessions) {
 		if (jsonValue.isString()) {
-			professions.append(jsonValue.toString());
+            professions.append(jsonValue.toString());
 		}
 	}
 	emit professionsGot(professions);

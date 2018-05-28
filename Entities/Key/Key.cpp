@@ -5,6 +5,7 @@
 #include "Entities/Key/GeneralAnswerOptions/GeneralAnswerOptionsKey.h"
 #include "Entities/Key/UniqueAnswerOptions/UniqueAnswerOptionsKey.h"
 #include "PartOfKey/PartOfKey.h"
+#include "JsonArraySerialization.h"
 
 struct Key::Implementation {
 	QList<PartOfKey> partsOfKey;
@@ -92,23 +93,12 @@ UniqueAnswerOptionsKey *Key::toUAOK() {
 //  :: Serializable ::
 
 QJsonArray Key::toJson() const {
-	QJsonArray json;
-	for (const auto &partOfKey : pimpl->partsOfKey) {
-		json.append(partOfKey.toJson());
-	}
-	return json;
+    return jsonArrayFromSerializableObjects(pimpl->partsOfKey);
 }
 
 void Key::initWithJsonArray(const QJsonArray &json) {
-	pimpl->partsOfKey.clear();
-	for (const auto &jsonPartOfKey : json) {
-		if (jsonPartOfKey.isObject()) {
-			QJsonObject jsonObject = jsonPartOfKey.toObject();
-			PartOfKey partOfKey;
-			partOfKey.initWithJsonObject(jsonObject);
-			pimpl->partsOfKey.append(partOfKey);
-		}
-	}
+    pimpl->partsOfKey =
+            serializableObjectsFromJsonArray<QList, PartOfKey>(json);
 }
 
 //  :: Protected accessors ::

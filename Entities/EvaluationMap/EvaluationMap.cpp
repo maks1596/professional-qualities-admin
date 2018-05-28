@@ -1,6 +1,7 @@
 #include "EvaluationMap.h"
 
 #include "Entities/Range/Appraised/AppraisedRange.h"
+#include "JsonArraySerialization.h"
 
 struct EvaluationMap::Implementation {
 	QList<AppraisedRange> appraisedRanges;
@@ -66,21 +67,10 @@ AppraisedRange &EvaluationMap::operator[](uint index) {
 //  :: Serializable ::
 
 QJsonArray EvaluationMap::toJson() const {
-	QJsonArray json;
-	for (const auto &appraisedRange : pimpl->appraisedRanges) {
-		json.append(appraisedRange.toJson());
-	}
-	return json;
+    return jsonArrayFromSerializableObjects(pimpl->appraisedRanges);
 }
 
 void EvaluationMap::initWithJsonArray(const QJsonArray &json) {
-	pimpl->appraisedRanges.clear();
-	for (const auto &jsonApprasedRange : json) {
-		if (jsonApprasedRange.isObject()) {
-			QJsonObject jsonObject = jsonApprasedRange.toObject();
-			AppraisedRange appraisedRange;
-			appraisedRange.initWithJsonObject(jsonObject);
-			pimpl->appraisedRanges.append(appraisedRange);
-		}
-	}
+    pimpl->appraisedRanges =
+            serializableObjectsFromJsonArray<QList, AppraisedRange>(json);
 }
