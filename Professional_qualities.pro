@@ -82,7 +82,8 @@ SOURCES += main.cpp\
     Entities/PassedTestPreview/PassedTestPreview.cpp \
     Modules/PassedTests/Service/PassedTestsService.cpp \
     BaseService/BaseService.cpp \
-    Modules/PassedTests/Assembler/PassedTestsAssembler.cpp
+    Modules/PassedTests/Assembler/PassedTestsAssembler.cpp \
+    Modules/PassedTestStatistics/View/PassedTestStatisticsForm.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -146,7 +147,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/PassedTests/Service/PassedTestsService.h \
     BaseService/BaseService.h \
     Modules/PassedTests/Model/PassedTestsColumnIndex.h \
-    Modules/PassedTests/Assembler/PassedTestsAssembler.h
+    Modules/PassedTests/Assembler/PassedTestsAssembler.h \
+    Modules/PassedTestStatistics/View/PassedTestStatisticsForm.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
@@ -163,7 +165,8 @@ FORMS    += MainWindow/MainWindow.ui \
     Modules/Autorization/View/LoginForm.ui \
     Forms/UserForm/UserForm.ui \
     Forms/EntitiesForm/EntitiesForm.ui \
-    Modules/PassedTests/View/PassedTestsForm.ui
+    Modules/PassedTests/View/PassedTestsForm.ui \
+    Modules/PassedTestStatistics/View/PassedTestStatisticsForm.ui
 
 # Для статической сборки
 QMAKE_LFLAGS_RELEASE += -static -static-libgcc
