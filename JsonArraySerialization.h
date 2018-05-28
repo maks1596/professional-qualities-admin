@@ -49,7 +49,11 @@ template<template <typename> typename List, typename T>
 QJsonArray jsonArrayFromValues(const List<T> &values) {
     QJsonArray jsonArray;
     for (const auto &value : values) {
-        jsonArray += QJsonValue(value);
+        // Передавать значение сначала в QVariant, а затем в QJsonValue обязательно
+        // QJsonValue не может быть инициализирован, например, unsigned int
+        auto variant = QVariant::fromValue(value);
+        auto jsonValue = QJsonValue::fromVariant(variant);
+        jsonArray += jsonValue;
     }
     return jsonArray;
 }
