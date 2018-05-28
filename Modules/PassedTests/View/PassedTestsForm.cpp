@@ -1,7 +1,10 @@
 #include "PassedTestsForm.h"
 #include "ui_PassedTestsForm.h"
 
+#include "../Model/PassedTestsColumnIndex.h"
 #include "../Model/PassedTestsModel.h"
+
+using namespace PassedTests;
 
 PassedTestsForm::PassedTestsForm(QWidget *parent) :
     QWidget(parent),
@@ -12,9 +15,12 @@ PassedTestsForm::PassedTestsForm(QWidget *parent) :
             this, &PassedTestsForm::backButtonClicked);
 
     ui->passedTestsTableView->setModel(new PassedTestsModel(this));
+
     ui->passedTestsTableView->resizeColumnsToContents();
     ui->passedTestsTableView->horizontalHeader()
-            ->setSectionResizeMode(0, QHeaderView::Stretch);
+            ->setSectionResizeMode(NAME_COLUMN_INDEX, QHeaderView::Stretch);
+
+    // При нажатии на элемент таблицы выделяется целая строка вместо одной ячейки
     ui->passedTestsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 

@@ -3,17 +3,13 @@
 #include <QTimer>
 #include <QDebug>
 
-#include "Entities/PassedTestPreview/PassedTestPreview.h"
-
 #include "../Service/PassedTestsService.h"
+#include "Entities/PassedTestPreview/PassedTestPreview.h"
+#include "PassedTestsColumnIndex.h"
+
+using namespace PassedTests;
 
 //  :: Constants ::
-
-enum ColumnIndex {
-    NAME_COLUMN_INDEX,
-    NUMBER_OF_PASSES_COLUMN_INDEX,
-    NUMBER_OF_COLUMNS
-};
 
 const QStringList kHorizontalHeaders {
     "Название теста",

@@ -143,7 +143,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/PassedTests/Model/PassedTestsModel.h \
     Entities/PassedTestPreview/PassedTestPreview.h \
     Modules/PassedTests/Service/PassedTestsService.h \
-    BaseService/BaseService.h
+    BaseService/BaseService.h \
+    Modules/PassedTests/Model/PassedTestsColumnIndex.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
