@@ -77,6 +77,15 @@ void PassedTestsModel::setPassedTestPreviews(const QList<PassedTestPreview> &pre
     emitAllDataChanged();
 }
 
+//  :: Public methods ::
+
+int PassedTestsModel::getId(const QModelIndex &index) const {
+    if (index.isValid()) {
+        return getPassedTestPreviews()[index.row()].getId();
+    }
+    return 0;
+}
+
 //  :: Public slots ::
 
 void PassedTestsModel::startUpdating() const {

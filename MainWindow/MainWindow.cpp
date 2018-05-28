@@ -31,9 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
             this, &MainWindow::onStatisticsButtonClicled);
 
     connect(ui->addTestBtn, SIGNAL(clicked()),
-            this, SLOT(createTestForm()));
+            this, SLOT(pushTestFormToStack()));
     connect(ui->addUserBtn, SIGNAL(clicked()),
-            this, SLOT(createUserForm()));
+            this, SLOT(pushUserFormToStack()));
 }
 
 MainWindow::~MainWindow() {
@@ -46,14 +46,14 @@ void MainWindow::onUsersBtnClicked() {
     UsersForm *users = new UsersForm(this);
     connect(users, &UsersForm::toMainMenuBtnClicked,
             this, &MainWindow::onBackToMainMenu);
-    connect(users, SIGNAL(createUserForm(User)),
-            this, SLOT(createUserForm(User)));
+    connect(users, SIGNAL(pushUserFormToStack(User)),
+            this, SLOT(pushUserFormToStack(User)));
 	connect(users, &TestsForm::error,
 			this, &MainWindow::showStatusMessage);
     pushWidget(users);
 }
 
-void MainWindow::createUserForm(const User &user) {
+void MainWindow::pushUserFormToStack(const User &user) {
     UserForm *userForm = new UserForm(user, this);
     connect(userForm, &UserForm::editingCanceled,
             this, &MainWindow::onCancelUserEditing);
@@ -77,13 +77,13 @@ void MainWindow::onTestsBtnClicked() {
     connect(tests, &TestsForm::toMainMenuBtnClicked,
             this, &MainWindow::onBackToMainMenu);
     connect(tests, &TestsForm::createTestForm,
-            this, &MainWindow::createTestForm);
+            this, &MainWindow::pushTestFormToStack);
 	connect(tests, &TestsForm::error,
 			this, &MainWindow::showStatusMessage);
     pushWidget(tests);
 }
 
-void MainWindow::createTestForm(const Test &test) {
+void MainWindow::pushTestFormToStack(const Test &test) {
     Test *ptest = new Test(test);
     TestEditingForm *testForm = new TestEditingForm(ptest, this);
     connect(testForm, &TestEditingForm::cancelBtnClicked,
@@ -105,7 +105,7 @@ void MainWindow::onCancelTestEditing() {
 
 void MainWindow::onTestRead(const Test &test) {
     popWidget();
-    createTestForm(test);
+    pushTestFormToStack(test);
 }
 
 //  :: Статистика ::
@@ -114,7 +114,13 @@ void MainWindow::onStatisticsButtonClicled() {
     auto passedTestsForm = new PassedTestsForm(this);
     connect(passedTestsForm, &PassedTestsForm::backButtonClicked,
             this, &MainWindow::onBackToMainMenu);
+    connect(passedTestsForm, &PassedTestsForm::passedTestSelected,
+            this, &MainWindow::pushTestStatisticsFormToStack);
     pushWidget(passedTestsForm);
+}
+
+void MainWindow::pushTestStatisticsFormToStack(int passedTestId) {
+    showStatusMessage(QString("Выбран тест с ID = %1").arg(passedTestId));
 }
 
 //  :: Private slots ::

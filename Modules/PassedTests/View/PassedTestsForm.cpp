@@ -6,6 +6,8 @@
 
 using namespace PassedTests;
 
+//  :: Lifecycle ::
+
 PassedTestsForm::PassedTestsForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PassedTestsForm)
@@ -13,8 +15,11 @@ PassedTestsForm::PassedTestsForm(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->backButton, &QPushButton::clicked,
             this, &PassedTestsForm::backButtonClicked);
+    connect(ui->passedTestsTableView, &QTableView::doubleClicked,
+            this, &PassedTestsForm::onPassedTestDoubleClicked);
 
-    ui->passedTestsTableView->setModel(new PassedTestsModel(this));
+    setModel(new PassedTestsModel(this));
+    ui->passedTestsTableView->setModel(getModel());
 
     ui->passedTestsTableView->resizeColumnsToContents();
     ui->passedTestsTableView->horizontalHeader()
@@ -27,3 +32,23 @@ PassedTestsForm::PassedTestsForm(QWidget *parent) :
 PassedTestsForm::~PassedTestsForm() {
     delete ui;
 }
+
+//  :: Public accessors ::
+
+PassedTestsModel *PassedTestsForm::getModel() const {
+    return m_model;
+}
+void PassedTestsForm::setModel(PassedTestsModel *model) {
+    m_model = model;
+}
+
+//  :: Private slots ::
+
+void PassedTestsForm::onPassedTestDoubleClicked(const QModelIndex &index) {
+    auto id = getModel()->getId(index);
+    if (id > 0) {
+        emit passedTestSelected(id);
+    } // иначе 'что-то пошло не так', но это и не важно
+}
+
+

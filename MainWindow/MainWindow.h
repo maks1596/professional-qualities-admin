@@ -22,12 +22,14 @@ private slots:
     void onStatisticsButtonClicled();
     void onBackToMainMenu();
 
-    void createUserForm(const User &user = User());
+    void pushUserFormToStack(const User &user = User());
     void onCancelUserEditing();
 
-    void createTestForm(const Test &test = Test());
+    void pushTestFormToStack(const Test &test = Test());
     void onCancelTestEditing();
     void onTestRead(const Test &test);
+
+    void pushTestStatisticsFormToStack(int passedTestId);
 
     void showCriticalMessage(const QString &error);
     void showStatusMessage(const QString &message);
