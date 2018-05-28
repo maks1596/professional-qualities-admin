@@ -1,10 +1,14 @@
 #pragma once
 
 #include <QJsonArray>
-#include <QJsonValue>
 
 #include "Serializable/Object/SerializableObject.h"
 
+/**
+ * @brief Функция преобразует контейнер сериализуемых объектов в массив JSON
+ * @param objects - контейнер сериализуемых объектов
+ * @return массив JSON
+ */
 template<template<typename> typename List, class T,
          typename = typename std::enable_if<
              std::is_base_of<SerializableObject, T>::value>
@@ -17,6 +21,11 @@ QJsonArray jsonArrayFromSerializableObjects(const List<T> &objects) {
     return jsonArray;
 }
 
+/**
+ * @brief Функция преобразует массив JSON в контейнер сериализуемых объектов
+ * @param jsonArray - массив JSON
+ * @return контейнер сериализуемых объектов
+ */
 template<template<typename> typename List, class T,
          typename = typename std::enable_if<
              std::is_base_of<SerializableObject, T>::value>
@@ -31,6 +40,11 @@ List<T> serializableObjectsFromJsonArray(const QJsonArray &jsonArray) {
     return result;
 }
 
+/**
+ * @brief Функция преобразует контейнер произвольных значений в массив JSON
+ * @param values - контейнер
+ * @return массив JSON
+ */
 template<template <typename> typename List, typename T>
 QJsonArray jsonArrayFromValues(const List<T> &values) {
     QJsonArray jsonArray;
