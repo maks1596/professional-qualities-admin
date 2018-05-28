@@ -31,9 +31,7 @@ void PassedTestsService::onPreviewsGot(const QJsonArray &jsonPreviews) {
     for (const auto &jsonValue : jsonPreviews) {
         if (jsonValue.isObject()) {
             auto jsonObject = jsonValue.toObject();
-            PassedTestPreview preview;
-            preview.initWithJsonObject(jsonObject);
-            previews += preview;
+            previews += makeWithJsonObject<PassedTestPreview>(jsonObject);
         }
     }
     emit previewsGot(previews);

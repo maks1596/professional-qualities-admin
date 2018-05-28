@@ -36,3 +36,30 @@ public:
 	 */
 	void initWithVariantList(const QVariantList &variantList);
 };
+
+/**
+ * @brief Вспомогательная функция для десериализации JSON-массива в объект типа Т.
+ * Если тип Т не является наследникм SerializableArray, то
+ * компилятор не сгенерирует для него функцию.
+ * @param json - массив JSON
+ * @return десериализованный из JSON-массива обект типа Т
+ */
+template<class T,
+         typename = typename std::enable_if<
+             std::is_base_of<SerializableArray, T>::value>
+         ::type>
+T makeWithJsonArray(const QJsonArray &json) {\
+    T object;
+    object.initWithJsonArray(json);
+    return object;
+}
+
+/**
+ * @brief Вспомогательная функция для десериализации QVariantList в объект типа Т.
+ * @param variantList - вариативный список
+ * @return десериализованный из QVariantList объект типа Т
+ */
+template<class T>
+T makeWithVariantList(const QVariantList &list) {
+    return makeWithJsonArray<T>(QJsonArray::fromVariantList(list));
+}
