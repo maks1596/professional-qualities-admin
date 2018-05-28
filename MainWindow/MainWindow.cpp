@@ -10,6 +10,8 @@
 #include "Modules/Tests/View/TestsForm.h"
 #include "Modules/PassedTests/Assembler/PassedTestsAssembler.h"
 #include "Modules/PassedTests/View/PassedTestsForm.h"
+#include "Modules/PassedTestStatistics/Assembler/PassedTestStatisticsAssembler.h"
+#include "Modules/PassedTestStatistics/View/PassedTestStatisticsForm.h"
 
 //  :: Constants ::
 
@@ -126,7 +128,8 @@ void MainWindow::onStatisticsButtonClicled() {
 }
 
 void MainWindow::pushTestStatisticsFormToStack(int passedTestId) {
-    showStatusMessage(QString("Выбран тест с ID = %1").arg(passedTestId));
+    auto testStatisticsForm = PassedTestStatisticsAssembler::assembly(passedTestId, this);
+    pushWidget(testStatisticsForm);
 }
 
 //  :: Private slots ::
