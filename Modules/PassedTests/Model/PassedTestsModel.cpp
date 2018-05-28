@@ -1,7 +1,6 @@
 #include "PassedTestsModel.h"
 
 #include <QTimer>
-#include <QDebug>
 
 #include "../Service/PassedTestsService.h"
 #include "Entities/PassedTestPreview/PassedTestPreview.h"

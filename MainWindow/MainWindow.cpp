@@ -15,6 +15,7 @@
 
 //  :: Constants ::
 
+const int MAIN_MENU_STACK_INDEX = 0;
 const int CLEAR_STATUS_BAR_TIMING = 5000;
 
 //  :: Lifecycle  ::
@@ -24,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->stackedWidget->setCurrentIndex(MAIN_MENU);
+    ui->stackedWidget->setCurrentIndex(MAIN_MENU_STACK_INDEX);
 
     connect(ui->usersBtn, &QCommandLinkButton::clicked,
             this, &MainWindow::onUsersBtnClicked);
@@ -49,7 +50,7 @@ void MainWindow::onUsersBtnClicked() {
     UsersForm *users = new UsersForm(this);
     connect(users, &UsersForm::toMainMenuBtnClicked,
             this, &MainWindow::onBackToMainMenu);
-    connect(users, SIGNAL(pushUserFormToStack(User)),
+    connect(users, SIGNAL(createUserForm(User)),
             this, SLOT(pushUserFormToStack(User)));
 	connect(users, &TestsForm::error,
 			this, &MainWindow::showStatusMessage);
@@ -65,9 +66,8 @@ void MainWindow::pushUserFormToStack(const User &user) {
 
 void MainWindow::onCancelUserEditing() {
     popWidget();
-    ui->stackedWidget->setCurrentIndex(ENTITIES_FORM);
     if(!ui->stackedWidget->currentWidget()) {
-	   ((UsersForm *)ui->stackedWidget->currentWidget())->startUpdating();
+       currentWidget<UsersForm>()->startUpdating();
     } else {
         onUsersBtnClicked();
     }
@@ -98,9 +98,8 @@ void MainWindow::pushTestFormToStack(const Test &test) {
 
 void MainWindow::onCancelTestEditing() {
     popWidget();
-    ui->stackedWidget->setCurrentIndex(ENTITIES_FORM);
     if(!ui->stackedWidget->currentWidget()) {
-	   ((TestsForm *)ui->stackedWidget->currentWidget())->startUpdating();
+       currentWidget<TestsForm>()->startUpdating();
     } else {
         onTestsBtnClicked();
     }
@@ -120,6 +119,8 @@ void MainWindow::onStatisticsButtonClicled() {
             this, &MainWindow::onBackToMainMenu);
     connect(passedTestsForm, &PassedTestsForm::passedTestSelected,
             this, &MainWindow::pushTestStatisticsFormToStack);
+    connect(passedTestsForm, &PassedTestsForm::passedTestSelected,
+            passedTestsForm, &PassedTestsForm::stopUpdating);
     connect(passedTestsForm, &PassedTestsForm::error,
             this, &MainWindow::showStatusMessage);
 
@@ -129,6 +130,12 @@ void MainWindow::onStatisticsButtonClicled() {
 
 void MainWindow::pushTestStatisticsFormToStack(int passedTestId) {
     auto testStatisticsForm = PassedTestStatisticsAssembler::assembly(passedTestId, this);
+
+    connect(testStatisticsForm, &PassedTestStatisticsForm::backButtonClicked,
+            this, &MainWindow::popWidget);
+    connect(testStatisticsForm, &PassedTestStatisticsForm::backButtonClicked,
+            currentWidget<PassedTestsForm>(), &PassedTestsForm::startUpdating);
+
     pushWidget(testStatisticsForm);
 }
 
@@ -148,7 +155,7 @@ void MainWindow::showCriticalMessage(const QString &error) {
 
 void MainWindow::onBackToMainMenu() {
     popWidget();
-    ui->stackedWidget->setCurrentIndex(MAIN_MENU);
+    ui->stackedWidget->setCurrentIndex(MAIN_MENU_STACK_INDEX);
 }
 
 void MainWindow::pushWidget(QWidget *newWidget) {
@@ -163,6 +170,11 @@ void MainWindow::popWidget() {
     ui->stackedWidget->removeWidget(curWidget);
     curWidget->deleteLater();
 	clearStatusBar();
+}
+
+template<class T>
+T *MainWindow::currentWidget() {
+    return dynamic_cast<T *>(ui->stackedWidget->currentWidget());
 }
 
 void MainWindow::clearStatusBar() {

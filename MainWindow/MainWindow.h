@@ -37,13 +37,10 @@ private slots:
 private:
     void pushWidget(QWidget *newWidget);
     void popWidget();
-	void clearStatusBar();
+    template<class T>
+    T *currentWidget();
 
-    enum StackIndex {
-        MAIN_MENU,
-		ENTITIES_FORM,
-        EDIT_FORM
-    };
+	void clearStatusBar();
 
     Ui::MainWindow *ui;
 };

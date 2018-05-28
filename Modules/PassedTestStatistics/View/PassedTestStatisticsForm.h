@@ -13,6 +13,9 @@ public:
     explicit PassedTestStatisticsForm(QWidget *parent = nullptr);
     ~PassedTestStatisticsForm();
 
+signals:
+    void backButtonClicked();
+
 private:
     Ui::PassedTestStatisticsForm *ui;
 };

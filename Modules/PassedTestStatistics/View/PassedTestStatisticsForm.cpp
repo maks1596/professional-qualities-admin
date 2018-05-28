@@ -6,6 +6,8 @@ PassedTestStatisticsForm::PassedTestStatisticsForm(QWidget *parent) :
     ui(new Ui::PassedTestStatisticsForm)
 {
     ui->setupUi(this);
+    connect(ui->backButton, &QPushButton::clicked,
+            this, &PassedTestStatisticsForm::backButtonClicked);
 }
 
 PassedTestStatisticsForm::~PassedTestStatisticsForm() {
