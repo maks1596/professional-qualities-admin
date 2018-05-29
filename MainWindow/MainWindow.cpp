@@ -10,8 +10,8 @@
 #include "Modules/Tests/View/TestsForm.h"
 #include "Modules/PassedTests/Assembler/PassedTestsAssembler.h"
 #include "Modules/PassedTests/View/PassedTestsForm.h"
-#include "Modules/PassedTestStatistics/Assembler/PassedTestStatisticsAssembler.h"
-#include "Modules/PassedTestStatistics/View/PassedTestStatisticsForm.h"
+#include "Modules/PassedTest/Assembler/PassedTestAssembler.h"
+#include "Modules/PassedTest/View/PassedTestForm.h"
 
 //  :: Constants ::
 
@@ -129,11 +129,11 @@ void MainWindow::onStatisticsButtonClicled() {
 }
 
 void MainWindow::pushTestStatisticsFormToStack(const PassedTest &passedTest) {
-    auto testStatisticsForm = PassedTestStatisticsAssembler::assembly(passedTest, this);
+    auto testStatisticsForm = PassedTestAssembler::assembly(passedTest, this);
 
-    connect(testStatisticsForm, &PassedTestStatisticsForm::backButtonClicked,
+    connect(testStatisticsForm, &PassedTestForm::backButtonClicked,
             this, &MainWindow::popWidget);
-    connect(testStatisticsForm, &PassedTestStatisticsForm::backButtonClicked,
+    connect(testStatisticsForm, &PassedTestForm::backButtonClicked,
             currentWidget<PassedTestsForm>(), &PassedTestsForm::startUpdating);
 
     pushWidget(testStatisticsForm);
