@@ -14,6 +14,10 @@ PassedTestsForm *PassedTestsAssembler::assembly(QWidget *parent) {
 
     QObject::connect(service, &PassedTestsService::error,
                      view, &PassedTestsForm::error);
+    QObject::connect(view, SIGNAL(passedTestSelected(int)),
+                     service, SLOT(getPassedTest(int)));
+    QObject::connect(service, SIGNAL(passedTestGot(PassedTest)),
+                     view, SIGNAL(passedTestSelected(PassedTest)));
 
     return view;
 }

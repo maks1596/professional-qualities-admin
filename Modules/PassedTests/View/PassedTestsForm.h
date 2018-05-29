@@ -6,6 +6,7 @@ namespace Ui {
 class PassedTestsForm;
 }
 
+class PassedTest;
 class PassedTestsModel;
 
 class PassedTestsForm : public QWidget {
@@ -25,6 +26,7 @@ public slots:
 signals:
     void backButtonClicked();
     void passedTestSelected(int id);
+    void passedTestSelected(const PassedTest &passedTest);
     void error(const QString &errorMessage);
 
 private slots:

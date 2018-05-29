@@ -9,6 +9,8 @@ namespace Ui {
 class MainWindow;
 }
 
+class PassedTest;
+
 class MainWindow : public QMainWindow {
 Q_OBJECT
 
@@ -29,7 +31,7 @@ private slots:
     void onCancelTestEditing();
     void onTestRead(const Test &test);
 
-    void pushTestStatisticsFormToStack(int passedTestId);
+    void pushTestStatisticsFormToStack(const PassedTest &passedTest);
 
     void showCriticalMessage(const QString &error);
     void showStatusMessage(const QString &message);

@@ -117,10 +117,10 @@ void MainWindow::onStatisticsButtonClicled() {
 
     connect(passedTestsForm, &PassedTestsForm::backButtonClicked,
             this, &MainWindow::onBackToMainMenu);
-    connect(passedTestsForm, &PassedTestsForm::passedTestSelected,
-            this, &MainWindow::pushTestStatisticsFormToStack);
-    connect(passedTestsForm, &PassedTestsForm::passedTestSelected,
-            passedTestsForm, &PassedTestsForm::stopUpdating);
+    connect(passedTestsForm, SIGNAL(passedTestSelected(PassedTest)),
+            SLOT(pushTestStatisticsFormToStack(PassedTest)));
+    connect(passedTestsForm, SIGNAL(passedTestSelected(PassedTest)),
+            passedTestsForm, SLOT(stopUpdating()));
     connect(passedTestsForm, &PassedTestsForm::error,
             this, &MainWindow::showStatusMessage);
 
@@ -128,8 +128,8 @@ void MainWindow::onStatisticsButtonClicled() {
     passedTestsForm->startUpdating();
 }
 
-void MainWindow::pushTestStatisticsFormToStack(int passedTestId) {
-    auto testStatisticsForm = PassedTestStatisticsAssembler::assembly(passedTestId, this);
+void MainWindow::pushTestStatisticsFormToStack(const PassedTest &passedTest) {
+    auto testStatisticsForm = PassedTestStatisticsAssembler::assembly(passedTest, this);
 
     connect(testStatisticsForm, &PassedTestStatisticsForm::backButtonClicked,
             this, &MainWindow::popWidget);
