@@ -90,7 +90,8 @@ SOURCES += main.cpp\
     Entities/Statistics/ResultStatistics/ResultStatistics.cpp \
     Entities/Statistics/GroupResults/GroupResults.cpp \
     Entities/Statistics/IndicatorGroup/IndicatorGroup.cpp \
-    Entities/Statistics/Indicator/Indicator.cpp
+    Entities/Statistics/Indicator/Indicator.cpp \
+    Modules/PassedTest/Model/PassedTestModel.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -163,7 +164,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/Statistics/ResultStatistics/ResultStatistics.h \
     Entities/Statistics/GroupResults/GroupResults.h \
     Entities/Statistics/IndicatorGroup/IndicatorGroup.h \
-    Entities/Statistics/Indicator/Indicator.h
+    Entities/Statistics/Indicator/Indicator.h \
+    Modules/PassedTest/Model/PassedTestModel.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
