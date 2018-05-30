@@ -6,8 +6,7 @@
 
 const QString ID_JSON_KEY = "id";
 const QString NAME_JSON_KEY = "name";
-const QString PROGRAMMERS_RESULTS_JSON_KEY = "programmersResults";
-const QString NON_PROGRAMMERS_RESULTS_JSON_KEY = "nonProgrammersResults";
+const QString GROUPS_RESULTS_JSON_KEY = "groupsResults";
 
 //  :: Serializable ::
 
@@ -16,10 +15,8 @@ QJsonObject ScaleStatistics::toJson() const {
 
     json[ID_JSON_KEY] = getId();
     json[NAME_JSON_KEY] = getName();
-    json[PROGRAMMERS_RESULTS_JSON_KEY] =
-            jsonArrayFromSerializableObjects(getProgrammersResults());
-    json[NON_PROGRAMMERS_RESULTS_JSON_KEY] =
-            jsonArrayFromSerializableObjects(getNonProgrammersResults());
+    json[GROUPS_RESULTS_JSON_KEY] =
+            jsonArrayFromSerializableObjects(getGroupsResults());
 
     return json;
 }
@@ -31,19 +28,10 @@ void ScaleStatistics::initWithJsonObject(const QJsonObject &json) {
     if (json.contains(NAME_JSON_KEY) && json[NAME_JSON_KEY].isString()) {
         setName(json[NAME_JSON_KEY].toString());
     }
-    if (json.contains(PROGRAMMERS_RESULTS_JSON_KEY) &&
-            json[PROGRAMMERS_RESULTS_JSON_KEY].isArray()) {
-        auto jsonArray = json[PROGRAMMERS_RESULTS_JSON_KEY].toArray();
-        setProgrammersResults(
-                    serializableObjectsFromJsonArray<QList, ResultStatistics>(jsonArray)
-                    );
-    }
-    if (json.contains(NON_PROGRAMMERS_RESULTS_JSON_KEY) &&
-            json[NON_PROGRAMMERS_RESULTS_JSON_KEY].isArray()) {
-        auto jsonArray = json[NON_PROGRAMMERS_RESULTS_JSON_KEY].toArray();
-        setNonProgrammersResults(
-                    serializableObjectsFromJsonArray<QList, ResultStatistics>(jsonArray)
-                    );
+    if (json.contains(GROUPS_RESULTS_JSON_KEY) &&
+            json[GROUPS_RESULTS_JSON_KEY].isArray()) {
+        auto jsonArray = json[GROUPS_RESULTS_JSON_KEY].toArray();
+        setGroupsResults(serializableObjectsFromJsonArray<QList, GroupResults>(jsonArray));
     }
 }
 
@@ -64,22 +52,10 @@ void ScaleStatistics::setName(const QString &name) {
     m_name = name;
 }
 
-//  :: Programmers results ::
-QList<ResultStatistics> ScaleStatistics::getProgrammersResults() const {
-    return m_programmersResults;
+//  :: Groups results ::
+QList<GroupResults> ScaleStatistics::getGroupsResults() const {
+    return m_groupsResults;
 }
-void ScaleStatistics::setProgrammersResults(
-        const QList<ResultStatistics> &programmersResults
-        ) {
-    m_programmersResults = programmersResults;
-}
-
-//  :: Non programmers results ::
-QList<ResultStatistics> ScaleStatistics::getNonProgrammersResults() const {
-    return m_nonProgrammersResults;
-}
-void ScaleStatistics::setNonProgrammersResults(
-        const QList<ResultStatistics> &nonProgrammersResults
-        ) {
-    m_nonProgrammersResults = nonProgrammersResults;
+void ScaleStatistics::setGroupsResults(const QList<GroupResults> &groupsResults) {
+    m_groupsResults = groupsResults;
 }

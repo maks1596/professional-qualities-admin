@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../GroupResults/GroupResults.h"
 #include "../ResultStatistics/ResultStatistics.h"
 #include "Serializable/Object/SerializableObject.h"
 
@@ -17,15 +18,11 @@ public:
     QString getName() const;
     void setName(const QString &name);
 
-    QList<ResultStatistics> getProgrammersResults() const;
-    void setProgrammersResults(const QList<ResultStatistics> &programmersResults);
-
-    QList<ResultStatistics> getNonProgrammersResults() const;
-    void setNonProgrammersResults(const QList<ResultStatistics> &nonProgrammersResults);
+    QList<GroupResults> getGroupsResults() const;
+    void setGroupsResults(const QList<GroupResults> &groupsResults);
 
 private:
     int m_id;
     QString m_name;
-    QList<ResultStatistics> m_programmersResults;
-    QList<ResultStatistics> m_nonProgrammersResults;
+    QList<GroupResults> m_groupsResults;
 };

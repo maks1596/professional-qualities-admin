@@ -87,7 +87,8 @@ SOURCES += main.cpp\
     Modules/PassedTest/Assembler/PassedTestAssembler.cpp \
     Entities/Statistics/PassedTest/PassedTest.cpp \
     Entities/Statistics/ScaleStatistics/ScaleStatistics.cpp \
-    Entities/Statistics/ResultStatistics/ResultStatistics.cpp
+    Entities/Statistics/ResultStatistics/ResultStatistics.cpp \
+    Entities/Statistics/GroupResults/GroupResults.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -157,7 +158,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/Statistics/PassedTest/PassedTest.h \
     Entities/Statistics/ScaleStatistics/ScaleStatistics.h \
     JsonArraySerialization.h \
-    Entities/Statistics/ResultStatistics/ResultStatistics.h
+    Entities/Statistics/ResultStatistics/ResultStatistics.h \
+    Entities/Statistics/GroupResults/GroupResults.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
