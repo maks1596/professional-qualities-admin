@@ -10,6 +10,7 @@ class MainWindow;
 }
 
 class PassedTest;
+class ScaleStatistics;
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
@@ -32,6 +33,7 @@ private slots:
     void onTestRead(const Test &test);
 
     void pushTestStatisticsFormToStack(const PassedTest &passedTest);
+    void pushScaleStatisticsFormToStack(const ScaleStatistics &scaleStatistics);
 
     void showCriticalMessage(const QString &error);
     void showStatusMessage(const QString &message);

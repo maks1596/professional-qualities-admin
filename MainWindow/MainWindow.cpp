@@ -1,17 +1,22 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#include <QFileDialog>
 #include <QMessageBox>
 
 #include "Forms/UserForm/UserForm.h"
 #include "Modules/Users/View/UsersForm.h"
+
 #include "Modules/TestEditing/View/TestEditingForm.h"
 #include "Modules/Tests/View/TestsForm.h"
+
 #include "Modules/PassedTests/Assembler/PassedTestsAssembler.h"
 #include "Modules/PassedTests/View/PassedTestsForm.h"
+
 #include "Modules/PassedTest/Assembler/PassedTestAssembler.h"
 #include "Modules/PassedTest/View/PassedTestForm.h"
+
+#include "Modules/ScaleStatistics/Assembler/ScaleStatisticsAssembler.h"
+#include "Modules/ScaleStatistics/View/ScaleStatisticsForm.h"
 
 //  :: Constants ::
 
@@ -135,8 +140,19 @@ void MainWindow::pushTestStatisticsFormToStack(const PassedTest &passedTest) {
             this, &MainWindow::popWidget);
     connect(testStatisticsForm, &PassedTestForm::backButtonClicked,
             currentWidget<PassedTestsForm>(), &PassedTestsForm::startUpdating);
+    connect(testStatisticsForm, &PassedTestForm::scaleSelected,
+            this, &MainWindow::pushScaleStatisticsFormToStack);
 
     pushWidget(testStatisticsForm);
+}
+
+void MainWindow::pushScaleStatisticsFormToStack(const ScaleStatistics &scaleStatistics) {
+    auto scaleStatisticsForm = ScaleStatisticsAssembler::assembly(scaleStatistics, this);
+
+    connect(scaleStatisticsForm, &ScaleStatisticsForm::backButtonClicked,
+            this, &MainWindow::popWidget);
+
+    pushWidget(scaleStatisticsForm);
 }
 
 //  :: Private slots ::
