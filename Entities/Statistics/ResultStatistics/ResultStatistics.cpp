@@ -1,12 +1,13 @@
 #include "ResultStatistics.h"
 
+#include "JsonArraySerialization.h"
+
 //  :: Constants ::
 
 const QString FORMULATION_JSON_KEY = "formulation";
 const QString TIMES_JSON_KEY = "times";
 const QString FREQUENCY_JSON_KEY = "frequency";
-const QString EXPECTED_POINTS_JSON_KEY = "expectedPoints";
-const QString VARIANCE_JSON_KEY = "variance";
+const QString INDICATOR_GROUPS_JSON_KEY = "indicatorGroups";
 
 //  :: Serializable ::
 
@@ -16,8 +17,8 @@ QJsonObject ResultStatistics::toJson() const {
     json[FORMULATION_JSON_KEY] = getFormulation();
     json[TIMES_JSON_KEY] = static_cast<int>(getTimes());
     json[FREQUENCY_JSON_KEY] = getFrequency();
-    json[EXPECTED_POINTS_JSON_KEY] = getExpectedPoints();
-    json[VARIANCE_JSON_KEY] = getVariance();
+    json[INDICATOR_GROUPS_JSON_KEY] =
+            jsonArrayFromSerializableObjects(getIndicatorGroups());
 
     return json;
 }
@@ -32,11 +33,10 @@ void ResultStatistics::initWithJsonObject(const QJsonObject &json) {
     if (json.contains(FREQUENCY_JSON_KEY) && json[FREQUENCY_JSON_KEY].isDouble()) {
         setFrequency(json[FREQUENCY_JSON_KEY].toDouble());
     }
-    if (json.contains(EXPECTED_POINTS_JSON_KEY) && json[EXPECTED_POINTS_JSON_KEY].isDouble()) {
-        setExpectedPoints(json[EXPECTED_POINTS_JSON_KEY].toDouble());
-    }
-    if (json.contains(VARIANCE_JSON_KEY) && json[VARIANCE_JSON_KEY].isDouble()) {
-        setVariance(json[VARIANCE_JSON_KEY].toDouble());
+    if (json.contains(INDICATOR_GROUPS_JSON_KEY) &&
+            json[INDICATOR_GROUPS_JSON_KEY].isArray()) {
+        auto jsonArray = json[INDICATOR_GROUPS_JSON_KEY].toArray();
+        setIndicatorGroups(serializableObjectsFromJsonArray<QList, IndicatorGroup>(jsonArray));
     }
 }
 
@@ -64,19 +64,10 @@ double ResultStatistics::getFrequency() const {
 void ResultStatistics::setFrequency(double frequency) {
     m_frequency = frequency;
 }
-
-//  :: Expected points ::
-double ResultStatistics::getExpectedPoints() const {
-    return m_expectedPoints;
+//  :: Indicator groups ::
+QList<IndicatorGroup> ResultStatistics::getIndicatorGroups() const {
+    return m_indicatorGroups;
 }
-void ResultStatistics::setExpectedPoints(double expectedPoints) {
-    m_expectedPoints = expectedPoints;
-}
-
-//  :: Variance ::
-double ResultStatistics::getVariance() const {
-    return m_variance;
-}
-void ResultStatistics::setVariance(double variance) {
-    m_variance = variance;
+void ResultStatistics::setIndicatorGroups(const QList<IndicatorGroup> &indicatorGroups) {
+    m_indicatorGroups = indicatorGroups;
 }

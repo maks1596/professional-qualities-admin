@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Entities/Statistics/IndicatorGroup/IndicatorGroup.h"
 #include "Serializable/Object/SerializableObject.h"
 
 class ResultStatistics : public SerializableObject {
@@ -19,16 +20,12 @@ public:
     double getFrequency() const;
     void setFrequency(double frequency);
 
-    double getExpectedPoints() const;
-    void setExpectedPoints(double expectedPoints);
-
-    double getVariance() const;
-    void setVariance(double variance);
+    QList<IndicatorGroup> getIndicatorGroups() const;
+    void setIndicatorGroups(const QList<IndicatorGroup> &indicatorGroups);
 
 private:
     QString m_formulation;
     uint m_times;
     double m_frequency;
-    double m_expectedPoints;
-    double m_variance;
+    QList<IndicatorGroup> m_indicatorGroups;
 };

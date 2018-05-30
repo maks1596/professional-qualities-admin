@@ -5,14 +5,14 @@
 //  :: Constants ::
 
 const QString GROUP_NAME_JSON_KEY = "groupName";
-const QString RESULTS_JSON_KEY = "results";
+const QString VALUE_JSON_KEY = "results";
 
 //  :: Serilizable ::
 
 QJsonObject GroupResults::toJson() const {
     QJsonObject json;
     json[GROUP_NAME_JSON_KEY] = getGroupName();
-    json[RESULTS_JSON_KEY] = jsonArrayFromSerializableObjects(getResults());
+    json[VALUE_JSON_KEY] = jsonArrayFromSerializableObjects(getResults());
     return json;
 }
 
@@ -20,8 +20,8 @@ void GroupResults::initWithJsonObject(const QJsonObject &json) {
     if (json.contains(GROUP_NAME_JSON_KEY) && json[GROUP_NAME_JSON_KEY].isString()) {
         setGroupName(json[GROUP_NAME_JSON_KEY].toString());
     }
-    if (json.contains(RESULTS_JSON_KEY) && json[RESULTS_JSON_KEY].isArray()) {
-        auto jsonArray = json[RESULTS_JSON_KEY].toArray();
+    if (json.contains(VALUE_JSON_KEY) && json[VALUE_JSON_KEY].isArray()) {
+        auto jsonArray = json[VALUE_JSON_KEY].toArray();
         setResults(serializableObjectsFromJsonArray<QList, ResultStatistics>(jsonArray));
     }
 }
