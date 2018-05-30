@@ -93,7 +93,8 @@ SOURCES += main.cpp\
     Entities/Statistics/Indicator/Indicator.cpp \
     Modules/PassedTest/Model/PassedTestModel.cpp \
     Modules/ScaleStatistics/View/ScaleStatisticsForm.cpp \
-    Modules/ScaleStatistics/Assembler/ScaleStatisticsAssembler.cpp
+    Modules/ScaleStatistics/Assembler/ScaleStatisticsAssembler.cpp \
+    Modules/ScaleStatistics/Model/ScaleStatisticsModel.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -169,7 +170,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/Statistics/Indicator/Indicator.h \
     Modules/PassedTest/Model/PassedTestModel.h \
     Modules/ScaleStatistics/View/ScaleStatisticsForm.h \
-    Modules/ScaleStatistics/Assembler/ScaleStatisticsAssembler.h
+    Modules/ScaleStatistics/Assembler/ScaleStatisticsAssembler.h \
+    Modules/ScaleStatistics/Model/ScaleStatisticsModel.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \

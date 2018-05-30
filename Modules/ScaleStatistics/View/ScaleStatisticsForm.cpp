@@ -1,6 +1,8 @@
 #include "ScaleStatisticsForm.h"
 #include "ui_ScaleStatisticsForm.h"
 
+#include "../Model/ScaleStatisticsModel.h"
+
 //  :: Lifecycle ::
 
 ScaleStatisticsForm::ScaleStatisticsForm(QWidget *parent) :
@@ -15,4 +17,29 @@ ScaleStatisticsForm::ScaleStatisticsForm(QWidget *parent) :
 
 ScaleStatisticsForm::~ScaleStatisticsForm() {
     delete ui;
+}
+
+//  :: Public accessors ::
+
+ScaleStatisticsModel *ScaleStatisticsForm::getModel() const {
+    return m_model;
+}
+void ScaleStatisticsForm::setModel(ScaleStatisticsModel *model) {
+    m_model = model;
+
+    ui->scaleNameLabel->setText(model->getScaleName());
+    updateGroupsResultsTabs();
+}
+
+//  :: Private methods ::
+
+inline
+void ScaleStatisticsForm::updateGroupsResultsTabs() {
+    ui->groupsTabWidget->clear();
+    uint numberOfGroups = getModel()->getNumberOfGroups();
+
+    for (uint groupIndex = 0; groupIndex < numberOfGroups; ++groupIndex) {
+        auto groupName = getModel()->getNameOfGroup(groupIndex);
+        ui->groupsTabWidget->addTab(new QLabel(groupName, this), groupName);
+    }
 }
