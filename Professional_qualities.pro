@@ -91,7 +91,8 @@ SOURCES += main.cpp\
     Entities/Statistics/GroupResults/GroupResults.cpp \
     Entities/Statistics/IndicatorGroup/IndicatorGroup.cpp \
     Entities/Statistics/Indicator/Indicator.cpp \
-    Modules/PassedTest/Model/PassedTestModel.cpp
+    Modules/PassedTest/Model/PassedTestModel.cpp \
+    Modules/ScaleStatistics/View/ScaleStatisticsForm.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -165,7 +166,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/Statistics/GroupResults/GroupResults.h \
     Entities/Statistics/IndicatorGroup/IndicatorGroup.h \
     Entities/Statistics/Indicator/Indicator.h \
-    Modules/PassedTest/Model/PassedTestModel.h
+    Modules/PassedTest/Model/PassedTestModel.h \
+    Modules/ScaleStatistics/View/ScaleStatisticsForm.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
@@ -183,7 +185,8 @@ FORMS    += MainWindow/MainWindow.ui \
     Forms/UserForm/UserForm.ui \
     Forms/EntitiesForm/EntitiesForm.ui \
     Modules/PassedTests/View/PassedTestsForm.ui \
-    Modules/PassedTest/View/PassedTestForm.ui
+    Modules/PassedTest/View/PassedTestForm.ui \
+    Modules/ScaleStatistics/View/ScaleStatisticsForm.ui
 
 # Для статической сборки
 QMAKE_LFLAGS_RELEASE += -static -static-libgcc
