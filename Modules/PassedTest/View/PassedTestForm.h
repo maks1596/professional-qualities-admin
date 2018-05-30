@@ -6,6 +6,7 @@ namespace Ui {
 class PassedTestForm;
 }
 class PassedTestModel;
+class ScaleStatistics;
 
 class PassedTestForm : public QWidget {
     Q_OBJECT
@@ -19,9 +20,13 @@ public:
 
 signals:
     void backButtonClicked();
+    void scaleSelected(const ScaleStatistics &scaleStatistics);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
+
+private slots:
+    void onScaleDoubleClicked(const QModelIndex &index);
 
 private:
     void updatePassedTestName();

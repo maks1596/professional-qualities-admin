@@ -16,6 +16,8 @@ PassedTestForm::PassedTestForm(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->backButton, &QPushButton::clicked,
             this, &PassedTestForm::backButtonClicked);
+    connect(ui->scalesListView, &QListView::doubleClicked,
+            this, &PassedTestForm::onScaleDoubleClicked);
 }
 
 PassedTestForm::~PassedTestForm() {
@@ -40,6 +42,15 @@ void PassedTestForm::setModel(PassedTestModel *model) {
 void PassedTestForm::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
     updatePassedTestName();
+}
+
+//  :: Private slots ::
+
+void PassedTestForm::onScaleDoubleClicked(const QModelIndex &index) {
+    auto scaleStatistics = getModel()->getScaleStatistics(index);
+    if (scaleStatistics.getId() > 0) {
+        emit scaleSelected(scaleStatistics);
+    }
 }
 
 //  :: Private methods ::

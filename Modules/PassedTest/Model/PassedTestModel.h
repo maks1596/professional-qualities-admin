@@ -21,6 +21,8 @@ public:
     QString getPassedTestName() const;
     uint getNumberOfPasses() const;
 
+    ScaleStatistics getScaleStatistics(const QModelIndex &index) const;
+
 private:
     PassedTest m_passedTest;
 };

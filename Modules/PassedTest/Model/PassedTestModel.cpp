@@ -39,3 +39,13 @@ QString PassedTestModel::getPassedTestName() const {
 uint PassedTestModel::getNumberOfPasses() const {
     return getPassedTest().getNumberOfPasses();
 }
+
+ScaleStatistics PassedTestModel::getScaleStatistics(const QModelIndex &index) const {
+    if (index.isValid()) {
+        auto scales = getPassedTest().getScales();
+        if (index.row() < scales.size()) {
+            return scales.at(index.row());
+        }
+    }
+    return ScaleStatistics();
+}
