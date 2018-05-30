@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entities/ResultStatistics/ResultStatistics.h"
+#include "../ResultStatistics/ResultStatistics.h"
 #include "Serializable/Object/SerializableObject.h"
 
 class ScaleStatistics : public SerializableObject {

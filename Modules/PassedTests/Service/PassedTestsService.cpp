@@ -3,8 +3,8 @@
 #include <QJsonArray>
 #include <QJsonValue>
 
-#include "Entities/PassedTest/PassedTest.h"
-#include "Entities/PassedTestPreview/PassedTestPreview.h"
+#include "Entities/Statistics/PassedTest/PassedTest.h"
+#include "Entities/Statistics/PassedTestPreview/PassedTestPreview.h"
 #include "Requester/Requester.h"
 #include "JsonArraySerialization.h"
 

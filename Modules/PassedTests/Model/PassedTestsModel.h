@@ -2,7 +2,7 @@
 
 #include <QAbstractTableModel>
 
-#include "Entities/PassedTestPreview/PassedTestPreview.h"
+#include "Entities/Statistics/PassedTestPreview/PassedTestPreview.h"
 
 class QTimer;
 class PassedTestPreview;

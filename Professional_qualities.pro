@@ -79,15 +79,15 @@ SOURCES += main.cpp\
     Entities/AutorizationData/AutorizationData.cpp \
     Modules/PassedTests/View/PassedTestsForm.cpp \
     Modules/PassedTests/Model/PassedTestsModel.cpp \
-    Entities/PassedTestPreview/PassedTestPreview.cpp \
+    Entities/Statistics/PassedTestPreview/PassedTestPreview.cpp \
     Modules/PassedTests/Service/PassedTestsService.cpp \
     BaseService/BaseService.cpp \
     Modules/PassedTests/Assembler/PassedTestsAssembler.cpp \
     Modules/PassedTest/View/PassedTestForm.cpp \
     Modules/PassedTest/Assembler/PassedTestAssembler.cpp \
-    Entities/PassedTest/PassedTest.cpp \
-    Entities/ScaleStatistics/ScaleStatistics.cpp \
-    Entities/ResultStatistics/ResultStatistics.cpp
+    Entities/Statistics/PassedTest/PassedTest.cpp \
+    Entities/Statistics/ScaleStatistics/ScaleStatistics.cpp \
+    Entities/Statistics/ResultStatistics/ResultStatistics.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -147,17 +147,17 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/AutorizationData/AutorizationData.h \
     Modules/PassedTests/View/PassedTestsForm.h \
     Modules/PassedTests/Model/PassedTestsModel.h \
-    Entities/PassedTestPreview/PassedTestPreview.h \
+    Entities/Statistics/PassedTestPreview/PassedTestPreview.h \
     Modules/PassedTests/Service/PassedTestsService.h \
     BaseService/BaseService.h \
     Modules/PassedTests/Model/PassedTestsColumnIndex.h \
     Modules/PassedTests/Assembler/PassedTestsAssembler.h \
     Modules/PassedTest/View/PassedTestForm.h \
     Modules/PassedTest/Assembler/PassedTestAssembler.h \
-    Entities/PassedTest/PassedTest.h \
-    Entities/ScaleStatistics/ScaleStatistics.h \
+    Entities/Statistics/PassedTest/PassedTest.h \
+    Entities/Statistics/ScaleStatistics/ScaleStatistics.h \
     JsonArraySerialization.h \
-    Entities/ResultStatistics/ResultStatistics.h
+    Entities/Statistics/ResultStatistics/ResultStatistics.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \

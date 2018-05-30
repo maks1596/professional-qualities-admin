@@ -3,7 +3,7 @@
 #include <QTimer>
 
 #include "../Service/PassedTestsService.h"
-#include "Entities/PassedTestPreview/PassedTestPreview.h"
+#include "Entities/Statistics/PassedTestPreview/PassedTestPreview.h"
 #include "PassedTestsColumnIndex.h"
 
 using namespace PassedTests;
