@@ -1,7 +1,10 @@
 #include "ScaleStatisticsForm.h"
 #include "ui_ScaleStatisticsForm.h"
 
+#include <QTreeView>
+
 #include "../Model/ScaleStatisticsModel.h"
+#include "Modules/GroupResults/Assembler/GroupResultsAssembler.h"
 
 //  :: Lifecycle ::
 
@@ -40,6 +43,8 @@ void ScaleStatisticsForm::updateGroupsResultsTabs() {
 
     for (uint groupIndex = 0; groupIndex < numberOfGroups; ++groupIndex) {
         auto groupName = getModel()->getNameOfGroup(groupIndex);
-        ui->groupsTabWidget->addTab(new QLabel(groupName, this), groupName);
+        auto groupResults = getModel()->getGroupResults(groupIndex);
+        auto groupView = GroupResultsAssembler::assembly(groupResults, this);
+        ui->groupsTabWidget->addTab(groupView, groupName);
     }
 }

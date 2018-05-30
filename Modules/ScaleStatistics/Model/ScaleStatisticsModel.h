@@ -17,6 +17,7 @@ public:
     QString getScaleName() const;
     uint getNumberOfGroups() const;
     QString getNameOfGroup(uint groupIndex) const;
+    GroupResults getGroupResults(uint groupIndex) const;
 
 private:
     ScaleStatistics m_scaleStatistics;

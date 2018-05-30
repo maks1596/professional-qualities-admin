@@ -30,7 +30,14 @@ uint ScaleStatisticsModel::getNumberOfGroups() const {
 
 QString ScaleStatisticsModel::getNameOfGroup(uint groupIndex) const {
     if (groupIndex < getNumberOfGroups()) {
-        return getScaleStatistics().getGroupsResults().at(groupIndex).getGroupName();
+        return getGroupResults(groupIndex).getGroupName();
     }
     return QString();
+}
+
+GroupResults ScaleStatisticsModel::getGroupResults(uint groupIndex) const {
+    if (groupIndex < getNumberOfGroups()) {
+        return getScaleStatistics().getGroupsResults().at(groupIndex);
+    }
+    return GroupResults();
 }
