@@ -95,7 +95,8 @@ SOURCES += main.cpp\
     Modules/ScaleStatistics/View/ScaleStatisticsForm.cpp \
     Modules/ScaleStatistics/Assembler/ScaleStatisticsAssembler.cpp \
     Modules/ScaleStatistics/Model/ScaleStatisticsModel.cpp \
-    Modules/GroupResults/Model/GroupResultsModel.cpp
+    Modules/GroupResults/Model/GroupResultsModel.cpp \
+    Modules/GroupResults/Assembler/GroupResultsAssembler.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -174,7 +175,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/ScaleStatistics/Assembler/ScaleStatisticsAssembler.h \
     Modules/ScaleStatistics/Model/ScaleStatisticsModel.h \
     Modules/GroupResults/Model/GroupResultsModel.h \
-    Tree.h
+    Tree.h \
+    Modules/GroupResults/Assembler/GroupResultsAssembler.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
