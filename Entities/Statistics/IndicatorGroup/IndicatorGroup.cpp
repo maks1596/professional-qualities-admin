@@ -1,6 +1,7 @@
 #include "IndicatorGroup.h"
 
 #include "JsonArraySerialization.h"
+#include "Tree.h"
 
 //  :: Constants ::
 
@@ -41,4 +42,22 @@ QList<Indicator> IndicatorGroup::getIndicators() const {
 }
 void IndicatorGroup::setIndicators(const QList<Indicator> &indicators) {
     m_indicators = indicators;
+}
+
+//  :: Public methods ::
+
+Tree::Node<Indicator> IndicatorGroup::toTreeNode(Tree::Node<Indicator> *parent) const {
+    Tree::Node<Indicator> treeNode;
+    treeNode.data.setName(getName());
+    treeNode.parent = parent;
+    treeNode.children = indicatorsToTreeNodes(&treeNode);
+    return treeNode;
+}
+
+Tree::Nodes<Indicator> IndicatorGroup::indicatorsToTreeNodes(Tree::Node<Indicator> *parent) const {
+    Tree::Nodes<Indicator> nodes;
+    for (const auto &indicator : getIndicators()) {
+        nodes.append(indicator.toTreeNode(parent));
+    }
+    return nodes;
 }

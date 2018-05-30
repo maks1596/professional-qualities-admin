@@ -2,6 +2,7 @@
 
 #include "Entities/Statistics/IndicatorGroup/IndicatorGroup.h"
 #include "Serializable/Object/SerializableObject.h"
+#include "Tree.h"
 
 class ResultStatistics : public SerializableObject {
 public:
@@ -20,8 +21,11 @@ public:
     double getFrequency() const;
     void setFrequency(double frequency);
 
-    QList<IndicatorGroup> getIndicatorGroups() const;
+    const QList<IndicatorGroup> &getIndicatorGroups() const;
     void setIndicatorGroups(const QList<IndicatorGroup> &indicatorGroups);
+
+    Tree::Node<Indicator> toTreeNode() const;
+    Tree::Nodes<Indicator> indicatorGroupsToNodes(Tree::Node<Indicator> *parent) const;
 
 private:
     QString m_formulation;

@@ -1,6 +1,7 @@
 #include "ResultStatistics.h"
 
 #include "JsonArraySerialization.h"
+#include "Tree.h"
 
 //  :: Constants ::
 
@@ -65,9 +66,24 @@ void ResultStatistics::setFrequency(double frequency) {
     m_frequency = frequency;
 }
 //  :: Indicator groups ::
-QList<IndicatorGroup> ResultStatistics::getIndicatorGroups() const {
+const QList<IndicatorGroup> &ResultStatistics::getIndicatorGroups() const {
     return m_indicatorGroups;
 }
 void ResultStatistics::setIndicatorGroups(const QList<IndicatorGroup> &indicatorGroups) {
     m_indicatorGroups = indicatorGroups;
+}
+
+Tree::Node<Indicator> ResultStatistics::toTreeNode() const {
+    Tree::Node<Indicator> node;
+    node.data.setName(getFormulation());
+    node.children = indicatorGroupsToNodes(&node);
+    return node;
+}
+
+Tree::Nodes<Indicator> ResultStatistics::indicatorGroupsToNodes(Tree::Node<Indicator> *parent) const {
+    Tree::Nodes<Indicator> nodes;
+    for (const auto &indicatorGroup : getIndicatorGroups()) {
+        nodes.append(indicatorGroup.toTreeNode(parent));
+    }
+    return nodes;
 }

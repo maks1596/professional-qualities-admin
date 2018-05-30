@@ -1,6 +1,7 @@
 #include "GroupResults.h"
 
 #include "JsonArraySerialization.h"
+#include "Tree.h"
 
 //  :: Constants ::
 
@@ -41,4 +42,14 @@ QList<ResultStatistics> GroupResults::getResults() const {
 }
 void GroupResults::setResults(const QList<ResultStatistics> &results) {
     m_results = results;
+}
+
+Tree::Nodes<Indicator> GroupResults::resultsToTreeNodes() const {
+    Tree::Nodes<Indicator> nodes;
+
+    for (const auto &result : getResults()) {
+        nodes.append(result.toTreeNode());
+    }
+
+    return nodes;
 }

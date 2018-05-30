@@ -2,6 +2,7 @@
 
 #include "../Indicator/Indicator.h"
 #include "Serializable/Object/SerializableObject.h"
+#include "Tree.h"
 
 class IndicatorGroup : public SerializableObject {
 public:
@@ -16,6 +17,9 @@ public:
 
     QList<Indicator> getIndicators() const;
     void setIndicators(const QList<Indicator> &indicators);
+
+    Tree::Node<Indicator> toTreeNode(Tree::Node<Indicator> *parent) const;
+    Tree::Nodes<Indicator> indicatorsToTreeNodes(Tree::Node<Indicator> *parent) const;
 
 private:
     QString m_name;
