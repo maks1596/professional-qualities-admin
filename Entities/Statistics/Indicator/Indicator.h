@@ -21,7 +21,7 @@ public:
 
 private:
     QString m_name;
-    double m_value;
+    double m_value = 0.0;
 };
 
 bool operator==(const Indicator &lhs, const Indicator &rhs);
