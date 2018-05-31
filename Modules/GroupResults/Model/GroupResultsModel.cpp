@@ -12,7 +12,6 @@ using TreeNodePtrs = Tree::NodePtrs<Indicator>;
 //  :: Constants ::
 
 const QStringList kHorizontalHeaders {
-    "",
     "Название",
     "Значение"
 };
