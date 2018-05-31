@@ -8,7 +8,7 @@
 class GroupResults;
 class Indicator;
 
-class GroupResultsModel : public QAbstractTableModel {
+class GroupResultsModel : public QAbstractItemModel {
     Q_OBJECT
 
 public:
@@ -26,6 +26,11 @@ public:
 
     QModelIndex index(int row, int column, const QModelIndex &parent) const override;
     QModelIndex parent(const QModelIndex &child) const override;
+
+    bool canFetchMore(const QModelIndex &parent) const;
+    void fetchMore(const QModelIndex &parent);
+
+    bool hasChildren(const QModelIndex &parent) const;
 
     //  :: Accessors ::
 

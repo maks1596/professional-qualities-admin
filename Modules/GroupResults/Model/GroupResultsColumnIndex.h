@@ -1,0 +1,8 @@
+#pragma once
+
+enum GroupResultsColumnIndex {
+    RAMIFICATION_COLUMN_INDEX,
+    NAME_COLUMN_INDEX = RAMIFICATION_COLUMN_INDEX,
+    VALUE_COLUMN_INDEX,
+    COLUMN_COUNT
+};

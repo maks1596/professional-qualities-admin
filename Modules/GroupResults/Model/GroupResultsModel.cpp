@@ -1,18 +1,15 @@
 #include "GroupResultsModel.h"
 
-#include "Entities/Statistics/GroupResults/GroupResults.h"
+#include <QDebug>
 
+#include "Entities/Statistics/GroupResults/GroupResults.h"
+#include "GroupResultsColumnIndex.h"
+
+using TreeNode = Tree::Node<Indicator>;
 using TreeNodePtr = Tree::NodePtr<Indicator>;
 using TreeNodePtrs = Tree::NodePtrs<Indicator>;
 
 //  :: Constants ::
-
-enum ColumnIndex {
-    RAMIFICATION_COLUMN_INDEX,
-    NAME_COLUMN_INDEX,
-    VALUE_COLUMN_INDEX,
-    COLUMN_COUNT
-};
 
 const QStringList kHorizontalHeaders {
     "",
@@ -24,7 +21,7 @@ const QStringList kHorizontalHeaders {
 
 GroupResultsModel::GroupResultsModel(const GroupResults &groupResults,
                                      QObject *parent)
-    : QAbstractTableModel(parent)
+    : QAbstractItemModel(parent)
 {
     m_groupName = groupResults.getGroupName();
     m_nodes = groupResults.resultsToTreeNodePtrs();
@@ -47,7 +44,7 @@ int GroupResultsModel::rowCount(const QModelIndex &parent) const {
     if (!parent.isValid()) {
         return m_nodes.size();
     }
-    auto parentNodePtr = *(static_cast<const TreeNodePtr*>(parent.internalPointer()));
+    auto parentNodePtr = static_cast<const TreeNode *>(parent.internalPointer());
     return parentNodePtr->children.size();
 }
 
@@ -61,7 +58,7 @@ QVariant GroupResultsModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    auto nodePtr = *(static_cast<TreeNodePtr *>(index.internalPointer()));
+    auto nodePtr = static_cast<TreeNode *>(index.internalPointer());
     const Indicator& indicator = nodePtr->data;
 
     switch (index.column()) {
@@ -84,11 +81,11 @@ QModelIndex GroupResultsModel::index(int row, int column, const QModelIndex &par
     }
 
     if (!parent.isValid()) {    // запрашивают индексы корневых узлов
-        return createIndex(row, column, const_cast<TreeNodePtr *>(&m_nodes[row]));
+        return createIndex(row, column, const_cast<TreeNode *>(m_nodes[row].data()));
     }
 
-    auto parenNodePtr = *(static_cast<TreeNodePtr *>(parent.internalPointer()));
-    return createIndex(row, column, &parenNodePtr->children[row]);
+    auto parenNodePtr = static_cast<TreeNode *>(parent.internalPointer());
+    return createIndex(row, column, parenNodePtr->children[row].data());
 }
 
 QModelIndex GroupResultsModel::parent(const QModelIndex &child) const {
@@ -96,13 +93,36 @@ QModelIndex GroupResultsModel::parent(const QModelIndex &child) const {
         return QModelIndex();
     }
 
-    auto childNodePtr = *(static_cast<TreeNodePtr *>(child.internalPointer()));
+    auto childNodePtr = static_cast<TreeNode *>(child.internalPointer());
     auto parentNodePtr = childNodePtr->parent;
     if (parentNodePtr != nullptr) { // parent запрашивается не у корневого элемента
-        return createIndex(findRow(parentNodePtr), RAMIFICATION_COLUMN_INDEX, &parentNodePtr);
+        return createIndex(findRow(parentNodePtr), RAMIFICATION_COLUMN_INDEX, parentNodePtr.data());
     } else {
         return QModelIndex();
     }
+}
+
+bool GroupResultsModel::canFetchMore(const QModelIndex &parent) const {
+    if (parent.isValid()) {
+        auto parentNodePtr = static_cast<TreeNode *>(parent.internalPointer());
+        return !(parentNodePtr->children.isEmpty() || parentNodePtr->mapped);
+    }
+    return false;
+}
+
+void GroupResultsModel::fetchMore(const QModelIndex &parent) {
+    auto parentNodePtr = static_cast<TreeNode *>(parent.internalPointer());
+    beginInsertRows(parent, 0, parentNodePtr->children.size() - 1);
+    parentNodePtr->mapped = true;
+    endInsertRows();
+}
+
+bool GroupResultsModel::hasChildren(const QModelIndex &parent) const {
+    if (parent.isValid()) {
+        auto parentNode = static_cast<TreeNode *>(parent.internalPointer());
+        return !(parentNode->children.isEmpty());
+    }
+    return QAbstractItemModel::hasChildren(parent);
 }
 
 //  :: Public accessors ::

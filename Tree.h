@@ -24,6 +24,8 @@ struct Node {
     T data;
     NodePtrs<T> children;
     NodePtr<T> parent;
+
+    bool mapped = false;
 };
 
 template<typename T>
