@@ -73,17 +73,17 @@ void ResultStatistics::setIndicatorGroups(const QList<IndicatorGroup> &indicator
     m_indicatorGroups = indicatorGroups;
 }
 
-Tree::Node<Indicator> ResultStatistics::toTreeNode() const {
-    Tree::Node<Indicator> node;
-    node.data.setName(getFormulation());
-    node.children = indicatorGroupsToNodes(&node);
+Tree::NodePtr<Indicator> ResultStatistics::toTreeNodePtr() const {
+    Tree::NodePtr<Indicator> node(new Tree::Node<Indicator>);
+    node->data.setName(getFormulation());
+    node->children = indicatorGroupsToNodePtrs(node);
     return node;
 }
 
-Tree::Nodes<Indicator> ResultStatistics::indicatorGroupsToNodes(Tree::Node<Indicator> *parent) const {
-    Tree::Nodes<Indicator> nodes;
+Tree::NodePtrs<Indicator> ResultStatistics::indicatorGroupsToNodePtrs(const Tree::NodePtr<Indicator> &parent) const {
+    Tree::NodePtrs<Indicator> nodes;
     for (const auto &indicatorGroup : getIndicatorGroups()) {
-        nodes.append(indicatorGroup.toTreeNode(parent));
+        nodes.append(indicatorGroup.toTreeNodePtr(parent));
     }
     return nodes;
 }

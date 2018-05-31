@@ -44,12 +44,10 @@ void GroupResults::setResults(const QList<ResultStatistics> &results) {
     m_results = results;
 }
 
-Tree::Nodes<Indicator> GroupResults::resultsToTreeNodes() const {
-    Tree::Nodes<Indicator> nodes;
-
+Tree::NodePtrs<Indicator> GroupResults::resultsToTreeNodePtrs() const {
+    Tree::NodePtrs<Indicator> nodes;
     for (const auto &result : getResults()) {
-        nodes.append(result.toTreeNode());
+        nodes.append(result.toTreeNodePtr());
     }
-
     return nodes;
 }

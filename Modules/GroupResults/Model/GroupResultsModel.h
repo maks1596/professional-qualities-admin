@@ -32,8 +32,8 @@ public:
     QString getGroupName() const;
 
 private:
-    int findRow(const Tree::Node<Indicator> &node) const;
+    int findRow(const Tree::NodePtr<Indicator> &node) const;
 
     QString m_groupName;
-    Tree::Nodes<Indicator> m_nodes;
+    Tree::NodePtrs<Indicator> m_nodes;
 };

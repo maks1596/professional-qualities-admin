@@ -46,18 +46,18 @@ void IndicatorGroup::setIndicators(const QList<Indicator> &indicators) {
 
 //  :: Public methods ::
 
-Tree::Node<Indicator> IndicatorGroup::toTreeNode(Tree::Node<Indicator> *parent) const {
-    Tree::Node<Indicator> treeNode;
-    treeNode.data.setName(getName());
-    treeNode.parent = parent;
-    treeNode.children = indicatorsToTreeNodes(&treeNode);
-    return treeNode;
+Tree::NodePtr<Indicator> IndicatorGroup::toTreeNodePtr(const Tree::NodePtr<Indicator> &parent) const {
+    Tree::NodePtr<Indicator> node(new Tree::Node<Indicator>);
+    node->data.setName(getName());
+    node->parent = parent;
+    node->children = indicatorsToTreeNodePtrs(node);
+    return node;
 }
 
-Tree::Nodes<Indicator> IndicatorGroup::indicatorsToTreeNodes(Tree::Node<Indicator> *parent) const {
-    Tree::Nodes<Indicator> nodes;
+Tree::NodePtrs<Indicator> IndicatorGroup::indicatorsToTreeNodePtrs(const Tree::NodePtr<Indicator> &parent) const {
+    Tree::NodePtrs<Indicator> nodes;
     for (const auto &indicator : getIndicators()) {
-        nodes.append(indicator.toTreeNode(parent));
+        nodes.append(indicator.toTreeNodePtr(parent));
     }
     return nodes;
 }

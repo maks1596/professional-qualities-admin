@@ -17,7 +17,7 @@ public:
     double getValue() const;
     void setValue(double value);
 
-    Tree::Node<Indicator> toTreeNode(Tree::Node<Indicator> *parent) const;
+    Tree::NodePtr<Indicator> toTreeNodePtr(const Tree::NodePtr<Indicator> &parent) const;
 
 private:
     QString m_name;

@@ -2,8 +2,8 @@
 
 #include "Entities/Statistics/GroupResults/GroupResults.h"
 
-using TreeNode = Tree::Node<Indicator>;
-using TreeNodes = Tree::Nodes<Indicator>;
+using TreeNodePtr = Tree::NodePtr<Indicator>;
+using TreeNodePtrs = Tree::NodePtrs<Indicator>;
 
 //  :: Constants ::
 
@@ -27,7 +27,7 @@ GroupResultsModel::GroupResultsModel(const GroupResults &groupResults,
     : QAbstractTableModel(parent)
 {
     m_groupName = groupResults.getGroupName();
-    m_nodes = groupResults.resultsToTreeNodes();
+    m_nodes = groupResults.resultsToTreeNodePtrs();
 }
 
 //  :: QAbstratTableModel ::
@@ -47,8 +47,8 @@ int GroupResultsModel::rowCount(const QModelIndex &parent) const {
     if (!parent.isValid()) {
         return m_nodes.size();
     }
-    const TreeNode* parentNode = static_cast<const TreeNode*>(parent.internalPointer());
-    return parentNode->children.size();
+    auto parentNodePtr = *(static_cast<const TreeNodePtr*>(parent.internalPointer()));
+    return parentNodePtr->children.size();
 }
 
 int GroupResultsModel::columnCount(const QModelIndex &) const {
@@ -61,8 +61,8 @@ QVariant GroupResultsModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
 
-    const TreeNode* node = static_cast<TreeNode *>(index.internalPointer());
-    const Indicator& indicator = node->data;
+    auto nodePtr = *(static_cast<TreeNodePtr *>(index.internalPointer()));
+    const Indicator& indicator = nodePtr->data;
 
     switch (index.column()) {
     case NAME_COLUMN_INDEX: {
@@ -70,7 +70,7 @@ QVariant GroupResultsModel::data(const QModelIndex &index, int role) const
     } break;
 
     case VALUE_COLUMN_INDEX: {
-        if (node->children.isEmpty()) {
+        if (nodePtr->children.isEmpty()) {
             return indicator.getValue();
         }
     } break;
@@ -84,11 +84,11 @@ QModelIndex GroupResultsModel::index(int row, int column, const QModelIndex &par
     }
 
     if (!parent.isValid()) {    // запрашивают индексы корневых узлов
-        return createIndex(row, column, const_cast<TreeNode *>(&m_nodes[row]));
+        return createIndex(row, column, const_cast<TreeNodePtr *>(&m_nodes[row]));
     }
 
-    TreeNode* parenNode = static_cast<TreeNode *>(parent.internalPointer());
-    return createIndex(row, column, &parenNode->children[row]);
+    auto parenNodePtr = *(static_cast<TreeNodePtr *>(parent.internalPointer()));
+    return createIndex(row, column, &parenNodePtr->children[row]);
 }
 
 QModelIndex GroupResultsModel::parent(const QModelIndex &child) const {
@@ -96,12 +96,11 @@ QModelIndex GroupResultsModel::parent(const QModelIndex &child) const {
         return QModelIndex();
     }
 
-    TreeNode* childNode = static_cast<TreeNode *>(child.internalPointer());
-    TreeNode* parentNode = childNode->parent;
-    if (parentNode != nullptr) { // parent запрашивается не у корневого элемента
-        return createIndex(findRow(*parentNode), RAMIFICATION_COLUMN_INDEX, parentNode);
-    }
-    else {
+    auto childNodePtr = *(static_cast<TreeNodePtr *>(child.internalPointer()));
+    auto parentNodePtr = childNodePtr->parent;
+    if (parentNodePtr != nullptr) { // parent запрашивается не у корневого элемента
+        return createIndex(findRow(parentNodePtr), RAMIFICATION_COLUMN_INDEX, &parentNodePtr);
+    } else {
         return QModelIndex();
     }
 }
@@ -114,8 +113,8 @@ QString GroupResultsModel::getGroupName() const {
 
 //  :: Private methods ::
 
-int GroupResultsModel::findRow(const TreeNode &node) const {
-    auto parentChildren = node.parent != nullptr ?
-                          node.parent->children : m_nodes;
+int GroupResultsModel::findRow(const Tree::NodePtr<Indicator> &node) const {
+    auto parentChildren = node->parent != nullptr ?
+                          node->parent->children : m_nodes;
     return parentChildren.indexOf(node);
 }

@@ -18,8 +18,8 @@ public:
     QList<Indicator> getIndicators() const;
     void setIndicators(const QList<Indicator> &indicators);
 
-    Tree::Node<Indicator> toTreeNode(Tree::Node<Indicator> *parent) const;
-    Tree::Nodes<Indicator> indicatorsToTreeNodes(Tree::Node<Indicator> *parent) const;
+    Tree::NodePtr<Indicator> toTreeNodePtr(const Tree::NodePtr<Indicator> &parent) const;
+    Tree::NodePtrs<Indicator> indicatorsToTreeNodePtrs(const Tree::NodePtr<Indicator> &parent) const;
 
 private:
     QString m_name;

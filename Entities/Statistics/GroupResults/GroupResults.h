@@ -18,7 +18,7 @@ public:
     QList<ResultStatistics> getResults() const;
     void setResults(const QList<ResultStatistics> &results);
 
-    Tree::Nodes<Indicator> resultsToTreeNodes() const;
+    Tree::NodePtrs<Indicator> resultsToTreeNodePtrs() const;
 
 private:
     QString m_groupName;

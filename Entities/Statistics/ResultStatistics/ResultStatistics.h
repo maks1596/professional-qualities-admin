@@ -24,8 +24,8 @@ public:
     const QList<IndicatorGroup> &getIndicatorGroups() const;
     void setIndicatorGroups(const QList<IndicatorGroup> &indicatorGroups);
 
-    Tree::Node<Indicator> toTreeNode() const;
-    Tree::Nodes<Indicator> indicatorGroupsToNodes(Tree::Node<Indicator> *parent) const;
+    Tree::NodePtr<Indicator> toTreeNodePtr() const;
+    Tree::NodePtrs<Indicator> indicatorGroupsToNodePtrs(const Tree::NodePtr<Indicator> &parent) const;
 
 private:
     QString m_formulation;

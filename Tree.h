@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QList>
+#include <QSharedPointer>
 
 namespace Tree {
 
@@ -8,18 +9,33 @@ template<typename>
 struct Node;
 
 template<typename T>
-using Nodes = QList<Node<T>>;
+using NodePtr = QSharedPointer<Node<T>>;
+
+template<typename T>
+using NodePtrs = QList<NodePtr<T>>;
 
 template<typename T>
 struct Node {
-    T data;
-    Nodes<T> children;
-    Node<T> *parent = nullptr;
-};
+    Node()
+        : data(),
+          parent(nullptr)
+    {}
 
-}
+    T data;
+    NodePtrs<T> children;
+    NodePtr<T> parent;
+};
 
 template<typename T>
 bool operator==(const Tree::Node<T> &lhs, const Tree::Node<T> &rhs) {
     return lhs.data == rhs.data;
 }
+
+template<typename T>
+bool operator==(const Tree::NodePtr<T> &lhs, const Tree::NodePtr<T> &rhs) {
+    return *lhs == *rhs;
+}
+}
+
+
+

@@ -44,11 +44,11 @@ void Indicator::setValue(double value) {
 
 //  :: Public methods ::
 
-Tree::Node<Indicator> Indicator::toTreeNode(Tree::Node<Indicator> *parent) const {
-    Tree::Node<Indicator> treeNode;
-    treeNode.data = *this;
-    treeNode.parent = parent;
-    return treeNode;
+Tree::NodePtr<Indicator> Indicator::toTreeNodePtr(const Tree::NodePtr<Indicator> &parent) const {
+    Tree::NodePtr<Indicator> node(new Tree::Node<Indicator>);
+    node->data = *this;
+    node->parent = parent;
+    return node;
 }
 
 //  :: Public functions ::
