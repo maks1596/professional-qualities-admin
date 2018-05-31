@@ -1,13 +1,12 @@
 #include "GroupResultsModel.h"
 
-#include <QDebug>
-
 #include "Entities/Statistics/GroupResults/GroupResults.h"
 #include "GroupResultsColumnIndex.h"
+#include "NamedValue/NamedValue.h"
 
-using TreeNode = Tree::Node<Indicator>;
-using TreeNodePtr = Tree::NodePtr<Indicator>;
-using TreeNodePtrs = Tree::NodePtrs<Indicator>;
+using TreeNode = Tree::Node<NamedValue>;
+using TreeNodePtr = Tree::NodePtr<NamedValue>;
+using TreeNodePtrs = Tree::NodePtrs<NamedValue>;
 
 //  :: Constants ::
 
@@ -58,17 +57,15 @@ QVariant GroupResultsModel::data(const QModelIndex &index, int role) const
     }
 
     auto nodePtr = static_cast<TreeNode *>(index.internalPointer());
-    const Indicator& indicator = nodePtr->data;
+    auto namedValue = nodePtr->data;
 
     switch (index.column()) {
     case NAME_COLUMN_INDEX: {
-        return indicator.getName();
+        return namedValue.name;
     } break;
 
     case VALUE_COLUMN_INDEX: {
-        if (nodePtr->children.isEmpty()) {
-            return indicator.getValue();
-        }
+        return namedValue.value;
     } break;
     }
     return QVariant();
@@ -132,7 +129,7 @@ QString GroupResultsModel::getGroupName() const {
 
 //  :: Private methods ::
 
-int GroupResultsModel::findRow(const Tree::NodePtr<Indicator> &node) const {
+int GroupResultsModel::findRow(const Tree::NodePtr<NamedValue> &node) const {
     auto parentChildren = node->parent != nullptr ?
                           node->parent->children : m_nodes;
     return parentChildren.indexOf(node);

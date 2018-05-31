@@ -6,7 +6,7 @@
 #include "Tree.h"
 
 class GroupResults;
-class Indicator;
+class NamedValue;
 
 class GroupResultsModel : public QAbstractItemModel {
     Q_OBJECT
@@ -37,8 +37,8 @@ public:
     QString getGroupName() const;
 
 private:
-    int findRow(const Tree::NodePtr<Indicator> &node) const;
+    int findRow(const Tree::NodePtr<NamedValue> &node) const;
 
     QString m_groupName;
-    Tree::NodePtrs<Indicator> m_nodes;
+    Tree::NodePtrs<NamedValue> m_nodes;
 };

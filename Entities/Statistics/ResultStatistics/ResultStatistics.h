@@ -4,6 +4,8 @@
 #include "Serializable/Object/SerializableObject.h"
 #include "Tree.h"
 
+class NamedValue;
+
 class ResultStatistics : public SerializableObject {
 public:
     //  :: Serializable ::
@@ -24,10 +26,13 @@ public:
     const QList<IndicatorGroup> &getIndicatorGroups() const;
     void setIndicatorGroups(const QList<IndicatorGroup> &indicatorGroups);
 
-    Tree::NodePtr<Indicator> toTreeNodePtr() const;
-    Tree::NodePtrs<Indicator> indicatorGroupsToNodePtrs(const Tree::NodePtr<Indicator> &parent) const;
+    Tree::NodePtr<NamedValue> toTreeNodePtr() const;
 
 private:
+    Tree::NodePtr<NamedValue> timesToNodePtr(const Tree::NodePtr<NamedValue> &parent) const;
+    Tree::NodePtr<NamedValue> frequencyToNodePtr(const Tree::NodePtr<NamedValue> &parent) const;
+    Tree::NodePtrs<NamedValue> indicatorGroupsToNodePtrs(const Tree::NodePtr<NamedValue> &parent) const;
+
     QString m_formulation;
     uint m_times;
     double m_frequency;

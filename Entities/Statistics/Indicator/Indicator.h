@@ -3,6 +3,8 @@
 #include "Serializable/Object/SerializableObject.h"
 #include "Tree.h"
 
+class NamedValue;
+
 class Indicator : public SerializableObject {
 public:
     //  :: Serializable ::
@@ -17,11 +19,9 @@ public:
     double getValue() const;
     void setValue(double value);
 
-    Tree::NodePtr<Indicator> toTreeNodePtr(const Tree::NodePtr<Indicator> &parent) const;
+    Tree::NodePtr<NamedValue> toTreeNodePtr(const Tree::NodePtr<NamedValue> &parent) const;
 
 private:
     QString m_name;
     double m_value = 0.0;
 };
-
-bool operator==(const Indicator &lhs, const Indicator &rhs);

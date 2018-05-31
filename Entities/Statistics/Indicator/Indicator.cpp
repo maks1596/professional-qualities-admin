@@ -1,5 +1,6 @@
 #include "Indicator.h"
 
+#include "NamedValue/NamedValue.h"
 #include "Tree.h"
 
 //  :: Constants ::
@@ -44,16 +45,10 @@ void Indicator::setValue(double value) {
 
 //  :: Public methods ::
 
-Tree::NodePtr<Indicator> Indicator::toTreeNodePtr(const Tree::NodePtr<Indicator> &parent) const {
-    Tree::NodePtr<Indicator> node(new Tree::Node<Indicator>);
-    node->data = *this;
+Tree::NodePtr<NamedValue> Indicator::toTreeNodePtr(const Tree::NodePtr<NamedValue> &parent) const {
+    NamedValue namedValue{getName(), getValue()};
+    Tree::NodePtr<NamedValue> node(new Tree::Node<NamedValue>);
+    node->data = namedValue;
     node->parent = parent;
     return node;
-}
-
-//  :: Public functions ::
-
-bool operator==(const Indicator &lhs, const Indicator &rhs) {
-    return lhs.getName() == rhs.getName() &&
-            lhs.getValue() == rhs.getValue();
 }

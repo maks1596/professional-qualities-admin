@@ -1,5 +1,6 @@
 #include "GroupResults.h"
 
+#include "NamedValue/NamedValue.h"
 #include "JsonArraySerialization.h"
 #include "Tree.h"
 
@@ -44,8 +45,8 @@ void GroupResults::setResults(const QList<ResultStatistics> &results) {
     m_results = results;
 }
 
-Tree::NodePtrs<Indicator> GroupResults::resultsToTreeNodePtrs() const {
-    Tree::NodePtrs<Indicator> nodes;
+Tree::NodePtrs<NamedValue> GroupResults::resultsToTreeNodePtrs() const {
+    Tree::NodePtrs<NamedValue> nodes;
     for (const auto &result : getResults()) {
         nodes.append(result.toTreeNodePtr());
     }

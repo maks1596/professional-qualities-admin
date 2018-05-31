@@ -4,6 +4,8 @@
 #include "Serializable/Object/SerializableObject.h"
 #include "Tree.h"
 
+class NamedValue;
+
 class IndicatorGroup : public SerializableObject {
 public:
     //  :: Serializable ::
@@ -18,10 +20,11 @@ public:
     QList<Indicator> getIndicators() const;
     void setIndicators(const QList<Indicator> &indicators);
 
-    Tree::NodePtr<Indicator> toTreeNodePtr(const Tree::NodePtr<Indicator> &parent) const;
-    Tree::NodePtrs<Indicator> indicatorsToTreeNodePtrs(const Tree::NodePtr<Indicator> &parent) const;
+    Tree::NodePtr<NamedValue> toTreeNodePtr(const Tree::NodePtr<NamedValue> &parent) const;
 
 private:
+    Tree::NodePtrs<NamedValue> indicatorsToTreeNodePtrs(const Tree::NodePtr<NamedValue> &parent) const;
+
     QString m_name;
     QList<Indicator> m_indicators;
 };

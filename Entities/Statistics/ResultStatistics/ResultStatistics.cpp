@@ -1,5 +1,6 @@
 #include "ResultStatistics.h"
 
+#include "NamedValue/NamedValue.h"
 #include "JsonArraySerialization.h"
 #include "Tree.h"
 
@@ -9,6 +10,9 @@ const QString FORMULATION_JSON_KEY = "formulation";
 const QString TIMES_JSON_KEY = "times";
 const QString FREQUENCY_JSON_KEY = "frequency";
 const QString INDICATOR_GROUPS_JSON_KEY = "indicatorGroups";
+
+const QString TIMES_NAME = "Количество";
+const QString FREQUENCY_NAME = "Частота";
 
 //  :: Serializable ::
 
@@ -73,15 +77,41 @@ void ResultStatistics::setIndicatorGroups(const QList<IndicatorGroup> &indicator
     m_indicatorGroups = indicatorGroups;
 }
 
-Tree::NodePtr<Indicator> ResultStatistics::toTreeNodePtr() const {
-    Tree::NodePtr<Indicator> node(new Tree::Node<Indicator>);
-    node->data.setName(getFormulation());
-    node->children = indicatorGroupsToNodePtrs(node);
+//  :: Public methods ::
+
+Tree::NodePtr<NamedValue> ResultStatistics::toTreeNodePtr() const {
+    NamedValue namedValue{getFormulation(), QVariant()};
+
+    Tree::NodePtr<NamedValue> node(new Tree::Node<NamedValue>);
+    node->data = namedValue;
+
+    node->children.append(timesToNodePtr(node));
+    node->children.append(frequencyToNodePtr(node));
+    node->children.append(indicatorGroupsToNodePtrs(node));
+
     return node;
 }
 
-Tree::NodePtrs<Indicator> ResultStatistics::indicatorGroupsToNodePtrs(const Tree::NodePtr<Indicator> &parent) const {
-    Tree::NodePtrs<Indicator> nodes;
+//  :: Private methods ::
+
+Tree::NodePtr<NamedValue> ResultStatistics::timesToNodePtr(const Tree::NodePtr<NamedValue> &parent) const {
+    NamedValue namedValue{TIMES_NAME, getTimes()};
+    Tree::NodePtr<NamedValue> node(new Tree::Node<NamedValue>);
+    node->data = namedValue;
+    node->parent = parent;
+    return node;
+}
+
+Tree::NodePtr<NamedValue> ResultStatistics::frequencyToNodePtr(const Tree::NodePtr<NamedValue> &parent) const {
+    NamedValue namedValue{FREQUENCY_NAME, getFrequency()};
+    Tree::NodePtr<NamedValue> node(new Tree::Node<NamedValue>);
+    node->data = namedValue;
+    node->parent = parent;
+    return node;
+}
+
+Tree::NodePtrs<NamedValue> ResultStatistics::indicatorGroupsToNodePtrs(const Tree::NodePtr<NamedValue> &parent) const {
+    Tree::NodePtrs<NamedValue> nodes;
     for (const auto &indicatorGroup : getIndicatorGroups()) {
         nodes.append(indicatorGroup.toTreeNodePtr(parent));
     }

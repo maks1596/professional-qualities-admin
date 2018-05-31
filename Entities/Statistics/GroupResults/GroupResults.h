@@ -4,6 +4,8 @@
 #include "Serializable/Object/SerializableObject.h"
 #include "Tree.h"
 
+class NamedValue;
+
 class GroupResults : public SerializableObject {
 public:
     //  :: Serializable ::
@@ -18,7 +20,7 @@ public:
     QList<ResultStatistics> getResults() const;
     void setResults(const QList<ResultStatistics> &results);
 
-    Tree::NodePtrs<Indicator> resultsToTreeNodePtrs() const;
+    Tree::NodePtrs<NamedValue> resultsToTreeNodePtrs() const;
 
 private:
     QString m_groupName;
