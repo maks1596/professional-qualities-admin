@@ -14,7 +14,7 @@ template<typename T>
 struct Node {
     T data;
     Nodes<T> children;
-    Node<T> *parent;
+    Node<T> *parent = nullptr;
 };
 
 }
