@@ -1,8 +1,6 @@
 #include "ScaleStatisticsForm.h"
 #include "ui_ScaleStatisticsForm.h"
 
-#include <QTreeView>
-
 #include "../Model/ScaleStatisticsModel.h"
 #include "Modules/GroupResults/Assembler/GroupResultsAssembler.h"
 

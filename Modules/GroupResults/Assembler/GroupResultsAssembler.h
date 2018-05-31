@@ -1,10 +1,10 @@
 #pragma once
 
-class QWidget;
-class QTreeView;
+#include "../View/GroupResultsForm.h"
 
+class QWidget;
 class GroupResults;
 
 namespace GroupResultsAssembler {
-QTreeView *assembly(const GroupResults &groupResults, QWidget *parent);
+GroupResultsForm *assembly(const GroupResults &groupResults, QWidget *parent);
 }

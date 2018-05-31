@@ -176,7 +176,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/ScaleStatistics/Model/ScaleStatisticsModel.h \
     Modules/GroupResults/Model/GroupResultsModel.h \
     Tree.h \
-    Modules/GroupResults/Assembler/GroupResultsAssembler.h
+    Modules/GroupResults/Assembler/GroupResultsAssembler.h \
+    Modules/GroupResults/View/GroupResultsForm.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
