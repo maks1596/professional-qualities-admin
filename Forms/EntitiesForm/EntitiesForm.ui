@@ -13,69 +13,68 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
-   <property name="leftMargin">
-    <number>9</number>
-   </property>
-   <property name="topMargin">
-    <number>9</number>
-   </property>
-   <property name="rightMargin">
-    <number>9</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="title">
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Заголовок</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTableWidget" name="entitiesTableWidget"/>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0">
      <item>
       <widget class="QPushButton" name="toMainMenuBtn">
        <property name="text">
-        <string>В главное меню</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/images/images.qrc">
+         <normaloff>:/images/arrow-left.svg</normaloff>:/images/arrow-left.svg</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="title">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Заголовок</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="addBtn">
        <property name="text">
-        <string>Добавить</string>
+        <string/>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
     </layout>
    </item>
+   <item>
+    <widget class="QTableWidget" name="entitiesTableWidget"/>
+   </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources/images/images.qrc"/>
+ </resources>
  <connections/>
 </ui>

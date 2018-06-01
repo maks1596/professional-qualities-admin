@@ -49,13 +49,26 @@
            <widget class="QPushButton" name="addUserBtn">
             <property name="font">
              <font>
-              <pointsize>14</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
+              <pointsize>8</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
+            <property name="toolTip">
+             <string>Добавить тестируемого</string>
+            </property>
             <property name="text">
-             <string>+</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/images/images.qrc">
+              <normaloff>:/images/account-plus.svg</normaloff>:/images/account-plus.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -77,13 +90,26 @@
            <widget class="QPushButton" name="addTestBtn">
             <property name="font">
              <font>
-              <pointsize>14</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
+              <pointsize>8</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
              </font>
             </property>
+            <property name="toolTip">
+             <string>Добавить тест</string>
+            </property>
             <property name="text">
-             <string>+</string>
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../resources/images/images.qrc">
+              <normaloff>:/images/file-plus.svg</normaloff>:/images/file-plus.svg</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
             </property>
             <property name="flat">
              <bool>true</bool>
@@ -139,6 +165,8 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../resources/images/images.qrc"/>
+ </resources>
  <connections/>
 </ui>

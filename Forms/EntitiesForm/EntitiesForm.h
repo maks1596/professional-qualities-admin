@@ -39,6 +39,8 @@ protected:
 	void setEntities(const QList<Entity> &entities);
 
 	void setTitle(const QString &title);
+    void setAddButtonIconName(const QString &iconName);
+    void setAddButtonToolTip(const QString &toolTip);
 	void setHeaderLabels(const QStringList &labels);
 	void setContent(const QList<QStringList> &content);
 

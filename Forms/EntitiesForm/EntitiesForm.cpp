@@ -62,6 +62,14 @@ void EntitiesForm::setTitle(const QString &title) {
     ui->title->setText(title);
 }
 
+void EntitiesForm::setAddButtonIconName(const QString &iconName) {
+    ui->addBtn->setIcon(QIcon(iconName));
+}
+
+void EntitiesForm::setAddButtonToolTip(const QString &toolTip) {
+    ui->addBtn->setToolTip(toolTip);
+}
+
 void EntitiesForm::setHeaderLabels(const QStringList &labels) {
 	QStringList actualHeaders(labels);
 	actualHeaders.append(DELETE_HEADER_NAME);

@@ -5,13 +5,29 @@
 #include "Entities/User/User.h"
 #include "../Model/UsersModel.h"
 
+//  :: Constants ::
+
+const QStringList kHeaderLabels {
+    "Имя",
+    "Пол",
+    "Возраст",
+    "Профессия",
+    "Оценка эксперта"
+};
+
+const QString TITLE = "Тестируемые";
+const QString ADD_BUTTON_ICON_NAME = ":/images/account-plus.svg";
+const QString ADD_BUTTON_TOOL_TIP = "Добавить тестируемого";
+
 //  :: Lifecycle ::
 
 UsersForm::UsersForm(QWidget *parent) :
 	EntitiesForm(parent)
 {
-    setTitle("Тестируемые");
-	setHeaderLabels({"Имя", "Пол", "Возраст", "Профессия", "Оценка эксперта"});
+    setTitle(TITLE);
+    setAddButtonIconName(ADD_BUTTON_ICON_NAME);
+    setAddButtonToolTip(ADD_BUTTON_TOOL_TIP);
+    setHeaderLabels(kHeaderLabels);
 
 	m_model = new UsersModel(this);
 	connect(m_model, &UsersModel::usersGot,

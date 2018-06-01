@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/images">
         <file>arrow-left.svg</file>
+        <file>account-plus.svg</file>
+        <file>file-plus.svg</file>
     </qresource>
 </RCC>

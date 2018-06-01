@@ -8,6 +8,13 @@
 
 //  :: Constatns ::
 
+const QStringList kHeaderLabels {
+    "Название теста"
+};
+
+const QString TITLE = "Тесты";
+const QString ADD_BUTTON_ICON_NAME = ":/images/file-plus.svg";
+const QString ADD_BUTTON_TOOL_TIP = "Добавить тест";
 const QString TEST_IS_USED_MESSAGE = "Удаление теста невозможно\n"
 									 "Тест уже был пройден";
 
@@ -16,8 +23,10 @@ const QString TEST_IS_USED_MESSAGE = "Удаление теста невозмо
 TestsForm::TestsForm(QWidget *parent) :
 	EntitiesForm(parent)
 {
-    setTitle("Тесты");
-	setHeaderLabels({"Название теста"});
+    setTitle(TITLE);
+    setAddButtonIconName(ADD_BUTTON_ICON_NAME);
+    setAddButtonToolTip(ADD_BUTTON_TOOL_TIP);
+    setHeaderLabels(kHeaderLabels);
 	initModel();
 }
 
