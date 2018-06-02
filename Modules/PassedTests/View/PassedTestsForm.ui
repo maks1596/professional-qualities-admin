@@ -56,7 +56,17 @@
     </layout>
    </item>
    <item>
-    <widget class="QTableView" name="passedTestsTableView"/>
+    <widget class="QTableView" name="passedTestsTableView">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::ExtendedSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

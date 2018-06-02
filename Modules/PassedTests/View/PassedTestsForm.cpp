@@ -17,9 +17,6 @@ PassedTestsForm::PassedTestsForm(QWidget *parent) :
             this, &PassedTestsForm::backButtonClicked);
     connect(ui->passedTestsTableView, &QTableView::doubleClicked,
             this, &PassedTestsForm::onPassedTestDoubleClicked);
-
-    // При нажатии на элемент таблицы выделяется целая строка вместо одной ячейки
-    ui->passedTestsTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 PassedTestsForm::~PassedTestsForm() {
