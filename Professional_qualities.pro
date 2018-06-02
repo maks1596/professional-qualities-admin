@@ -101,7 +101,8 @@ SOURCES += main.cpp\
     Modules/Correlations/Model/CorrelationsModel.cpp \
     Entities/Statistics/CorrelationValue/CorrelationValue.cpp \
     Entities/Statistics/GroupCorrelations/GroupCorrelations.cpp \
-    Modules/Correlations/Service/CorrelationsService.cpp
+    Modules/Correlations/Service/CorrelationsService.cpp \
+    Modules/Correlations/Assembler/CorrelationsAssembler.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -189,7 +190,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/Correlations/Model/CorrelationsModel.h \
     Entities/Statistics/CorrelationValue/CorrelationValue.h \
     Entities/Statistics/GroupCorrelations/GroupCorrelations.h \
-    Modules/Correlations/Service/CorrelationsService.h
+    Modules/Correlations/Service/CorrelationsService.h \
+    Modules/Correlations/Assembler/CorrelationsAssembler.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \

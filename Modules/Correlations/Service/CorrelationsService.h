@@ -5,6 +5,7 @@
 class GroupCorrelations;
 
 class CorrelationsService : public BaseService {
+    Q_OBJECT
 public:
     explicit CorrelationsService(QObject *parent = nullptr);
 
