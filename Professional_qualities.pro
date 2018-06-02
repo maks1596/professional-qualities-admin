@@ -180,7 +180,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/GroupResults/Assembler/GroupResultsAssembler.h \
     Modules/GroupResults/View/GroupResultsForm.h \
     Modules/GroupResults/Model/GroupResultsColumnIndex.h \
-    NamedValue/NamedValue.h
+    NamedValue/NamedValue.h \
+    Modules/Correlations/View/CorrelationsForm.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
