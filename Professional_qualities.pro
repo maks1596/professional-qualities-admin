@@ -98,6 +98,7 @@ SOURCES += main.cpp\
     Modules/GroupResults/Model/GroupResultsModel.cpp \
     Modules/GroupResults/Assembler/GroupResultsAssembler.cpp \
     NamedValue/NamedValue.cpp \
+    Modules/Correlations/Model/CorrelationsModel.cpp \
     Entities/Statistics/CorrelationValue/CorrelationValue.cpp \
     Entities/Statistics/GroupCorrelations/GroupCorrelations.cpp
 
@@ -184,6 +185,7 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/GroupResults/Model/GroupResultsColumnIndex.h \
     NamedValue/NamedValue.h \
     Modules/Correlations/View/CorrelationsForm.h \
+    Modules/Correlations/Model/CorrelationsModel.h \
     Entities/Statistics/CorrelationValue/CorrelationValue.h \
     Entities/Statistics/GroupCorrelations/GroupCorrelations.h
 
