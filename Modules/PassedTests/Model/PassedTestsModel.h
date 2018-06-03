@@ -43,7 +43,6 @@ public slots:
     void stopUpdating() const;
 
 private:
-    void initService();
     void initTimer();
     void checkRowsCountChanged(const QList<PassedTestPreview> &newPreviews);
     void emitAllDataChanged();
