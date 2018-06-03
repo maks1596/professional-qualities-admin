@@ -146,8 +146,8 @@ void MainWindow::pushTestStatisticsFormToStack(const PassedTest &passedTest) {
     pushWidget(testStatisticsForm);
 }
 
-void MainWindow::pushScaleStatisticsFormToStack(const ScaleStatistics &scaleStatistics) {
-    auto scaleStatisticsForm = ScaleStatisticsAssembler::assembly(scaleStatistics, this);
+void MainWindow::pushScaleStatisticsFormToStack(int testId, const ScaleStatistics &scaleStatistics) {
+    auto scaleStatisticsForm = ScaleStatisticsAssembler::assembly(testId, scaleStatistics, this);
 
     connect(scaleStatisticsForm, &ScaleStatisticsForm::backButtonClicked,
             this, &MainWindow::popWidget);

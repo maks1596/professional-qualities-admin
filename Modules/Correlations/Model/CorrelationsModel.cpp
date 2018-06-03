@@ -4,8 +4,7 @@
 
 CorrelationsModel::CorrelationsModel(QObject *parent)
     : QAbstractTableModel(parent)
-{
-}
+{ }
 
 //  :: QAbstractTableModel ::
 
@@ -27,7 +26,7 @@ QVariant CorrelationsModel::headerData(int section, Qt::Orientation orientation,
             }
         }
     }
-    return orientation;
+    return section;
 }
 
 int CorrelationsModel::rowCount(const QModelIndex &) const {
@@ -93,8 +92,11 @@ void CorrelationsModel::checkColumnCount(const QList<GroupCorrelations> newGroup
 
 inline
 int CorrelationsModel::rowCount(const QList<GroupCorrelations> groupsCorrelations) const {
-    // Корреляции для всех групп одинаковые и в одинаковом количестве
-    return groupsCorrelations.first().getCorrelationValues().size();
+    if (!groupsCorrelations.isEmpty()) {
+        // Корреляции для всех групп одинаковые и в одинаковом количестве
+        return groupsCorrelations.first().getCorrelationValues().size();
+    }
+    return 0;
 }
 inline
 int CorrelationsModel::columnCount(const QList<GroupCorrelations> groupsCorrelations) const {

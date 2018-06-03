@@ -15,6 +15,11 @@ CorrelationsForm *CorrelationsAssembler::assembly(int testId, int scaleId, QWidg
                      model, &CorrelationsModel::setGroupsCorrelations);
     QObject::connect(service, &CorrelationsService::error,
                      view, &CorrelationsForm::error);
+    QObject::connect(model, &CorrelationsModel::dataChanged,
+                     [view](){
+        view->resizeColumnsToContents();
+        view->resizeRowsToContents();
+    });
 
     service->getDefaultGroupsCorrelations(testId, scaleId);
 

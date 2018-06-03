@@ -33,7 +33,8 @@ private slots:
     void onTestRead(const Test &test);
 
     void pushTestStatisticsFormToStack(const PassedTest &passedTest);
-    void pushScaleStatisticsFormToStack(const ScaleStatistics &scaleStatistics);
+    void pushScaleStatisticsFormToStack(int testId,
+                                        const ScaleStatistics &scaleStatistics);
 
     void showCriticalMessage(const QString &error);
     void showStatusMessage(const QString &message);

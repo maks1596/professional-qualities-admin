@@ -6,5 +6,7 @@ class ScaleStatistics;
 class ScaleStatisticsForm;
 
 namespace ScaleStatisticsAssembler {
-ScaleStatisticsForm *assembly(const ScaleStatistics &scaleStatistics, QWidget *parent);
+ScaleStatisticsForm *assembly(int testId,
+                              const ScaleStatistics &scaleStatistics,
+                              QWidget *parent);
 }

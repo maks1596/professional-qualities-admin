@@ -23,7 +23,7 @@ QVariant PassedTestModel::data(const QModelIndex &index, int role) const {
 
 //  :: Public accessors ::
 
-PassedTest PassedTestModel::getPassedTest() const {
+const PassedTest &PassedTestModel::getPassedTest() const {
     return m_passedTest;
 }
 void PassedTestModel::setPassedTest(const PassedTest &passedTest) {
@@ -31,6 +31,10 @@ void PassedTestModel::setPassedTest(const PassedTest &passedTest) {
 }
 
 //  :: Public methods ::
+
+int PassedTestModel::getTestId() const {
+    return getPassedTest().getId();
+}
 
 QString PassedTestModel::getPassedTestName() const {
     return getPassedTest().getName();

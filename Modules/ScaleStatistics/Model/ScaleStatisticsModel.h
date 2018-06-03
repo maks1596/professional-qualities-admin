@@ -3,22 +3,36 @@
 #include <QObject>
 
 #include "Entities/Statistics/ScaleStatistics/ScaleStatistics.h"
+#include "ScaleStatisticsTabIndex.h"
 
 class ScaleStatisticsModel : public QObject {
     Q_OBJECT
 
 public:
-    ScaleStatisticsModel(const ScaleStatistics &scaleStatistics,
+
+    //  :: Lifecycle ::
+
+    ScaleStatisticsModel(int testId,
+                         const ScaleStatistics &scaleStatistics,
                          QObject *parent = nullptr);
 
-    ScaleStatistics getScaleStatistics() const;
+    //  :: Accessors ::
+
+    int getTestId() const;
+    void setTestId(int testId);
+
+    const ScaleStatistics &getScaleStatistics() const;
     void setScaleStatistics(const ScaleStatistics &scaleStatistics);
 
+    //  :: Methods ::
+
+    int getScaleId() const;
     QString getScaleName() const;
-    uint getNumberOfGroups() const;
-    QString getNameOfGroup(uint groupIndex) const;
-    GroupResults getGroupResults(uint groupIndex) const;
+    const QList<GroupResults> &getGroupsResults() const;
+
+    QString getTabLabel(ScaleStatisticsTabIndex index) const;
 
 private:
+    int m_testId;
     ScaleStatistics m_scaleStatistics;
 };

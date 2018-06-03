@@ -20,7 +20,7 @@ public:
 
 signals:
     void backButtonClicked();
-    void scaleSelected(const ScaleStatistics &scaleStatistics);
+    void scaleSelected(int testId, const ScaleStatistics &scaleStatistics);
 
 protected:
     void resizeEvent(QResizeEvent *event) override;

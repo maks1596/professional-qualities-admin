@@ -49,7 +49,8 @@ void PassedTestForm::resizeEvent(QResizeEvent *event) {
 void PassedTestForm::onScaleDoubleClicked(const QModelIndex &index) {
     auto scaleStatistics = getModel()->getScaleStatistics(index);
     if (scaleStatistics.getId() > 0) {
-        emit scaleSelected(scaleStatistics);
+        auto testId = getModel()->getTestId();
+        emit scaleSelected(testId, scaleStatistics);
     }
 }
 

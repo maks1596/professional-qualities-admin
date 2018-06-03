@@ -102,7 +102,10 @@ SOURCES += main.cpp\
     Entities/Statistics/CorrelationValue/CorrelationValue.cpp \
     Entities/Statistics/GroupCorrelations/GroupCorrelations.cpp \
     Modules/Correlations/Service/CorrelationsService.cpp \
-    Modules/Correlations/Assembler/CorrelationsAssembler.cpp
+    Modules/Correlations/Assembler/CorrelationsAssembler.cpp \
+    Modules/GroupsResults/Model/GroupsResultsModel.cpp \
+    Modules/GroupsResults/View/GroupsResultsForm.cpp \
+    Modules/GroupsResults/Assembler/GroupsResultsAssembler.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -191,7 +194,11 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/Statistics/CorrelationValue/CorrelationValue.h \
     Entities/Statistics/GroupCorrelations/GroupCorrelations.h \
     Modules/Correlations/Service/CorrelationsService.h \
-    Modules/Correlations/Assembler/CorrelationsAssembler.h
+    Modules/Correlations/Assembler/CorrelationsAssembler.h \
+    Modules/GroupsResults/Model/GroupsResultsModel.h \
+    Modules/GroupsResults/View/GroupsResultsForm.h \
+    Modules/GroupsResults/Assembler/GroupsResultsAssembler.h \
+    Modules/ScaleStatistics/Model/ScaleStatisticsTabIndex.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
@@ -210,7 +217,8 @@ FORMS    += MainWindow/MainWindow.ui \
     Forms/EntitiesForm/EntitiesForm.ui \
     Modules/PassedTests/View/PassedTestsForm.ui \
     Modules/PassedTest/View/PassedTestForm.ui \
-    Modules/ScaleStatistics/View/ScaleStatisticsForm.ui
+    Modules/ScaleStatistics/View/ScaleStatisticsForm.ui \
+    Modules/GroupsResults/View/GroupsResultsForm.ui
 
 # Для статической сборки
 QMAKE_LFLAGS_RELEASE += -static -static-libgcc

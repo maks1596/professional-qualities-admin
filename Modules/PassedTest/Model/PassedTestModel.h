@@ -15,9 +15,10 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     //  :: Accessors ::
-    PassedTest getPassedTest() const;
+    const PassedTest &getPassedTest() const;
     void setPassedTest(const PassedTest &passedTest);
 
+    int getTestId() const;
     QString getPassedTestName() const;
     uint getNumberOfPasses() const;
 

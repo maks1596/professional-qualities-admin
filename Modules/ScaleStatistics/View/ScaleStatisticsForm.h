@@ -21,7 +21,9 @@ signals:
     void backButtonClicked();
 
 private:
-    void updateGroupsResultsTabs();
+    void updateResultsTab();
+    void updateCorrelationsTab();
+    void removeTab(int index);
 
     ScaleStatisticsModel *m_model;
     Ui::ScaleStatisticsForm *ui;

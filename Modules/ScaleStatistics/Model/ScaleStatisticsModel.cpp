@@ -1,17 +1,32 @@
 #include "ScaleStatisticsModel.h"
 
+//  :: Constants ::
+
+const QString RESULTS_TAB_LABEL = "Результаты";
+const QString CORRELATIONS_TAB_LABEL = "Корреляции";
+
 //  :: Lifecycle ::
 
-ScaleStatisticsModel::ScaleStatisticsModel(const ScaleStatistics &scaleStatistics,
+ScaleStatisticsModel::ScaleStatisticsModel(int testId,
+                                           const ScaleStatistics &scaleStatistics,
                                            QObject *parent)
     : QObject(parent)
 {
+    setTestId(testId);
     setScaleStatistics(scaleStatistics);
 }
 
 //  :: Public accessors ::
+//  :: Test ID ::
+void ScaleStatisticsModel::setTestId(int testId) {
+    m_testId = testId;
+}
+int ScaleStatisticsModel::getTestId() const {
+    return m_testId;
+}
 
-ScaleStatistics ScaleStatisticsModel::getScaleStatistics() const {
+//  :: Scale statistics ::
+const ScaleStatistics &ScaleStatisticsModel::getScaleStatistics() const {
     return m_scaleStatistics;
 }
 void ScaleStatisticsModel::setScaleStatistics(const ScaleStatistics &scaleStatistics) {
@@ -20,24 +35,30 @@ void ScaleStatisticsModel::setScaleStatistics(const ScaleStatistics &scaleStatis
 
 //  :: Public methods ::
 
+int ScaleStatisticsModel::getScaleId() const {
+    return getScaleStatistics().getId();
+}
+
 QString ScaleStatisticsModel::getScaleName() const {
     return getScaleStatistics().getName();
 }
 
-uint ScaleStatisticsModel::getNumberOfGroups() const {
-    return getScaleStatistics().getGroupsResults().size();
+const QList<GroupResults> &ScaleStatisticsModel::getGroupsResults() const {
+    return getScaleStatistics().getGroupsResults();
 }
 
-QString ScaleStatisticsModel::getNameOfGroup(uint groupIndex) const {
-    if (groupIndex < getNumberOfGroups()) {
-        return getGroupResults(groupIndex).getGroupName();
-    }
-    return QString();
-}
+QString ScaleStatisticsModel::getTabLabel(ScaleStatisticsTabIndex index) const {
+    switch (index) {
+    case SCALE_STATISTICS_RESULTS_TAB_INDEX: {
+        return RESULTS_TAB_LABEL;
+    } break;
 
-GroupResults ScaleStatisticsModel::getGroupResults(uint groupIndex) const {
-    if (groupIndex < getNumberOfGroups()) {
-        return getScaleStatistics().getGroupsResults().at(groupIndex);
+    case SCALE_STATISTICS_CORRELATIONS_TAB_INDEX: {
+        return CORRELATIONS_TAB_LABEL;
+    } break;
+
+    default: {
+        return QString();
+    } break;
     }
-    return GroupResults();
 }
