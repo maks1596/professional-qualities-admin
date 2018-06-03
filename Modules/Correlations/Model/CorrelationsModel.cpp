@@ -26,7 +26,7 @@ QVariant CorrelationsModel::headerData(int section, Qt::Orientation orientation,
             }
         }
     }
-    return section;
+    return section + 1;
 }
 
 int CorrelationsModel::rowCount(const QModelIndex &) const {

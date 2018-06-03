@@ -135,7 +135,7 @@ QNetworkReply* Requester::sendCustomRequest(QNetworkRequest &request,
 											const QByteArray &byteArray) {
 	auto buffer = new QBuffer();
 	buffer->buffer() = byteArray;
-	QNetworkReply *reply;
+    QNetworkReply *reply = nullptr;
 
 	if (buffer->open(QIODevice::ReadOnly)) {
 		reply = pimpl->networkAccessManager
