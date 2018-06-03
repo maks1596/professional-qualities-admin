@@ -41,7 +41,7 @@ struct Test::Implementation {
 	Questions questions;
 	Scales scales;
 
-	int curScaleIndex;
+    int curScaleIndex = -1;
 };
 
 //  :: Lifecycle ::
