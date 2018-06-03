@@ -18,7 +18,7 @@ public:
     QString getName() const;
     void setName(const QString &name);
 
-    QList<GroupResults> getGroupsResults() const;
+    const QList<GroupResults> &getGroupsResults() const;
     void setGroupsResults(const QList<GroupResults> &groupsResults);
 
 private:

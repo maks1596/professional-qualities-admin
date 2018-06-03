@@ -53,7 +53,7 @@ void ScaleStatistics::setName(const QString &name) {
 }
 
 //  :: Groups results ::
-QList<GroupResults> ScaleStatistics::getGroupsResults() const {
+const QList<GroupResults> &ScaleStatistics::getGroupsResults() const {
     return m_groupsResults;
 }
 void ScaleStatistics::setGroupsResults(const QList<GroupResults> &groupsResults) {
