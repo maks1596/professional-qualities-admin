@@ -13,21 +13,45 @@ CorrelationsModel::CorrelationsModel(int testId, int scaleId, QObject *parent)
 //  :: QAbstractTableModel ::
 
 QVariant CorrelationsModel::headerData(int section, Qt::Orientation orientation, int role) const {
-    if (role == Qt::DisplayRole) {
-        if (orientation == Qt::Vertical) {
-            if (section < rowCount()) {
-                return getGroupsCorrelations()
-                        .first()
-                        .getCorrelationValues()
-                        .at(section)
-                        .getName();
-            }
-        } else {
-            if (section < columnCount()) {
-                return getGroupsCorrelations()
-                        .at(section)
-                        .getGroupName();
-            }
+    switch (role) {
+    case Qt::DisplayRole:
+        return headerDataForDisplayRole(section, orientation);
+
+    case Qt::ToolTipRole:
+        return headerDataForToolTipRole(section, orientation);
+
+    default:
+        return QVariant();
+    }
+}
+
+QVariant CorrelationsModel::headerDataForDisplayRole(int section, Qt::Orientation orientation) const {
+    if (orientation == Qt::Vertical) {
+        if (section < rowCount()) {
+            return getGroupsCorrelations()
+                    .first()
+                    .getCorrelationValues()
+                    .at(section)
+                    .getName();
+        }
+    } else {
+        if (section < columnCount()) {
+            return getGroupsCorrelations()
+                    .at(section)
+                    .getGroupName();
+        }
+    }
+    return QVariant();
+}
+
+QVariant CorrelationsModel::headerDataForToolTipRole(int section, Qt::Orientation orientation) const {
+    if (orientation == Qt::Vertical) {
+        if (section < rowCount()) {
+            return getGroupsCorrelations()
+                    .first()
+                    .getCorrelationValues()
+                    .at(section)
+                    .getFullName();
         }
     }
     return QVariant();

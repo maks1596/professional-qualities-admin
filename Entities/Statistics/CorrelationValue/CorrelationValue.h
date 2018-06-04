@@ -14,10 +14,14 @@ public:
     const QString &getName() const;
     void setName(const QString &name);
 
+    QString getFullName() const;
+    void setFullName(const QString &fullName);
+
     const QVariant &getValue() const;
     void setValue(const QVariant &value);
 
 private:
     QString m_name;
+    QString m_fullName;
     QVariant m_value;
 };
