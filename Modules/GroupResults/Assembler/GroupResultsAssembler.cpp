@@ -9,6 +9,7 @@ GroupResultsForm *GroupResultsAssembler::assembly(const GroupResults &groupResul
     auto model = new GroupResultsModel(groupResults, view);
 
     view->setModel(model);
+    view->setFrameShape(QFrame::NoFrame);
 
     auto resizeLambda = [view](){view->resizeColumnToContents(NAME_COLUMN_INDEX);};
     QObject::connect(view, &QTreeView::collapsed, resizeLambda);
