@@ -1,9 +1,13 @@
 #include "CorrelationsModel.h"
 
+#include "../Service/CorrelationsService.h"
+
 //  :: Lifecycle ::
 
-CorrelationsModel::CorrelationsModel(QObject *parent)
-    : QAbstractTableModel(parent)
+CorrelationsModel::CorrelationsModel(int testId, int scaleId, QObject *parent)
+    : QAbstractTableModel(parent),
+      m_testId(testId),
+      m_scaleId(scaleId)
 { }
 
 //  :: QAbstractTableModel ::
@@ -55,6 +59,28 @@ QVariant CorrelationsModel::data(const QModelIndex &index, int role) const {
 
 //  :: Public accessors ::
 
+int CorrelationsModel::getTestId() const {
+    return m_testId;
+}
+
+int CorrelationsModel::getScaleId() const {
+    return m_scaleId;
+}
+
+//  :: Service ::
+CorrelationsService *CorrelationsModel::getService() const {
+    return m_service;
+}
+void CorrelationsModel::setService(CorrelationsService *service) {
+    m_service = service;
+
+    connect(service, &CorrelationsService::defaultGroupsCorrelationsGot,
+            this, &CorrelationsModel::setGroupsCorrelations);
+
+    service->getDefaultGroupsCorrelations(getTestId(), getScaleId());
+}
+
+//  :: Groups correlations ::
 const QList<GroupCorrelations> &CorrelationsModel::getGroupsCorrelations() const {
     return m_groupsCorrelations;
 }
@@ -63,3 +89,7 @@ void CorrelationsModel::setGroupsCorrelations(const QList<GroupCorrelations> &gr
     m_groupsCorrelations = groupsCorrelations;
     endResetModel();
 }
+
+
+
+

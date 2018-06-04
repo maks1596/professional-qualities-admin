@@ -4,11 +4,13 @@
 
 #include "Entities/Statistics/GroupCorrelations/GroupCorrelations.h"
 
+class CorrelationsService;
+
 class CorrelationsModel : public QAbstractTableModel {
     Q_OBJECT
 
 public:
-    explicit CorrelationsModel(QObject *parent = nullptr);
+    explicit CorrelationsModel(int testId, int scaleId, QObject *parent = nullptr);
 
     //  :: QAbstractTableModel ::
     //  :: Header ::
@@ -22,9 +24,18 @@ public:
 
     //  :: Accessors ::
 
+    int getTestId() const;
+    int getScaleId() const;
+
+    CorrelationsService *getService() const;
+    void setService(CorrelationsService *service);
+
     const QList<GroupCorrelations> &getGroupsCorrelations() const;
     void setGroupsCorrelations(const QList<GroupCorrelations> &groupsCorrelations);
 
 private:
+    int m_testId;
+    int m_scaleId;
+    CorrelationsService *m_service;
     QList<GroupCorrelations> m_groupsCorrelations;
 };
