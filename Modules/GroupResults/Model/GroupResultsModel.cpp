@@ -28,14 +28,16 @@ GroupResultsModel::GroupResultsModel(const GroupResults &groupResults,
 //  :: QAbstratTableModel ::
 
 QVariant GroupResultsModel::headerData(int section, Qt::Orientation orientation, int role) const {
+    if (role != Qt::DisplayRole) {
+        return QVariant();
+    }
+
     if (orientation == Qt::Horizontal) {
         if (section < COLUMN_COUNT) {
-            if (role == Qt::DisplayRole) {
-                return kHorizontalHeaders[section];
-            }
+            return kHorizontalHeaders[section];
         }
     }
-    return section;
+    return section + 1;
 }
 
 int GroupResultsModel::rowCount(const QModelIndex &parent) const {

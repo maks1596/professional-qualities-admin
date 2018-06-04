@@ -13,6 +13,7 @@ GroupResultsForm *GroupResultsAssembler::assembly(const GroupResults &groupResul
     auto resizeLambda = [view](){view->resizeColumnToContents(NAME_COLUMN_INDEX);};
     QObject::connect(view, &QTreeView::collapsed, resizeLambda);
     QObject::connect(view, &QTreeView::expanded, resizeLambda);
+    resizeLambda();
 
     return view;
 }
