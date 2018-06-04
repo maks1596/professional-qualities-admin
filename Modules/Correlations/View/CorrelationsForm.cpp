@@ -10,6 +10,8 @@ CorrelationsForm::CorrelationsForm(QWidget *parent)
 void CorrelationsForm::setModel(QAbstractItemModel *model) {
     QTableView::setModel(model);
 
+    setFrameShape(QFrame::NoFrame);
+
     connect(model, &QAbstractItemModel::modelReset,
                          [this](){
             resizeColumnsToContents();
