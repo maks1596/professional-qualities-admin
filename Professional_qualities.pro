@@ -105,7 +105,8 @@ SOURCES += main.cpp\
     Modules/Correlations/Assembler/CorrelationsAssembler.cpp \
     Modules/GroupsResults/Model/GroupsResultsModel.cpp \
     Modules/GroupsResults/View/GroupsResultsForm.cpp \
-    Modules/GroupsResults/Assembler/GroupsResultsAssembler.cpp
+    Modules/GroupsResults/Assembler/GroupsResultsAssembler.cpp \
+    Modules/Correlations/View/CorrelationsForm.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
