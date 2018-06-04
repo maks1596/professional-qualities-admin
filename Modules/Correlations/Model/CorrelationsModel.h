@@ -26,14 +26,5 @@ public:
     void setGroupsCorrelations(const QList<GroupCorrelations> &groupsCorrelations);
 
 private:
-    void checkRowCount(const QList<GroupCorrelations> newGroupsCorrelations);
-    void checkColumnCount(const QList<GroupCorrelations> newGroupsCorrelations);
-
-
-    int rowCount(const QList<GroupCorrelations> groupsCorrelations) const;
-    int columnCount(const QList<GroupCorrelations> groupsCorrelations) const;
-
-    void emitAllDataChanged();
-
     QList<GroupCorrelations> m_groupsCorrelations;
 };

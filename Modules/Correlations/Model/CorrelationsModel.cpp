@@ -26,15 +26,19 @@ QVariant CorrelationsModel::headerData(int section, Qt::Orientation orientation,
             }
         }
     }
-    return section + 1;
+    return QVariant();
 }
 
 int CorrelationsModel::rowCount(const QModelIndex &) const {
-    return rowCount(getGroupsCorrelations());
+    if (!getGroupsCorrelations().isEmpty()) {
+        // Корреляции для всех групп одинаковые и в одинаковом количестве
+        return getGroupsCorrelations().first().getCorrelationValues().size();
+    }
+    return 0;
 }
 
 int CorrelationsModel::columnCount(const QModelIndex &) const {
-    return columnCount(getGroupsCorrelations());
+    return getGroupsCorrelations().size();
 }
 
 QVariant CorrelationsModel::data(const QModelIndex &index, int role) const {
@@ -55,57 +59,7 @@ const QList<GroupCorrelations> &CorrelationsModel::getGroupsCorrelations() const
     return m_groupsCorrelations;
 }
 void CorrelationsModel::setGroupsCorrelations(const QList<GroupCorrelations> &groupsCorrelations) {
-    checkRowCount(groupsCorrelations);
-    checkColumnCount(groupsCorrelations);
+    beginResetModel();
     m_groupsCorrelations = groupsCorrelations;
-    emitAllDataChanged();
-}
-
-//  :: Private methods ::
-inline
-void CorrelationsModel::checkRowCount(const QList<GroupCorrelations> newGroupsCorrelations) {
-    int oldRowCount = rowCount();
-    int newRowCount = rowCount(newGroupsCorrelations);
-
-    if (oldRowCount < newRowCount) {
-        beginInsertRows(QModelIndex(), oldRowCount, newRowCount - 1);
-        endInsertRows();
-    } else if (oldRowCount > newRowCount) {
-        beginRemoveRows(QModelIndex(), newRowCount, oldRowCount - 1);
-        endRemoveRows();
-    }
-}
-
-inline
-void CorrelationsModel::checkColumnCount(const QList<GroupCorrelations> newGroupsCorrelations) {
-    int oldColumnCount = columnCount();
-    int newColumnCount = columnCount(newGroupsCorrelations);
-
-    if (oldColumnCount < newColumnCount) {
-        beginInsertColumns(QModelIndex(), oldColumnCount, newColumnCount - 1);
-        endInsertColumns();
-    } else if (oldColumnCount > newColumnCount) {
-        beginRemoveColumns(QModelIndex(), newColumnCount, oldColumnCount - 1);
-        endRemoveColumns();
-    }
-}
-
-inline
-int CorrelationsModel::rowCount(const QList<GroupCorrelations> groupsCorrelations) const {
-    if (!groupsCorrelations.isEmpty()) {
-        // Корреляции для всех групп одинаковые и в одинаковом количестве
-        return groupsCorrelations.first().getCorrelationValues().size();
-    }
-    return 0;
-}
-inline
-int CorrelationsModel::columnCount(const QList<GroupCorrelations> groupsCorrelations) const {
-    return groupsCorrelations.size();
-}
-
-inline
-void CorrelationsModel::emitAllDataChanged() {
-    auto topLeft = index(0, 0);
-    auto bottomRight = index(rowCount() - 1, columnCount() - 1);
-    emit dataChanged(topLeft, bottomRight);
+    endResetModel();
 }
