@@ -184,6 +184,10 @@ void Test::toScale(const Scale &scale) {
 	}
 }
 
+bool Test::hasOnlyOneScale() const {
+	return (getScales().size() == 1);
+}
+
 //  :: Key ::
 void Test::addAnswerOptionToCurrentScale(const AnswerOption &answerOption) {
 	if(answerOption.getFormulation().isEmpty()) {

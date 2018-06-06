@@ -78,6 +78,12 @@ public:
 	 */
 	void toScale(const Scale &scale);
 
+	/**
+	 * @brief Метод отвечает на вопрос одна ли всего шкала в тесте
+	 * @return одна ли шкала в тесте
+	 */
+	bool hasOnlyOneScale() const;
+
 	//  :: Key  ::
 	/**
 	 * @brief Метод добавляет вариант ответа к ключу в текущей шкале

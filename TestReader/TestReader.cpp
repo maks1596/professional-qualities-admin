@@ -538,6 +538,13 @@ TestReader::State TestReader::readKeyScale(QChar curSymbol) {
         m_buffer = curSymbol;
         return READ_TAG;
     } break;
+    case ':': {
+        if(m_resultTest.hasOnlyOneScale()) {
+            return readTag(curSymbol);
+        } else {
+            throw KeyScaleExpected();
+        }
+    } break;
     }
     m_buffer += curSymbol;
     return READ_KEY_SCALE;
@@ -787,6 +794,13 @@ TestReader::State TestReader::readEvaluationMapScale(QChar curSymbol) {
         }
         m_buffer = curSymbol;
         return READ_LOWER_RANGE_VALUE;
+    } break;
+    case ':': {
+        if(m_resultTest.hasOnlyOneScale()) {
+            return readLowerRangeValue(curSymbol);
+        } else {
+            throw EvaluationMapScaleExpected();
+        }
     } break;
     }
     m_buffer += curSymbol;
