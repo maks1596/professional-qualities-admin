@@ -19,7 +19,6 @@ public:
     void setModel(PassedTestModel *model);
 
 signals:
-    void backButtonClicked();
     void scaleSelected(int testId, const ScaleStatistics &scaleStatistics);
 
 protected:

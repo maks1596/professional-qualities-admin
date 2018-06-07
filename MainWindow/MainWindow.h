@@ -19,6 +19,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+signals:
+    void aboutToClose();
+
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     void onUsersBtnClicked();
     void onTestsBtnClicked();
@@ -32,8 +38,8 @@ private slots:
     void onCancelTestEditing();
     void onTestRead(const Test &test);
 
-    void pushTestStatisticsFormToStack(const PassedTest &passedTest);
-    void pushScaleStatisticsFormToStack(int testId,
+    void showTestStatisticsForm(const PassedTest &passedTest);
+    void showScaleStatisticsForm(int testId,
                                         const ScaleStatistics &scaleStatistics);
 
     void showCriticalMessage(const QString &error);

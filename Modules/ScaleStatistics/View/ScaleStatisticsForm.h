@@ -17,9 +17,6 @@ public:
     ScaleStatisticsModel *getModel() const;
     void setModel(ScaleStatisticsModel *model);
 
-signals:
-    void backButtonClicked();
-
 private:
     void updateResultsTab();
     void updateCorrelationsTab();

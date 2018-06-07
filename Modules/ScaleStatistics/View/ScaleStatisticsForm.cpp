@@ -14,9 +14,6 @@ ScaleStatisticsForm::ScaleStatisticsForm(QWidget *parent) :
     ui(new Ui::ScaleStatisticsForm)
 {
     ui->setupUi(this);
-
-    connect(ui->backButton, &QPushButton::clicked,
-            this, &ScaleStatisticsForm::backButtonClicked);
 }
 
 ScaleStatisticsForm::~ScaleStatisticsForm() {

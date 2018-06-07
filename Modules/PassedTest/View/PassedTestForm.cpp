@@ -14,8 +14,6 @@ PassedTestForm::PassedTestForm(QWidget *parent) :
     ui(new Ui::PassedTestForm)
 {
     ui->setupUi(this);
-    connect(ui->backButton, &QPushButton::clicked,
-            this, &PassedTestForm::backButtonClicked);
     connect(ui->scalesListView, &QListView::doubleClicked,
             this, &PassedTestForm::onScaleDoubleClicked);
 }

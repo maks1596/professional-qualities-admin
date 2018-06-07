@@ -49,6 +49,14 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+//  :: Protected methods ::
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    emit aboutToClose();
+    QMainWindow::closeEvent(event);
+}
+
+//  :: Private slots ::
 //  :: Пользователи ::
 
 void MainWindow::onUsersBtnClicked() {
@@ -123,9 +131,7 @@ void MainWindow::onStatisticsButtonClicled() {
     connect(passedTestsForm, &PassedTestsForm::backButtonClicked,
             this, &MainWindow::onBackToMainMenu);
     connect(passedTestsForm, SIGNAL(passedTestSelected(PassedTest)),
-            SLOT(pushTestStatisticsFormToStack(PassedTest)));
-    connect(passedTestsForm, SIGNAL(passedTestSelected(PassedTest)),
-            passedTestsForm, SLOT(stopUpdating()));
+            SLOT(showTestStatisticsForm(PassedTest)));
     connect(passedTestsForm, &PassedTestsForm::error,
             this, &MainWindow::showStatusMessage);
 
@@ -133,26 +139,30 @@ void MainWindow::onStatisticsButtonClicled() {
     passedTestsForm->startUpdating();
 }
 
-void MainWindow::pushTestStatisticsFormToStack(const PassedTest &passedTest) {
-    auto testStatisticsForm = PassedTestAssembler::assembly(passedTest, this);
+void MainWindow::showTestStatisticsForm(const PassedTest &passedTest) {
+    auto testStatisticsForm = PassedTestAssembler::assembly(passedTest);
 
-    connect(testStatisticsForm, &PassedTestForm::backButtonClicked,
-            this, &MainWindow::popWidget);
-    connect(testStatisticsForm, &PassedTestForm::backButtonClicked,
-            currentWidget<PassedTestsForm>(), &PassedTestsForm::startUpdating);
     connect(testStatisticsForm, &PassedTestForm::scaleSelected,
-            this, &MainWindow::pushScaleStatisticsFormToStack);
+            this, &MainWindow::showScaleStatisticsForm);
+    connect(this, &MainWindow::aboutToClose,
+            testStatisticsForm, &QWidget::close);
+    connect(this, &MainWindow::aboutToClose,
+            testStatisticsForm, &QWidget::deleteLater);
 
-    pushWidget(testStatisticsForm);
+    testStatisticsForm->show();
 }
 
-void MainWindow::pushScaleStatisticsFormToStack(int testId, const ScaleStatistics &scaleStatistics) {
-    auto scaleStatisticsForm = ScaleStatisticsAssembler::assembly(testId, scaleStatistics, this);
+void MainWindow::showScaleStatisticsForm(int testId, const ScaleStatistics &scaleStatistics) {
+    auto scaleStatisticsForm = ScaleStatisticsAssembler::assembly(testId, scaleStatistics);
 
-    connect(scaleStatisticsForm, &ScaleStatisticsForm::backButtonClicked,
-            this, &MainWindow::popWidget);
+    connect(this, &MainWindow::destroyed,
+            scaleStatisticsForm, &QWidget::close);
+    connect(this, &MainWindow::aboutToClose,
+            scaleStatisticsForm, &QWidget::close);
+    connect(this, &MainWindow::aboutToClose,
+            scaleStatisticsForm, &QWidget::deleteLater);
 
-    pushWidget(scaleStatisticsForm);
+    scaleStatisticsForm->show();
 }
 
 //  :: Private slots ::

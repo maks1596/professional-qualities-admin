@@ -8,5 +8,5 @@ class ScaleStatisticsForm;
 namespace ScaleStatisticsAssembler {
 ScaleStatisticsForm *assembly(int testId,
                               const ScaleStatistics &scaleStatistics,
-                              QWidget *parent);
+                              QWidget *parent = nullptr);
 }
