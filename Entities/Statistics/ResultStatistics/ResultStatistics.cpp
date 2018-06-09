@@ -81,39 +81,31 @@ void ResultStatistics::setIndicatorGroups(const QList<IndicatorGroup> &indicator
 
 Tree::NodePtr<NamedValue> ResultStatistics::toTreeNodePtr() const {
     NamedValue namedValue{getFormulation(), QVariant()};
+    auto nodePtr = Tree::makeNodePtr(namedValue);
 
-    Tree::NodePtr<NamedValue> node(new Tree::Node<NamedValue>);
-    node->data = namedValue;
+    nodePtr->addChild(timesToTreeNodePtr(nodePtr));
+    nodePtr->addChild(frequencyToTreeNodePtr(nodePtr));
+    nodePtr->addChildren(indicatorGroupsToNodePtrs(nodePtr));
 
-    node->children.append(timesToNodePtr(node));
-    node->children.append(frequencyToNodePtr(node));
-    node->children.append(indicatorGroupsToNodePtrs(node));
-
-    return node;
+    return nodePtr;
 }
 
 //  :: Private methods ::
 
-Tree::NodePtr<NamedValue> ResultStatistics::timesToNodePtr(const Tree::NodePtr<NamedValue> &parent) const {
-    NamedValue namedValue{TIMES_NAME, getTimes()};
-    Tree::NodePtr<NamedValue> node(new Tree::Node<NamedValue>);
-    node->data = namedValue;
-    node->parent = parent;
-    return node;
+Tree::NodePtr<NamedValue> ResultStatistics::timesToTreeNodePtr(const Tree::NodePtr<NamedValue> &parent) const {
+    NamedValue namedValue(TIMES_NAME, getTimes());
+    return Tree::makeNodePtr(namedValue, parent);
 }
 
-Tree::NodePtr<NamedValue> ResultStatistics::frequencyToNodePtr(const Tree::NodePtr<NamedValue> &parent) const {
-    NamedValue namedValue{FREQUENCY_NAME, getFrequency()};
-    Tree::NodePtr<NamedValue> node(new Tree::Node<NamedValue>);
-    node->data = namedValue;
-    node->parent = parent;
-    return node;
+Tree::NodePtr<NamedValue> ResultStatistics::frequencyToTreeNodePtr(const Tree::NodePtr<NamedValue> &parent) const {
+    NamedValue namedValue(FREQUENCY_NAME, getFrequency());
+    return Tree::makeNodePtr(namedValue, parent);
 }
 
 Tree::NodePtrs<NamedValue> ResultStatistics::indicatorGroupsToNodePtrs(const Tree::NodePtr<NamedValue> &parent) const {
-    Tree::NodePtrs<NamedValue> nodes;
+    Tree::NodePtrs<NamedValue> nodePtrs;
     for (const auto &indicatorGroup : getIndicatorGroups()) {
-        nodes.append(indicatorGroup.toTreeNodePtr(parent));
+        nodePtrs.append(indicatorGroup.toTreeNodePtr(parent));
     }
-    return nodes;
+    return nodePtrs;
 }

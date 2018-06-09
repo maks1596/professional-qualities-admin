@@ -8,6 +8,10 @@ class NamedValue;
 
 class ResultStatistics : public SerializableObject {
 public:
+
+    //  :: Lifecycle ::
+    virtual ~ResultStatistics() noexcept = default;
+
     //  :: Serializable ::
     virtual QJsonObject toJson() const override;
     virtual void initWithJsonObject(const QJsonObject &json) override;
@@ -26,11 +30,14 @@ public:
     const QList<IndicatorGroup> &getIndicatorGroups() const;
     void setIndicatorGroups(const QList<IndicatorGroup> &indicatorGroups);
 
+    //  :: Methods ::
+
     Tree::NodePtr<NamedValue> toTreeNodePtr() const;
 
 private:
-    Tree::NodePtr<NamedValue> timesToNodePtr(const Tree::NodePtr<NamedValue> &parent) const;
-    Tree::NodePtr<NamedValue> frequencyToNodePtr(const Tree::NodePtr<NamedValue> &parent) const;
+    Tree::NodePtr<NamedValue> timesToTreeNodePtr(const Tree::NodePtr<NamedValue> &parent) const;
+    Tree::NodePtr<NamedValue> frequencyToTreeNodePtr(const Tree::NodePtr<NamedValue> &parent) const;
+
     Tree::NodePtrs<NamedValue> indicatorGroupsToNodePtrs(const Tree::NodePtr<NamedValue> &parent) const;
 
     QString m_formulation;

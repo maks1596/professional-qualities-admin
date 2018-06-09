@@ -1,8 +1,7 @@
 #pragma once
 
-enum GroupResultsColumnIndex {
+enum DefinedGroupsResultsColumnIndex {
     RAMIFICATION_COLUMN_INDEX,
     NAME_COLUMN_INDEX = RAMIFICATION_COLUMN_INDEX,
-    VALUE_COLUMN_INDEX,
-    COLUMN_COUNT
+    DEFINED_COLUMNS_COUNT
 };

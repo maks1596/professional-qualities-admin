@@ -1,23 +1,5 @@
 #pragma once
 
-#include <QWidget>
+#include <QTreeView>
 
-namespace Ui {
-class GroupsResultsForm;
-}
-class GroupsResultsModel;
-
-class GroupsResultsForm : public QWidget {
-    Q_OBJECT
-
-public:
-    explicit GroupsResultsForm(QWidget *parent = nullptr);
-    ~GroupsResultsForm();
-
-    GroupsResultsModel *getModel() const;
-    void setModel(GroupsResultsModel *model);
-
-private:
-    GroupsResultsModel *m_model;
-    Ui::GroupsResultsForm *ui;
-};
+using GroupsResultsForm = QTreeView;

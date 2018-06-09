@@ -38,12 +38,14 @@ void GroupResults::setGroupName(const QString &groupName) {
 }
 
 //  :: Results ::
-QList<ResultStatistics> GroupResults::getResults() const {
+const QList<ResultStatistics> &GroupResults::getResults() const {
     return m_results;
 }
 void GroupResults::setResults(const QList<ResultStatistics> &results) {
     m_results = results;
 }
+
+//  :: Public methods ::
 
 Tree::NodePtrs<NamedValue> GroupResults::resultsToTreeNodePtrs() const {
     Tree::NodePtrs<NamedValue> nodes;

@@ -46,9 +46,6 @@ void Indicator::setValue(double value) {
 //  :: Public methods ::
 
 Tree::NodePtr<NamedValue> Indicator::toTreeNodePtr(const Tree::NodePtr<NamedValue> &parent) const {
-    NamedValue namedValue{getName(), getValue()};
-    Tree::NodePtr<NamedValue> node(new Tree::Node<NamedValue>);
-    node->data = namedValue;
-    node->parent = parent;
-    return node;
+    NamedValue namedValue(getName(), getValue());
+    return Tree::makeNodePtr(namedValue, parent);
 }

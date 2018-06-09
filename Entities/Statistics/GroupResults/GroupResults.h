@@ -8,6 +8,10 @@ class NamedValue;
 
 class GroupResults : public SerializableObject {
 public:
+
+    //  :: Lifecycle ::
+    virtual ~GroupResults() noexcept = default;
+
     //  :: Serializable ::
     virtual QJsonObject toJson() const override;
     virtual void initWithJsonObject(const QJsonObject &json) override;
@@ -17,9 +21,10 @@ public:
     QString getGroupName() const;
     void setGroupName(const QString &groupName);
 
-    QList<ResultStatistics> getResults() const;
+    const QList<ResultStatistics> &getResults() const;
     void setResults(const QList<ResultStatistics> &results);
 
+    //  :: Methods ::
     Tree::NodePtrs<NamedValue> resultsToTreeNodePtrs() const;
 
 private:

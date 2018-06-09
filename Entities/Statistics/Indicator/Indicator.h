@@ -7,6 +7,10 @@ class NamedValue;
 
 class Indicator : public SerializableObject {
 public:
+
+    //  :: Lifecycle ::
+    virtual ~Indicator() noexcept = default;
+
     //  :: Serializable ::
     virtual QJsonObject toJson() const override;
     virtual void initWithJsonObject(const QJsonObject &json) override;

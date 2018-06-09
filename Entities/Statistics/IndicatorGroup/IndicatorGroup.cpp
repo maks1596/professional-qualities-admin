@@ -48,19 +48,17 @@ void IndicatorGroup::setIndicators(const QList<Indicator> &indicators) {
 //  :: Public methods ::
 
 Tree::NodePtr<NamedValue> IndicatorGroup::toTreeNodePtr(const Tree::NodePtr<NamedValue> &parent) const {
-    Tree::NodePtr<NamedValue> node(new Tree::Node<NamedValue>);
-    node->data.name = getName();
-    node->parent = parent;
-    node->children = indicatorsToTreeNodePtrs(node);
-    return node;
+    auto nodePtr = Tree::makeNodePtr({getName()}, parent);
+    nodePtr->setChildren(indicatorsToTreeNodePtrs(nodePtr));
+    return nodePtr;
 }
 
 //  :: Private methods ::
 
 Tree::NodePtrs<NamedValue> IndicatorGroup::indicatorsToTreeNodePtrs(const Tree::NodePtr<NamedValue> &parent) const {
-    Tree::NodePtrs<NamedValue> nodes;
+    Tree::NodePtrs<NamedValue> nodePtrs;
     for (const auto &indicator : getIndicators()) {
-        nodes.append(indicator.toTreeNodePtr(parent));
+        nodePtrs.append(indicator.toTreeNodePtr(parent));
     }
-    return nodes;
+    return nodePtrs;
 }

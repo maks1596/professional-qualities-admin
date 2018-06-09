@@ -95,8 +95,6 @@ SOURCES += main.cpp\
     Modules/ScaleStatistics/View/ScaleStatisticsForm.cpp \
     Modules/ScaleStatistics/Assembler/ScaleStatisticsAssembler.cpp \
     Modules/ScaleStatistics/Model/ScaleStatisticsModel.cpp \
-    Modules/GroupResults/Model/GroupResultsModel.cpp \
-    Modules/GroupResults/Assembler/GroupResultsAssembler.cpp \
     NamedValue/NamedValue.cpp \
     Modules/Correlations/Model/CorrelationsModel.cpp \
     Entities/Statistics/CorrelationValue/CorrelationValue.cpp \
@@ -104,9 +102,10 @@ SOURCES += main.cpp\
     Modules/Correlations/Service/CorrelationsService.cpp \
     Modules/Correlations/Assembler/CorrelationsAssembler.cpp \
     Modules/GroupsResults/Model/GroupsResultsModel.cpp \
-    Modules/GroupsResults/View/GroupsResultsForm.cpp \
     Modules/GroupsResults/Assembler/GroupsResultsAssembler.cpp \
-    Modules/Correlations/View/CorrelationsForm.cpp
+    Modules/Correlations/View/CorrelationsForm.cpp \
+    Entities/Statistics/GroupsResultsTree/GroupsResultsTree.cpp \
+    NamedValues/NamedValues.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -184,11 +183,7 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/ScaleStatistics/View/ScaleStatisticsForm.h \
     Modules/ScaleStatistics/Assembler/ScaleStatisticsAssembler.h \
     Modules/ScaleStatistics/Model/ScaleStatisticsModel.h \
-    Modules/GroupResults/Model/GroupResultsModel.h \
     Tree.h \
-    Modules/GroupResults/Assembler/GroupResultsAssembler.h \
-    Modules/GroupResults/View/GroupResultsForm.h \
-    Modules/GroupResults/Model/GroupResultsColumnIndex.h \
     NamedValue/NamedValue.h \
     Modules/Correlations/View/CorrelationsForm.h \
     Modules/Correlations/Model/CorrelationsModel.h \
@@ -199,7 +194,9 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/GroupsResults/Model/GroupsResultsModel.h \
     Modules/GroupsResults/View/GroupsResultsForm.h \
     Modules/GroupsResults/Assembler/GroupsResultsAssembler.h \
-    Modules/ScaleStatistics/Model/ScaleStatisticsTabIndex.h
+    Modules/ScaleStatistics/Model/ScaleStatisticsTabIndex.h \
+    Entities/Statistics/GroupsResultsTree/GroupsResultsTree.h \
+    NamedValues/NamedValues.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
@@ -219,7 +216,6 @@ FORMS    += MainWindow/MainWindow.ui \
     Modules/PassedTests/View/PassedTestsForm.ui \
     Modules/PassedTest/View/PassedTestForm.ui \
     Modules/ScaleStatistics/View/ScaleStatisticsForm.ui \
-    Modules/GroupsResults/View/GroupsResultsForm.ui
 
 # Для статической сборки
 QMAKE_LFLAGS_RELEASE += -static -static-libgcc
