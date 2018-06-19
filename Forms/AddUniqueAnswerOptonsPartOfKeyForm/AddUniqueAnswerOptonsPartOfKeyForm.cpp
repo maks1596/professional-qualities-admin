@@ -112,7 +112,10 @@ void AddForm::addAnswerOptionOnForm(const uint &index) {
 void AddForm::updateAnswerOption() {
     ui->answerOption->clear();
 	auto questionIndex = getPartOfKey().getQuestionIndex();
-    auto curQuestion = m_questions->at(questionIndex);
+    Question curQuestion;
+    if (!m_questions->isEmpty()) {
+        curQuestion = m_questions->at(questionIndex);
+    }
     auto answerOptions = curQuestion.getAnswerOptions();
     auto formAnswerOptions = makeAnswerOptions(answerOptions->count());
     ui->answerOption->addItems(formAnswerOptions);
