@@ -44,11 +44,6 @@ void LoginForm::onLoginBtnClicked() {
 							 ui->password->text());
 }
 
-void LoginForm::onLoginSuccess() {
-	emit loginSuccessed();
-	hide();
-}
-
 void LoginForm::onLoginFailed() {
 	ui->errorMessage->show();
 	QApplication::alert(this);
@@ -64,7 +59,7 @@ void LoginForm::configureErrorMessage() {
 void LoginForm::initModel() {
 	m_model = new AutorizationModel(this);
 	connect(m_model, &AutorizationModel::autorized,
-			this, &LoginForm::onLoginSuccess);
+            this, &LoginForm::loginSuccessed);
 	connect(m_model, &AutorizationModel::error,
 			this, &LoginForm::onLoginFailed);
 }

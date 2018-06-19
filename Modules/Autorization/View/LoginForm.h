@@ -21,7 +21,6 @@ signals:
 private slots:
     void onLoginBtnClicked();
 
-	void onLoginSuccess();
 	void onLoginFailed();
 
 private:

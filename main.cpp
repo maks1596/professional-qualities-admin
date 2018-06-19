@@ -24,6 +24,8 @@ int main(int argc,  char **argv) {
     loginForm.show();
 
     QObject::connect(&loginForm, &LoginForm::loginSuccessed,
+                     &loginForm, &LoginForm::hide);
+    QObject::connect(&loginForm, &LoginForm::loginSuccessed,
                      &mainWindow, &MainWindow::show);
 
     return a.exec();
