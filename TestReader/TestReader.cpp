@@ -434,7 +434,6 @@ TestReader::State TestReader::readUniqueAnswerOption(QChar curSymbol) {
             return READ_QUESTION;
         }
     }
-    case ',':
     case ';': {
         uniqueAnswerOptionRead();
         return WAIT_UNIQUE_ANSWER_OPTION;
