@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>UserDataForm</class>
+ <widget class="QWidget" name="UserDataForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>254</width>
+    <height>98</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Логин</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="loginLineEdit">
+     <property name="placeholderText">
+      <string>Введите логин</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Пароль</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="passwordLineEdit">
+     <property name="echoMode">
+      <enum>QLineEdit::PasswordEchoOnEdit</enum>
+     </property>
+     <property name="placeholderText">
+      <string>Введите пароль</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="repeatPasswordLineEdit">
+     <property name="echoMode">
+      <enum>QLineEdit::PasswordEchoOnEdit</enum>
+     </property>
+     <property name="placeholderText">
+      <string>Повторите пароль</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Роль</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QComboBox" name="roleComboBox"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

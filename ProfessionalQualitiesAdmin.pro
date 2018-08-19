@@ -106,6 +106,7 @@ SOURCES += main.cpp\
     Modules/Correlations/View/CorrelationsForm.cpp \
     Entities/Statistics/GroupsResultsTree/GroupsResultsTree.cpp \
     NamedValues/NamedValues.cpp \
+    Forms/UserDataForm/UserDataForm.cpp \
     Entities/UserRole/UserRole.cpp \
     Entities/UserRole/Model/UserRoleModel.cpp
 
@@ -199,6 +200,7 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/ScaleStatistics/Model/ScaleStatisticsTabIndex.h \
     Entities/Statistics/GroupsResultsTree/GroupsResultsTree.h \
     NamedValues/NamedValues.h \
+    Forms/UserDataForm/UserDataForm.h \
     Entities/UserRole/UserRole.h \
     Entities/UserRole/Model/UserRoleModel.h
 
@@ -220,6 +222,7 @@ FORMS    += MainWindow/MainWindow.ui \
     Modules/PassedTests/View/PassedTestsForm.ui \
     Modules/PassedTest/View/PassedTestForm.ui \
     Modules/ScaleStatistics/View/ScaleStatisticsForm.ui \
+    Forms/UserDataForm/UserDataForm.ui
 
 # Для статической сборки
 QMAKE_LFLAGS_RELEASE += -static -static-libgcc
