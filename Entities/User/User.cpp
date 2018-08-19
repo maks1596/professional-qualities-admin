@@ -3,11 +3,15 @@
 #include <QDate>
 #include <QString>
 
+#include "Entities/Gender/Gender.h"
+#include "Entities/UserRole/UserRole.h"
+
 //  :: Constants ::
 
 const QString ID_JSON_KEY = "id";
 const QString LOGIN_JSON_KEY = "login";
 const QString PASSWORD_JSON_KEY = "password";
+const QString ROLE_JSON_KEY = "roleName";
 const QString NAME_JSON_KEY = "name";
 const QString GENDER_JSON_KEY = "gender";
 const QString BIRTHDAY_JSON_KEY = "birthday";
@@ -19,6 +23,7 @@ const QString EXPERT_ASSESSMENT_JSON_KEY = "expertAssessment";
 struct User::Implementation {
 	QString login;
 	QString password;
+    UserRole role;
 
 	QString name;
 	Gender gender = Gender::Male;
@@ -71,7 +76,15 @@ QString User::getPassword() const {
 	return pimpl->password;
 }
 void User::setPassword(const QString &password) {
-	pimpl->password = password;
+    pimpl->password = password;
+}
+
+//  :: Role ::
+UserRole User::getRole() const {
+    return pimpl->role;
+}
+void User::setRole(UserRole role) {
+    pimpl->role = role;
 }
 
 //  :: Name ::
@@ -141,6 +154,7 @@ QJsonObject User::toJson() const {
 	json[ID_JSON_KEY] = getId();
 	json[LOGIN_JSON_KEY] = getLogin();
 	json[PASSWORD_JSON_KEY] = getPassword();
+    json[ROLE_JSON_KEY] = userRoleToJson(getRole());
 	json[NAME_JSON_KEY] = getName();
 	json[GENDER_JSON_KEY] = genderToJson(getGender());
 	json[BIRTHDAY_JSON_KEY] = getBirthday().toString(Qt::DateFormat::ISODate);
@@ -159,6 +173,11 @@ void User::initWithJsonObject(const QJsonObject &json) {
     }
 	if (json.contains(PASSWORD_JSON_KEY) && json[PASSWORD_JSON_KEY].isString()) {
 		setPassword(json[PASSWORD_JSON_KEY].toString());
+    }
+    if (json.contains(ROLE_JSON_KEY) && json[ROLE_JSON_KEY].isString()) {
+        auto roleJsonString = json[ROLE_JSON_KEY].toString();
+        auto role = userRoleFromJson(roleJsonString);
+        setRole(role);
     }
 	if (json.contains(NAME_JSON_KEY) && json[NAME_JSON_KEY].isString()) {
 		setName(json[NAME_JSON_KEY].toString());

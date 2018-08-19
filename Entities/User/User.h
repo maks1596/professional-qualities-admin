@@ -4,10 +4,12 @@
 #include <QScopedPointer>
 
 #include "Entities/Entity/Entity.h"
-#include "Entities/Gender/Gender.h"
 
 class QDate;
 class QString;
+
+enum class Gender;
+enum class UserRole;
 
 class User : public QObject,
 			 public Entity {
@@ -36,6 +38,9 @@ public:
 
     QString getPassword() const;
     void setPassword(const QString &password);
+
+    UserRole getRole() const;
+    void setRole(UserRole role);
 
     QString getName() const;
     void setName(const QString &getName);
