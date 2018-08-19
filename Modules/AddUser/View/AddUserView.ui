@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>UserForm</class>
- <widget class="QWidget" name="UserForm">
+ <class>AddUserView</class>
+ <widget class="QWidget" name="AddUserView">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -43,79 +43,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QFormLayout" name="loginForm">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Логин</string>
-       </property>
-       <property name="buddy">
-        <cstring>login</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="login">
-       <property name="placeholderText">
-        <string>Введите  имя учётной записи</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Пароль</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="password">
-       <property name="echoMode">
-        <enum>QLineEdit::Password</enum>
-       </property>
-       <property name="placeholderText">
-        <string>Введите пароль</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="repeatPassword">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="echoMode">
-        <enum>QLineEdit::Password</enum>
-       </property>
-       <property name="placeholderText">
-        <string>Повторите пароль</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLabel" name="passOk">
-       <property name="font">
-        <font>
-         <italic>true</italic>
-        </font>
-       </property>
-       <property name="text">
-        <string>Пароли совпадают</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLabel" name="passConflict">
-       <property name="font">
-        <font>
-         <italic>true</italic>
-        </font>
-       </property>
-       <property name="text">
-        <string>Пароли не совпадают</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="UserDataForm" name="userDataForm" native="true"/>
    </item>
    <item>
     <widget class="QLabel" name="label_10">
@@ -355,10 +283,15 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>UserDataForm</class>
+   <extends>QWidget</extends>
+   <header>Forms/UserDataForm/UserDataForm.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
-  <tabstop>login</tabstop>
-  <tabstop>password</tabstop>
-  <tabstop>repeatPassword</tabstop>
   <tabstop>name</tabstop>
   <tabstop>maleRadioButton</tabstop>
   <tabstop>femaleRadioButton</tabstop>
