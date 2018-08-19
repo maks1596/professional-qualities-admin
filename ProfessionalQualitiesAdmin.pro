@@ -52,7 +52,6 @@ SOURCES += main.cpp\
     Forms/AnswerOptionForm/AnswerOptionForm.cpp \
     Modules/Tests/View/TestsForm.cpp \
     Entities/User/User.cpp \
-    Forms/UserForm/UserForm.cpp \
     Forms/EntitiesForm/EntitiesForm.cpp \
     Requester/Requester.cpp \
     Entities/AnswerOption/Type/AnswerOptionsType.cpp \
@@ -108,7 +107,11 @@ SOURCES += main.cpp\
     NamedValues/NamedValues.cpp \
     Forms/UserDataForm/UserDataForm.cpp \
     Entities/UserRole/UserRole.cpp \
-    Entities/UserRole/Model/UserRoleModel.cpp
+    Entities/UserRole/Model/UserRoleModel.cpp \
+    Modules/AddUser/Controller/AddUserController.cpp \
+    Modules/AddUser/View/AddUserView.cpp \
+    Modules/AddUser/Service/AddUserService.cpp \
+    Modules/AddUser/Assembler/AddUserAssembler.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -138,7 +141,6 @@ HEADERS  += MainWindow/MainWindow.h \
     Forms/AnswerOptionForm/AnswerOptionForm.h \
     Modules/Tests/View/TestsForm.h \
     Entities/User/User.h \
-    Forms/UserForm/UserForm.h \
     Forms/EntitiesForm/EntitiesForm.h \
     Requester/Requester.h \
     Requester/RequestType.h \
@@ -202,7 +204,12 @@ HEADERS  += MainWindow/MainWindow.h \
     NamedValues/NamedValues.h \
     Forms/UserDataForm/UserDataForm.h \
     Entities/UserRole/UserRole.h \
-    Entities/UserRole/Model/UserRoleModel.h
+    Entities/UserRole/Model/UserRoleModel.h \
+    Modules/AddUser/Controller/AddUserController.h \
+    Modules/AddUser/View/AddUserView.h \
+    Forms/UserDataForm/PasswordsHintStatus.h \
+    Modules/AddUser/Service/AddUserService.h \
+    Modules/AddUser/Assembler/AddUserAssembler.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
@@ -217,12 +224,12 @@ FORMS    += MainWindow/MainWindow.ui \
     Forms/ScaleForm.ui \
     Forms/AddAppraisedRangeForm/AddAppraisedRangeForm.ui \
     Modules/Autorization/View/LoginForm.ui \
-    Forms/UserForm/UserForm.ui \
     Forms/EntitiesForm/EntitiesForm.ui \
     Modules/PassedTests/View/PassedTestsForm.ui \
     Modules/PassedTest/View/PassedTestForm.ui \
     Modules/ScaleStatistics/View/ScaleStatisticsForm.ui \
-    Forms/UserDataForm/UserDataForm.ui
+    Forms/UserDataForm/UserDataForm.ui \
+    Modules/AddUser/View/AddUserView.ui
 
 # Для статической сборки
 QMAKE_LFLAGS_RELEASE += -static -static-libgcc

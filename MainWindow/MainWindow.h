@@ -2,18 +2,18 @@
 
 #include <QMainWindow>
 
-#include "Entities/User/User.h"
 #include "Entities/Test/Test.h"
 
 namespace Ui {
 class MainWindow;
 }
 
+class User;
 class PassedTest;
 class ScaleStatistics;
 
 class MainWindow : public QMainWindow {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -31,7 +31,8 @@ private slots:
     void onStatisticsButtonClicled();
     void onBackToMainMenu();
 
-    void pushUserFormToStack(const User &user = User());
+    void pushAddUserFormToStack();
+    void pushEditUserFormToStack(const User &user);
     void onCancelUserEditing();
 
     void pushTestFormToStack(const Test &test = Test());

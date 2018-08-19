@@ -3,7 +3,10 @@
 
 #include <QMessageBox>
 
-#include "Forms/UserForm/UserForm.h"
+#include "Entities/User/User.h"
+
+#include "Modules/AddUser/Assembler/AddUserAssembler.h"
+#include "Modules/AddUser/View/AddUserView.h"
 #include "Modules/Users/View/UsersForm.h"
 
 #include "Modules/TestEditing/View/TestEditingForm.h"
@@ -41,8 +44,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->addTestBtn, SIGNAL(clicked()),
             this, SLOT(pushTestFormToStack()));
-    connect(ui->addUserBtn, SIGNAL(clicked()),
-            this, SLOT(pushUserFormToStack()));
+    connect(ui->addUserBtn, &QPushButton::clicked,
+            this, &MainWindow::pushAddUserFormToStack);
 }
 
 MainWindow::~MainWindow() {
@@ -60,19 +63,28 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 //  :: Пользователи ::
 
 void MainWindow::onUsersBtnClicked() {
-    UsersForm *users = new UsersForm(this);
-    connect(users, &UsersForm::toMainMenuBtnClicked,
+    UsersForm *usersForm = new UsersForm(this);
+    connect(usersForm, &UsersForm::toMainMenuBtnClicked,
             this, &MainWindow::onBackToMainMenu);
-    connect(users, SIGNAL(createUserForm(User)),
-            this, SLOT(pushUserFormToStack(User)));
-	connect(users, &TestsForm::error,
+    connect(usersForm, SIGNAL(createUserForm(User)),
+            this, SLOT(pushEditUserFormToStack(User)));
+    connect(usersForm, &UsersForm::addUserButtonClicked,
+            this, &MainWindow::pushAddUserFormToStack);
+    connect(usersForm, &TestsForm::error,
 			this, &MainWindow::showStatusMessage);
-    pushWidget(users);
+    pushWidget(usersForm);
 }
 
-void MainWindow::pushUserFormToStack(const User &user) {
-    UserForm *userForm = new UserForm(user, this);
-    connect(userForm, &UserForm::editingCanceled,
+void MainWindow::pushAddUserFormToStack() {
+    AddUserView *userForm = AddUserAssembler::assembly(this);
+    connect(userForm, &AddUserView::editingCanceled,
+            this, &MainWindow::onCancelUserEditing);
+    pushWidget(userForm);
+}
+
+void MainWindow::pushEditUserFormToStack(const User &user) {
+    AddUserView *userForm = new AddUserView(user, this);
+    connect(userForm, &AddUserView::editingCanceled,
             this, &MainWindow::onCancelUserEditing);
     pushWidget(userForm);
 }
