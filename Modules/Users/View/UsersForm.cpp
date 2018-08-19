@@ -47,7 +47,7 @@ void UsersForm::update() {
 //  :: Protected slots ::
 
 void UsersForm::onAddBtnClicked() {
-    emit createUserForm(User());
+    emit addUserButtonClicked();
 }
 
 void UsersForm::editEntity(const int &userID) {

@@ -15,6 +15,7 @@ public slots:
 	virtual void update() override;
 
 signals:
+    void addUserButtonClicked();
     void createUserForm(const User &user);
 
 protected slots:
