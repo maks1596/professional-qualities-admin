@@ -9,4 +9,6 @@ enum class UserRole {
 };
 
 QString userRoleToJson(UserRole role);
+UserRole userRoleFromJson(const QString &json);
+
 QString userRoleToString(UserRole role);
