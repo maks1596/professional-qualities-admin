@@ -105,7 +105,8 @@ SOURCES += main.cpp\
     Modules/GroupsResults/Assembler/GroupsResultsAssembler.cpp \
     Modules/Correlations/View/CorrelationsForm.cpp \
     Entities/Statistics/GroupsResultsTree/GroupsResultsTree.cpp \
-    NamedValues/NamedValues.cpp
+    NamedValues/NamedValues.cpp \
+    Entities/UserRole/UserRole.cpp \
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -196,7 +197,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/GroupsResults/Assembler/GroupsResultsAssembler.h \
     Modules/ScaleStatistics/Model/ScaleStatisticsTabIndex.h \
     Entities/Statistics/GroupsResultsTree/GroupsResultsTree.h \
-    NamedValues/NamedValues.h
+    NamedValues/NamedValues.h \
+    Entities/UserRole/UserRole.h \
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
