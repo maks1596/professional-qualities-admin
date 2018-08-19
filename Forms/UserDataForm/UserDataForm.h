@@ -6,7 +6,8 @@ namespace Ui {
 class UserDataForm;
 }
 
-enum class UserRole : char;
+enum class UserRole;
+enum class PasswordsHintStatus;
 
 class UserDataForm : public QWidget {
     Q_OBJECT
@@ -27,6 +28,19 @@ public:
     UserRole getRole() const;
     void setRole(UserRole role);
 
+    void setPasswordsHintStatus(PasswordsHintStatus status);
+
+signals:
+    void loginChanged(const QString &login);
+    void passwordChanged(const QString &login);
+    void repeatPasswordChanged(const QString &login);
+    void roleChanged(UserRole role);
+
+private slots:
+    void onRoleComboBoxCurrentIndexChanged(int index);
+
 private:
+    void setPasswordHintLabelTextColor(const QString &color);
+
     Ui::UserDataForm *ui;
 };
