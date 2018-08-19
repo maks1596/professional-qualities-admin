@@ -107,6 +107,7 @@ SOURCES += main.cpp\
     Entities/Statistics/GroupsResultsTree/GroupsResultsTree.cpp \
     NamedValues/NamedValues.cpp \
     Entities/UserRole/UserRole.cpp \
+    Entities/UserRole/Model/UserRoleModel.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -199,6 +200,7 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/Statistics/GroupsResultsTree/GroupsResultsTree.h \
     NamedValues/NamedValues.h \
     Entities/UserRole/UserRole.h \
+    Entities/UserRole/Model/UserRoleModel.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
