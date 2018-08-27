@@ -111,7 +111,8 @@ SOURCES += main.cpp\
     Modules/AddUser/Controller/AddUserController.cpp \
     Modules/AddUser/View/AddUserView.cpp \
     Modules/AddUser/Service/AddUserService.cpp \
-    Modules/AddUser/Assembler/AddUserAssembler.cpp
+    Modules/AddUser/Assembler/AddUserAssembler.cpp \
+    Forms/PersonalDataForm/PersonalDataForm.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -209,7 +210,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/AddUser/View/AddUserView.h \
     Forms/UserDataForm/PasswordsHintStatus.h \
     Modules/AddUser/Service/AddUserService.h \
-    Modules/AddUser/Assembler/AddUserAssembler.h
+    Modules/AddUser/Assembler/AddUserAssembler.h \
+    Forms/PersonalDataForm/PersonalDataForm.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
@@ -229,7 +231,8 @@ FORMS    += MainWindow/MainWindow.ui \
     Modules/PassedTest/View/PassedTestForm.ui \
     Modules/ScaleStatistics/View/ScaleStatisticsForm.ui \
     Forms/UserDataForm/UserDataForm.ui \
-    Modules/AddUser/View/AddUserView.ui
+    Modules/AddUser/View/AddUserView.ui \
+    Forms/PersonalDataForm/PersonalDataForm.ui
 
 # Для статической сборки
 QMAKE_LFLAGS_RELEASE += -static -static-libgcc
