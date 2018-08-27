@@ -3,6 +3,7 @@
 class QString;
 
 enum class Gender {
+    None,
 	Male,
 	Female
 };

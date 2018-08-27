@@ -18,16 +18,19 @@ QString genderToString(Gender gender) {
 		return MALE_GENDER_STRING;
 	case Gender::Female:
 		return FEMALE_GENDER_STRING;
-	}
-	return QString();
+    default:
+        return QString();
+    }
 }
 
 Gender genderFromString(const QString &string) {
 	if (string == FEMALE_GENDER_STRING) {
 		return Gender::Female;
-	} else {
+    } else if (string == MALE_GENDER_STRING) {
 		return Gender::Male;
-	}
+    } else {
+        return Gender::None;
+    }
 }
 
 //  :: to json ::
@@ -37,13 +40,16 @@ QString genderToJson(Gender gender) {
 		return MALE_GENDER_JSON_STRING;
 	case Gender::Female:
 		return FEMALE_GENDER_JSON_STRING;
-	}
-	return MALE_GENDER_JSON_STRING;
+    default:
+        return QString();
+    }
 }
 Gender genderFromJson(const QString &string) {
 	if (string == FEMALE_GENDER_JSON_STRING) {
 		return Gender::Female;
-	} else {
+    } else if (string == MALE_GENDER_JSON_STRING) {
 		return Gender::Male;
-	}
+    } else {
+        return Gender::None;
+    }
 }
