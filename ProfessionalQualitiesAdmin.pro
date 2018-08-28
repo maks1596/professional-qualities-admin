@@ -112,7 +112,8 @@ SOURCES += main.cpp\
     Modules/AddUser/View/AddUserView.cpp \
     Modules/AddUser/Service/AddUserService.cpp \
     Modules/AddUser/Assembler/AddUserAssembler.cpp \
-    Forms/PersonalDataForm/PersonalDataForm.cpp
+    Forms/PersonalDataForm/PersonalDataForm.cpp \
+    Modules/Professions/Service/ProfessionsService.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -211,7 +212,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Forms/UserDataForm/PasswordsHintStatus.h \
     Modules/AddUser/Service/AddUserService.h \
     Modules/AddUser/Assembler/AddUserAssembler.h \
-    Forms/PersonalDataForm/PersonalDataForm.h
+    Forms/PersonalDataForm/PersonalDataForm.h \
+    Modules/Professions/Service/ProfessionsService.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
