@@ -116,6 +116,14 @@ void PersonalDataForm::setMinimumExpertAssessment(int minAssessment) {
     setMinimumExpertAssessmentToolTip(minAssessment);
 }
 
+//  :: Professions model ::
+QAbstractItemModel *PersonalDataForm::getProfessionsModel() const {
+    return ui->professionComboBox->model();
+}
+void PersonalDataForm::setProfessionsModel(QAbstractItemModel *model) {
+    ui->professionComboBox->setModel(model);
+}
+
 //  :: Public methods ::
 
 void PersonalDataForm::setUserExcludedFromAsstimationMessageVisibility(bool visible) {

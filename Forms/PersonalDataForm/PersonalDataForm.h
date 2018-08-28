@@ -2,6 +2,8 @@
 
 #include <QWidget>
 
+class QAbstractItemModel;
+
 namespace Ui {
 class PersonalDataForm;
 }
@@ -36,7 +38,11 @@ public:
     void setMaximumExpertAssessment(int maxAssessment);
     void setMinimumExpertAssessment(int minAssessment);
 
+    QAbstractItemModel *getProfessionsModel() const;
+    void setProfessionsModel(QAbstractItemModel *model);
+
     void setUserExcludedFromAsstimationMessageVisibility(bool visible);
+
 
 signals:
     void nameChanged(const QString &name);
