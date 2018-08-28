@@ -20,6 +20,8 @@ private:
     void onPasswordChanged(const QString &password) const;
     void onRepeatPasswordChanged(const QString &repeatPassword) const;
 
+    void onExpertAssessmentChanged(int assessement);
+
     void onSaveUserButtonClicked() const;
 
     void addUser() const;

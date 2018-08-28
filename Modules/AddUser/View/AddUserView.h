@@ -4,6 +4,8 @@
 
 #include "Entities/User/User.h"
 
+class QAbstractItemModel;
+
 class CreateUserModel;
 class UpdateUserDataModel;
 
@@ -31,6 +33,17 @@ public:
 
     void setPasswordsHintStatus(PasswordsHintStatus status);
 
+    void setMaximumBirtdate(const QDate &maxDate);
+    void setMinimumBirtdate(const QDate &minDate);
+
+    void setMaximumExpertAssessment(int maxAssessment);
+    void setMinimumExpertAssessment(int minAssessment);
+
+    QAbstractItemModel *getProfessionsModel() const;
+    void setProfessionsModel(QAbstractItemModel *model);
+
+    void setUserExcludedFromAsstimationMessageVisibility(bool visible);
+
     void setSaveButtonEnabled(bool enabled);
     void setSaveButtonToolTip(const QString &toolTip);
 
@@ -41,18 +54,15 @@ signals:
     void passwordChanged(const QString &password);
     void repeatPasswordChanged(const QString &repeatPassword);
 
+    void expertAssessmentChanged(int assessment);
+
     void saveUserButtonClicked();
     void editingCanceled();
-
-private slots:
-	void onProfessionsGot(QStringList professions);
 
 private:
     void hideLoginData();
 	void initCreateModel();
-	void initUpdateModel();
-	void fillGenderRadioButtons();
-	void fillProfessionsComboBox();
+    void initUpdateModel();
 	void setGender(Gender gender);
 
     void saveUser();

@@ -19,10 +19,7 @@ AddUserView::AddUserView(const User &user, QWidget *parent) :
     ui->setupUi(this);
 
 	initUpdateModel();
-	initCreateModel();
-	fillGenderRadioButtons();
-	fillProfessionsComboBox();
-	ui->birthday->setMaximumDate(QDate::currentDate());
+    initCreateModel();
 
 	if(m_user.getId()) {
 		ui->title->setText("Редактирование профиля");
@@ -39,18 +36,9 @@ AddUserView::AddUserView(const User &user, QWidget *parent) :
 
     }
 
-    connect(ui->name, &QLineEdit::textChanged,
-            &m_user, &User::setName);
-	connect(ui->maleRadioButton, &QRadioButton::clicked,
-			[&](){ m_user.setGender(Gender::Male); });
-	connect(ui->femaleRadioButton, &QRadioButton::clicked,
-			[&](){ m_user.setGender(Gender::Female); });
-    connect(ui->birthday, &QDateEdit::dateChanged,
-			&m_user, &User::setBirthday);
-    connect(ui->profession, &QComboBox::currentTextChanged,
-            &m_user, &User::setProfession);
-    connect(ui->assessment, SIGNAL(valueChanged(int)),
-            &m_user, SLOT(setExpertAssessment(int)));
+
+    connect(ui->personalDataForm, &PersonalDataForm::expertAssessmentChanged,
+            this, &AddUserView::expertAssessmentChanged);
 
     connect(ui->saveBtn, &QPushButton::clicked,
             this, &AddUserView::saveUserButtonClicked);
@@ -73,11 +61,11 @@ void AddUserView::setUser(const User &user) {
 	m_user = user;
     ui->userDataForm->setLogin(m_user.getLogin());
 
-	ui->name->setText(m_user.getName());
-	setGender(m_user.getGender());
-	ui->birthday->setDate(m_user.getBirthday());
-	ui->profession->setCurrentText(m_user.getProfession());
-    ui->assessment->setValue(m_user.getExpertAssessment());
+//	ui->name->setText(m_user.getName());
+//	setGender(m_user.getGender());
+//	ui->birthday->setDate(m_user.getBirthday());
+//	ui->profession->setCurrentText(m_user.getProfession());
+//  ui->assessment->setValue(m_user.getExpertAssessment());
 }
 
 //  :: Login ::
@@ -103,6 +91,35 @@ UserRole AddUserView::getRole() const {
 //  :: Passwords hint ::
 void AddUserView::setPasswordsHintStatus(PasswordsHintStatus status) {
     ui->userDataForm->setPasswordsHintStatus(status);
+}
+
+//  :: Birthdate range ::
+void AddUserView::setMaximumBirtdate(const QDate &maxDate) {
+    ui->personalDataForm->setMaximumBirtdate(maxDate);
+}
+void AddUserView::setMinimumBirtdate(const QDate &minDate) {
+    ui->personalDataForm->setMinimumBirtdate(minDate);
+}
+
+//  :: Expert assessment range ::
+void AddUserView::setMaximumExpertAssessment(int maxAssessment) {
+    ui->personalDataForm->setMaximumExpertAssessment(maxAssessment);
+}
+void AddUserView::setMinimumExpertAssessment(int minAssessment) {
+    ui->personalDataForm->setMinimumExpertAssessment(minAssessment);
+}
+
+//  :: Professions model ::
+QAbstractItemModel *AddUserView::getProfessionsModel() const {
+    return ui->personalDataForm->getProfessionsModel();
+}
+void AddUserView::setProfessionsModel(QAbstractItemModel *model) {
+    ui->personalDataForm->setProfessionsModel(model);
+}
+
+void AddUserView::setUserExcludedFromAsstimationMessageVisibility(bool visible) {
+    ui->personalDataForm
+            ->setUserExcludedFromAsstimationMessageVisibility(visible);
 }
 
 //  :: Public methods ::
@@ -140,41 +157,6 @@ void AddUserView::initUpdateModel() {
 			this, SIGNAL(editingCanceled()));
 	connect(m_updateModel, &UpdateUserDataModel::error,
             this, &AddUserView::showErrorMessage);
-}
-
-void AddUserView::fillGenderRadioButtons() {
-	ui->maleRadioButton->setText(genderToString(Gender::Male));
-	ui->femaleRadioButton->setText(genderToString(Gender::Female));
-}
-
-void AddUserView::fillProfessionsComboBox() {
-	connect(m_createModel, &CreateUserModel::professionsGot,
-            this, &AddUserView::onProfessionsGot);
-	m_createModel->getProfessions();
-}
-
-void AddUserView::setGender(Gender gender) {
-	m_user.setGender(gender);
-	switch (gender) {
-	case Gender::Male:
-		ui->maleRadioButton->click();
-		break;
-	case Gender::Female:
-		ui->femaleRadioButton->click();
-		break;
-	}
-}
-
-void AddUserView::onProfessionsGot(QStringList professions) {
-	int indexOfProfession = professions.indexOf(m_user.getProfession());
-	if (indexOfProfession < 0) {
-		professions.insert(0, m_user.getProfession());
-		indexOfProfession = 0;
-	}
-
-	ui->profession->addItems(professions);
-	ui->profession->setCurrentIndex(indexOfProfession);
-	ui->profession->adjustSize();
 }
 
 void AddUserView::saveUser() {

@@ -1,5 +1,7 @@
 #include "AddUserController.h"
 
+#include <QDate>
+
 #include "../View/AddUserView.h"
 #include "../Service/AddUserService.h"
 #include "Forms/UserDataForm/PasswordsHintStatus.h"
@@ -7,6 +9,11 @@
 //  :: Constants ::
 
 const QString LOGIN_IS_REQUIRED_TOOL_TIP = "Для создания пользователя необходимо ввести логин";
+
+const QDate MAXIMUM_BIRTDATE = QDate::currentDate();
+
+const int MINIMUM_EXPERT_ASSESSMENT = -1;
+const int MAXIMUM_EXPERT_ASSESSMENT = 100;
 
 //  :: Lifecycle ::
 
@@ -31,6 +38,11 @@ void AddUserController::setView(AddUserView *view) {
 
     connect(view, &AddUserView::saveUserButtonClicked,
             this, &AddUserController::onSaveUserButtonClicked);
+
+    view->setMaximumBirtdate(MAXIMUM_BIRTDATE);
+
+    view->setMaximumExpertAssessment(MAXIMUM_EXPERT_ASSESSMENT);
+    view->setMinimumExpertAssessment(MINIMUM_EXPERT_ASSESSMENT);
 }
 
 //  :: Serivce ::
@@ -86,6 +98,12 @@ void AddUserController::onRepeatPasswordChanged(const QString &repeatPassword) c
     }
 
     getView()->setPasswordsHintStatus(status);
+}
+
+void AddUserController::onExpertAssessmentChanged(int assessement) {
+    getView()->setUserExcludedFromAsstimationMessageVisibility(
+                assessement == MINIMUM_EXPERT_ASSESSMENT
+                );
 }
 
 void AddUserController::onSaveUserButtonClicked() const {
