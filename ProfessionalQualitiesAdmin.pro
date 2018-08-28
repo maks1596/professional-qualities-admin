@@ -114,7 +114,8 @@ SOURCES += main.cpp\
     Modules/AddUser/Assembler/AddUserAssembler.cpp \
     Forms/PersonalDataForm/PersonalDataForm.cpp \
     Modules/Professions/Model/ProfessionsListModel.cpp \
-    Modules/Professions/Service/ProfessionsService.cpp
+    Modules/Professions/Service/ProfessionsService.cpp \
+    Modules/Professions/Assembler/ProfessionsAssembler.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -215,7 +216,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/AddUser/Assembler/AddUserAssembler.h \
     Forms/PersonalDataForm/PersonalDataForm.h \
     Modules/Professions/Model/ProfessionsListModel.h \
-    Modules/Professions/Service/ProfessionsService.h
+    Modules/Professions/Service/ProfessionsService.h \
+    Modules/Professions/Assembler/ProfessionsAssembler.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
