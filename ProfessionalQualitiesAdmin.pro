@@ -113,6 +113,7 @@ SOURCES += main.cpp\
     Modules/AddUser/Service/AddUserService.cpp \
     Modules/AddUser/Assembler/AddUserAssembler.cpp \
     Forms/PersonalDataForm/PersonalDataForm.cpp \
+    Modules/Professions/Model/ProfessionsListModel.cpp \
     Modules/Professions/Service/ProfessionsService.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
@@ -213,6 +214,7 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/AddUser/Service/AddUserService.h \
     Modules/AddUser/Assembler/AddUserAssembler.h \
     Forms/PersonalDataForm/PersonalDataForm.h \
+    Modules/Professions/Model/ProfessionsListModel.h \
     Modules/Professions/Service/ProfessionsService.h
 
 FORMS    += MainWindow/MainWindow.ui \
