@@ -3,6 +3,11 @@
 
 #include "Entities/Gender/Gender.h"
 
+//  :: Constatnts ::
+
+const QString MINIMUM_EXPERT_ASSESSMENT_HINT_FORMAT =
+        "При значении %1 данные пользователя не будут использоваться в оценивании";
+
 //  :: Lifecycle ::
 
 PersonalDataForm::PersonalDataForm(QWidget *parent) :
@@ -21,10 +26,13 @@ PersonalDataForm::PersonalDataForm(QWidget *parent) :
 
     connect(ui->birthdateEdit, &QDateEdit::dateChanged,
             this, &PersonalDataForm::birthdateChanged);
-    connect(ui->professionComboBox, &QComboBox::currentTextChanged(QString),
+    connect(ui->professionComboBox, &QComboBox::currentTextChanged,
             this, &PersonalDataForm::professionChanged);
-    connect(ui->assessmentSpinBox, &QSpinBox::valueChanged,
-            this, &PersonalDataForm::expertAssessmentChanged);
+    connect(ui->assessmentSpinBox, SIGNAL(valueChanged(int)),
+            SIGNAL(expertAssessmentChanged(int)));
+
+    setMinimumExpertAssessmentToolTip(ui->assessmentSpinBox->minimum());
+    setUserExcludedFromAsstimationMessageVisibility(false);
 }
 
 PersonalDataForm::~PersonalDataForm() {
@@ -34,7 +42,7 @@ PersonalDataForm::~PersonalDataForm() {
 //  :: Public accessors ::
 //  :: Name ::
 QString PersonalDataForm::getName() const {
-    return ui->nameLineEdit;
+    return ui->nameLineEdit->text();
 }
 void PersonalDataForm::setName(const QString &name) {
     ui->nameLineEdit->setText(name);
@@ -87,4 +95,38 @@ int PersonalDataForm::getExpertAssessment() const {
 }
 void PersonalDataForm::setExpertAssessment(int expertAssessment) {
     ui->assessmentSpinBox->setValue(expertAssessment);
+}
+
+//  :: Public methods ::
+
+//  :: Birtdate range ::
+void PersonalDataForm::setMaximumBirtdate(const QDate &maxDate) {
+    ui->birthdateEdit->setMaximumDate(maxDate);
+}
+void PersonalDataForm::setMinimumBirtdate(const QDate &minDate) {
+    ui->birthdateEdit->setMinimumDate(minDate);
+}
+
+//  :: Expert assessment range ::
+void PersonalDataForm::setMaximumExpertAssessment(int maxAssessment) {
+    ui->assessmentSpinBox->setMaximum(maxAssessment);
+}
+void PersonalDataForm::setMinimumExpertAssessment(int minAssessment) {
+    ui->assessmentSpinBox->setMinimum(minAssessment);
+    setMinimumExpertAssessmentToolTip(minAssessment);
+}
+
+//  :: Public methods ::
+
+void PersonalDataForm::setUserExcludedFromAsstimationMessageVisibility(bool visible) {
+    ui->userExcludedFromAsstimatoionLabel->setVisible(visible);
+}
+
+//  :: Private methods ::
+
+inline
+void PersonalDataForm::setMinimumExpertAssessmentToolTip(int assessment) {
+    ui->assessmentSpinBox
+            ->setToolTip(MINIMUM_EXPERT_ASSESSMENT_HINT_FORMAT
+                         .arg(assessment));
 }

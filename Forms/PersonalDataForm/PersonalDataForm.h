@@ -30,6 +30,14 @@ public:
     int getExpertAssessment() const;
     void setExpertAssessment(int expertAssessment);
 
+    void setMaximumBirtdate(const QDate &maxDate);
+    void setMinimumBirtdate(const QDate &minDate);
+
+    void setMaximumExpertAssessment(int maxAssessment);
+    void setMinimumExpertAssessment(int minAssessment);
+
+    void setUserExcludedFromAsstimationMessageVisibility(bool visible);
+
 signals:
     void nameChanged(const QString &name);
     void genderChanged(Gender gender);
@@ -38,6 +46,7 @@ signals:
     void expertAssessmentChanged(int assessment);
 
 private:
+    void setMinimumExpertAssessmentToolTip(int assessment);
 
     Ui::PersonalDataForm *ui;
 };
