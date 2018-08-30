@@ -1,6 +1,7 @@
 #include "AddUserView.h"
 #include "ui_AddUserView.h"
 
+#include <QDate>
 #include <QMessageBox>
 #include <QRadioButton>
 
@@ -85,6 +86,31 @@ QString AddUserView::getRepeatPassword() const {
 //  :: Role ::
 UserRole AddUserView::getRole() const {
     return ui->userDataForm->getRole();
+}
+
+//  :: Name ::
+QString AddUserView::getName() const {
+    return ui->personalDataForm->getName();
+}
+
+//  :: Gender ::
+Gender AddUserView::getGender() const {
+    return ui->personalDataForm->getGender();
+}
+
+//  :: Birtdate ::
+QDate AddUserView::getBirthDate() const {
+    return ui->personalDataForm->getBirthdate();
+}
+
+//  :: Profession ::
+QString AddUserView::getProfession() const {
+    return ui->personalDataForm->getProfession();
+}
+
+//  :: Expert assessment ::
+int AddUserView::getExpertAssessment() const {
+    return ui->personalDataForm->getExpertAssessment();
 }
 
 //  :: Passwords hint ::

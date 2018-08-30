@@ -31,6 +31,12 @@ public:
     QString getRepeatPassword() const;
     UserRole getRole() const;
 
+    QString getName() const;
+    Gender getGender() const;
+    QDate getBirthDate() const;
+    QString getProfession() const;
+    int getExpertAssessment() const;
+
     void setPasswordsHintStatus(PasswordsHintStatus status);
 
     void setMaximumBirtdate(const QDate &maxDate);
