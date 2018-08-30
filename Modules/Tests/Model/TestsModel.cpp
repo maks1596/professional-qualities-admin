@@ -36,12 +36,10 @@ void TestsModel::getTest(int id) const {
 }
 
 void TestsModel::deleteTest(int id) const {
-	auto requester = makeRequesterWithDefaultErrorOutput();
-	connect(requester, SIGNAL(success()),
-			SIGNAL(testDeleted()));
+    auto requester = makeRequester();
 
-	disconnect(requester, &Requester::failure,
-			   this, &BaseService::error);
+    connect(requester, SIGNAL(success()),
+			SIGNAL(testDeleted()));
 	connect(requester, &Requester::failure,
 			this, &TestsModel::testIsUsed);
 
