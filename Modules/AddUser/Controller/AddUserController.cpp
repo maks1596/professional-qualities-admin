@@ -36,13 +36,16 @@ void AddUserController::setView(AddUserView *view) {
     connect(view, &AddUserView::repeatPasswordChanged,
             this, &AddUserController::onRepeatPasswordChanged);
 
-    connect(view, &AddUserView::saveUserButtonClicked,
-            this, &AddUserController::onSaveUserButtonClicked);
-
     view->setMaximumBirtdate(MAXIMUM_BIRTDATE);
 
+    connect(view, &AddUserView::expertAssessmentChanged,
+            this, &AddUserController::onExpertAssessmentChanged);
     view->setMaximumExpertAssessment(MAXIMUM_EXPERT_ASSESSMENT);
     view->setMinimumExpertAssessment(MINIMUM_EXPERT_ASSESSMENT);
+    onExpertAssessmentChanged(view->getExpertAssessment());
+
+    connect(view, &AddUserView::saveUserButtonClicked,
+            this, &AddUserController::onSaveUserButtonClicked);
 }
 
 //  :: Serivce ::
