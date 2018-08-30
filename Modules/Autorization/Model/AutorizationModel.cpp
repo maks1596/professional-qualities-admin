@@ -18,7 +18,7 @@ void AutorizationModel::autorizeAsAdmin(const QString &login,
 }
 
 void AutorizationModel::autorizeAsAdmin(const AutorizationData &data) {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success()),
 			SIGNAL(autorized()));
 	requester->sendRequest(AUTORIZE_AS_ADMIN,

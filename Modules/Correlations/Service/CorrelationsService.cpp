@@ -17,7 +17,7 @@ CorrelationsService::CorrelationsService(QObject *parent)
 //  :: Public slots ::
 
 void CorrelationsService::getDefaultGroupsCorrelations(int testId, int scaleId) const {
-    auto requster = makeRequester();
+    auto requster = makeRequesterWithDefaultErrorOutput();
     connect(requster, SIGNAL(success(QJsonArray)),
             SLOT(defaultGroupsCorrelationsJsonGot(QJsonArray)));
     requster->sendRequest(CORRElATIONS_API.arg(testId).arg(scaleId));

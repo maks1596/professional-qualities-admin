@@ -16,7 +16,7 @@ AddUserService::AddUserService(QObject *parent)
 //  :: Public methods ::
 
 void AddUserService::addUser(const User &user) const {
-    auto requester = makeRequester();
+    auto requester = makeRequesterWithDefaultErrorOutput();
     connect(requester, SIGNAL(success()),
             SIGNAL(userAdded()));
     requester->sendRequest(ADD_USER_API,

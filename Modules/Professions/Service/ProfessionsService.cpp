@@ -16,7 +16,7 @@ ProfessionsService::ProfessionsService(QObject *parent)
 //  :: Public methods ::
 
 void ProfessionsService::getProfessions() const {
-    auto requester = makeRequester();
+    auto requester = makeRequesterWithDefaultErrorOutput();
     connect(requester, SIGNAL(success(QJsonArray)),
             SLOT(onProfessionsJsonGot(QJsonArray)));
     requester->sendRequest(GET_PROFESSIONS_API);

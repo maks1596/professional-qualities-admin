@@ -21,7 +21,7 @@ UsersModel::UsersModel(QObject *parent/*= nullptr*/)
 //  :: Public methods ::
 
 void UsersModel::getUsers() const {
-	auto *requester = makeRequester();
+	auto *requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success(QJsonArray)),
 			this, SLOT(jsonUsersGot(QJsonArray)));
 	requester->sendRequest(GET_USERS_API);
@@ -29,14 +29,14 @@ void UsersModel::getUsers() const {
 
 
 void UsersModel::getUser(int userId) const {
-	auto *requester = makeRequester();
+	auto *requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success(QJsonObject)),
 			this, SLOT(jsonUserGot(QJsonObject)));
 	requester->sendRequest(GET_USER_API.arg(userId));
 }
 
 void UsersModel::deleteUser(int userId) const {
-	auto *requester = makeRequester();
+	auto *requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success(QJsonArray)),
 			this, SIGNAL(userDeleted()));
 	requester->sendRequest(DELETE_USER_API.arg(userId),

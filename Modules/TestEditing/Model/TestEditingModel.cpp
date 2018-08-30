@@ -18,7 +18,7 @@ TestEditingModel::TestEditingModel(QObject *parent/*= nullptr*/)
 //  :: Public methods ::
 
 void TestEditingModel::checkTestName(const QString testName) const {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success(QJsonObject)),
 			SLOT(jsonShortTestInfoReceived(QJsonObject)));
 
@@ -33,7 +33,7 @@ void TestEditingModel::checkTestName(const QString testName) const {
 }
 
 void TestEditingModel::putTest(const Test &test) const {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success()),
 			SIGNAL(testPut()));
 	requester->sendRequest(PUT_TEST_API,
@@ -42,7 +42,7 @@ void TestEditingModel::putTest(const Test &test) const {
 }
 
 void TestEditingModel::replaceTest(const Test &test) const {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 
 	disconnect(requester, SIGNAL(failure(QString)),
 			   this, SIGNAL(error(QString)));
@@ -68,7 +68,7 @@ void TestEditingModel::jsonShortTestInfoReceived(const QJsonObject &jsonObject) 
 }
 
 void TestEditingModel::onTestDeleted(const Test &test) const {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success()),
 			SIGNAL(testReplaced()));
 	requester->sendRequest(PUT_TEST_API,

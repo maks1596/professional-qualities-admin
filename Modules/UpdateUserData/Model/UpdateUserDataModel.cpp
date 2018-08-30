@@ -15,7 +15,7 @@ UpdateUserDataModel::UpdateUserDataModel(QObject *parent/*= nullptr*/)
 //  :: Public methods ::
 
 void UpdateUserDataModel::patchUser(const User &user) const {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success()),
 			SIGNAL(userPatched()));
 	requester->sendRequest(PATCH_USER_API,

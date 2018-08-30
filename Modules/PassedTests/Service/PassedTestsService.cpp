@@ -21,14 +21,14 @@ PassedTestsService::PassedTestsService(QObject *parent/*= nullptr*/)
 //  :: Public slots ::
 
 void PassedTestsService::getPreviews() const {
-    auto requester = makeRequester();
+    auto requester = makeRequesterWithDefaultErrorOutput();
     connect(requester, SIGNAL(success(QJsonArray)),
             SLOT(onPreviewsGot(QJsonArray)));
     requester->sendRequest(GET_PREVIEWS_API);
 }
 
 void PassedTestsService::getPassedTest(int id) const {
-    auto requster = makeRequester();
+    auto requster = makeRequesterWithDefaultErrorOutput();
     connect(requster, SIGNAL(success(QJsonObject)),
             SLOT(onPassedTestGot(QJsonObject)));
     requster->sendRequest(GET_PASSED_TEST_API.arg(id));

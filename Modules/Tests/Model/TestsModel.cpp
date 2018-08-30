@@ -22,21 +22,21 @@ TestsModel::TestsModel(QObject *parent/*= nullptr*/)
 //  :: Public methods ::
 
 void TestsModel::getTests() const {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success(QJsonArray)),
 			SLOT(jsonTestsGot(QJsonArray)));
 	requester->sendRequest(GET_TESTS_API);
 }
 
 void TestsModel::getTest(int id) const {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success(QJsonObject)),
 			SLOT(jsonTestGot(QJsonObject)));
 	requester->sendRequest(GET_TEST_API.arg(id));
 }
 
 void TestsModel::deleteTest(int id) const {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success()),
 			SIGNAL(testDeleted()));
 

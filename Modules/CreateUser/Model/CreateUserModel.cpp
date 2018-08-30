@@ -20,7 +20,7 @@ CreateUserModel::CreateUserModel(QObject *parent/*= nullptr*/)
 //  :: Public methods ::
 
 void CreateUserModel::putUser(const User &user) const {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success()),
 			SIGNAL(userPut()));
 	requester->sendRequest(PUT_USER_API,
@@ -29,7 +29,7 @@ void CreateUserModel::putUser(const User &user) const {
 }
 
 void CreateUserModel::getProfessions() const {
-	auto requester = makeRequester();
+	auto requester = makeRequesterWithDefaultErrorOutput();
 	connect(requester, SIGNAL(success(QJsonArray)),
 			this, SLOT(jsonProfessionsGot(QJsonArray)));
 	requester->sendRequest(GET_PROFESSIONS_API);

@@ -15,5 +15,6 @@ signals:
 	void error(const QString &message);
 
 protected:
-	Requester *makeRequester() const;
+    Requester *makeRequester() const;
+    Requester *makeRequesterWithDefaultErrorOutput() const;
 };
