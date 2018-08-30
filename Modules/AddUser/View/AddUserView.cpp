@@ -36,7 +36,6 @@ AddUserView::AddUserView(const User &user, QWidget *parent) :
 
     }
 
-
     connect(ui->personalDataForm, &PersonalDataForm::expertAssessmentChanged,
             this, &AddUserView::expertAssessmentChanged);
 

@@ -25,6 +25,7 @@ int ProfessionsListModel::rowCount(const QModelIndex &parent) const {
     return m_professions.size();
 }
 
+
 QVariant ProfessionsListModel::data(const QModelIndex &index, int role) const {
     if (index.isValid() && role == Qt::DisplayRole) {
         return m_professions[index.row()];
@@ -32,7 +33,7 @@ QVariant ProfessionsListModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
-//  :: Public accessors ::
+//  :: Accessors ::
 //  :: Service ::
 ProfessionsService *ProfessionsListModel::getService() const {
     return m_service;
@@ -54,6 +55,7 @@ const QStringList &ProfessionsListModel::getProfessions() const {
 //  :: Public methods ::
 
 void ProfessionsListModel::startUpdating() {
+    getService()->getProfessions();
     m_timer->start();
 }
 void ProfessionsListModel::stopUpdating() {
