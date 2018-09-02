@@ -116,7 +116,8 @@ SOURCES += main.cpp\
     Modules/Professions/Model/ProfessionsListModel.cpp \
     Modules/Professions/Service/ProfessionsService.cpp \
     Modules/Professions/Assembler/ProfessionsAssembler.cpp \
-    Forms/EditUserDataForm/EditUserDataForm.cpp
+    Forms/EditUserDataForm/EditUserDataForm.cpp \
+    Modules/EditUser/View/EditUserView.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -219,7 +220,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/Professions/Model/ProfessionsListModel.h \
     Modules/Professions/Service/ProfessionsService.h \
     Modules/Professions/Assembler/ProfessionsAssembler.h \
-    Forms/EditUserDataForm/EditUserDataForm.h
+    Forms/EditUserDataForm/EditUserDataForm.h \
+    Modules/EditUser/View/EditUserView.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
@@ -241,7 +243,8 @@ FORMS    += MainWindow/MainWindow.ui \
     Forms/UserDataForm/UserDataForm.ui \
     Modules/AddUser/View/AddUserView.ui \
     Forms/PersonalDataForm/PersonalDataForm.ui \
-    Forms/EditUserDataForm/EditUserDataForm.ui
+    Forms/EditUserDataForm/EditUserDataForm.ui \
+    Modules/EditUser/View/EditUserView.ui
 
 # Для статической сборки
 QMAKE_LFLAGS_RELEASE += -static -static-libgcc
