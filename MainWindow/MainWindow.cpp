@@ -79,17 +79,17 @@ void MainWindow::onUsersBtnClicked() {
 }
 
 void MainWindow::pushAddUserViewToStack() {
-    AddUserView *userForm = AddUserAssembler::assembly(this);
-    connect(userForm, &AddUserView::editingCanceled,
+    auto addUserView = AddUserAssembler::assembly(this);
+    connect(addUserView, &AddUserView::cancelButtonClicked,
             this, &MainWindow::onCancelUserEditing);
-    pushWidget(userForm);
+    pushWidget(addUserView);
 }
 
 void MainWindow::pushEditUserViewToStack(const User &user) {
-    AddUserView *userForm = new AddUserView(user, this);
-    connect(userForm, &AddUserView::editingCanceled,
+    auto editUserView = new EditUserView(user, this);
+    connect(editUserView, &EditUserView::cancelButtonClicked,
             this, &MainWindow::onCancelUserEditing);
-    pushWidget(userForm);
+    pushWidget(editUserView);
 }
 
 void MainWindow::onCancelUserEditing() {
