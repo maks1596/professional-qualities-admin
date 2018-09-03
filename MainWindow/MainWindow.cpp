@@ -7,6 +7,9 @@
 
 #include "Modules/AddUser/Assembler/AddUserAssembler.h"
 #include "Modules/AddUser/View/AddUserView.h"
+
+#include "Modules/EditUser/View/EditUserView.h"
+
 #include "Modules/Users/View/UsersForm.h"
 
 #include "Modules/TestEditing/View/TestEditingForm.h"
@@ -45,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->addTestBtn, SIGNAL(clicked()),
             this, SLOT(pushTestFormToStack()));
     connect(ui->addUserBtn, &QPushButton::clicked,
-            this, &MainWindow::pushAddUserFormToStack);
+            this, &MainWindow::pushAddUserViewToStack);
 }
 
 MainWindow::~MainWindow() {
@@ -67,22 +70,22 @@ void MainWindow::onUsersBtnClicked() {
     connect(usersForm, &UsersForm::toMainMenuBtnClicked,
             this, &MainWindow::onBackToMainMenu);
     connect(usersForm, SIGNAL(createUserForm(User)),
-            this, SLOT(pushEditUserFormToStack(User)));
+            this, SLOT(pushEditUserViewToStack(User)));
     connect(usersForm, &UsersForm::addUserButtonClicked,
-            this, &MainWindow::pushAddUserFormToStack);
+            this, &MainWindow::pushAddUserViewToStack);
     connect(usersForm, &TestsForm::error,
 			this, &MainWindow::showStatusMessage);
     pushWidget(usersForm);
 }
 
-void MainWindow::pushAddUserFormToStack() {
+void MainWindow::pushAddUserViewToStack() {
     AddUserView *userForm = AddUserAssembler::assembly(this);
     connect(userForm, &AddUserView::editingCanceled,
             this, &MainWindow::onCancelUserEditing);
     pushWidget(userForm);
 }
 
-void MainWindow::pushEditUserFormToStack(const User &user) {
+void MainWindow::pushEditUserViewToStack(const User &user) {
     AddUserView *userForm = new AddUserView(user, this);
     connect(userForm, &AddUserView::editingCanceled,
             this, &MainWindow::onCancelUserEditing);

@@ -31,8 +31,8 @@ private slots:
     void onStatisticsButtonClicled();
     void onBackToMainMenu();
 
-    void pushAddUserFormToStack();
-    void pushEditUserFormToStack(const User &user);
+    void pushAddUserViewToStack();
+    void pushEditUserViewToStack(const User &user);
     void onCancelUserEditing();
 
     void pushTestFormToStack(const Test &test = Test());
