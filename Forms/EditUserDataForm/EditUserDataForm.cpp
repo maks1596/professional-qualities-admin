@@ -1,6 +1,7 @@
 #include "EditUserDataForm.h"
 #include "ui_EditUserDataForm.h"
 
+#include "Entities/UserRole/Model/UserRoleModel.h"
 #include "Entities/UserRole/UserRole.h"
 
 //  :: Lifecycle ::
