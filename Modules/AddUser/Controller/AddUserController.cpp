@@ -4,6 +4,7 @@
 
 #include "../View/AddUserView.h"
 #include "../Service/AddUserService.h"
+#include "Entities/User/User.h"
 #include "Forms/UserDataForm/PasswordsHintStatus.h"
 
 //  :: Constants ::
@@ -44,7 +45,7 @@ void AddUserController::setView(AddUserView *view) {
     view->setMinimumExpertAssessment(MINIMUM_EXPERT_ASSESSMENT);
     onExpertAssessmentChanged(view->getExpertAssessment());
 
-    connect(view, &AddUserView::saveUserButtonClicked,
+    connect(view, &AddUserView::saveButtonClicked,
             this, &AddUserController::onSaveUserButtonClicked);
 }
 
@@ -56,9 +57,9 @@ void AddUserController::setService(AddUserService *service) {
     m_service = service;
 
     connect(m_service, &AddUserService::error,
-            m_view, &AddUserView::showErrorMessage);
+            m_view, &AddUserView::showErrorMessageBox);
     connect(m_service, &AddUserService::userAdded,
-            m_view, &AddUserView::editingCanceled);
+            m_view, &AddUserView::cancelButtonClicked);
 }
 
 //  :: Private methods ::
