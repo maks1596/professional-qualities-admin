@@ -8,7 +8,7 @@
 #include "Modules/Professions/Model/ProfessionsListModel.h"
 
 AddUserView *AddUserAssembler::assembly(QWidget *parent) {
-    auto view = new AddUserView(User(), parent);
+    auto view = new AddUserView(parent);
     auto controller = new AddUserController(view);
     auto service = new AddUserService(controller);
 
