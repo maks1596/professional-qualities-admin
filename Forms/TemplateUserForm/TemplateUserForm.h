@@ -28,7 +28,10 @@ protected:
     QString getTitle() const;
     void setTitle(const QString &title);
 
+    QWidget *getUserDataWidget();
     QWidget *getUserDataWidget() const;
+
+    QWidget *getPersonalDataWidget();
     QWidget *getPersonalDataWidget() const;
 
 private:    

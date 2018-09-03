@@ -53,11 +53,17 @@ void TemplateUserForm::setTitle(const QString &title) {
 }
 
 //  :: User data form ::
+QWidget *TemplateUserForm::getUserDataWidget() {
+    return m_userDataWidget;
+}
 QWidget *TemplateUserForm::getUserDataWidget() const {
     return m_userDataWidget;
 }
 
 //  :: Personal data form ::
+QWidget *TemplateUserForm::getPersonalDataWidget() {
+    return m_personalDataWidget;
+}
 QWidget *TemplateUserForm::getPersonalDataWidget() const {
     return m_personalDataWidget;
 }
