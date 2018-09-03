@@ -1,30 +1,22 @@
 #pragma once
 
-#include <QWidget>
-
-#include "Entities/User/User.h"
+#include "Forms/TemplateUserForm/TemplateUserForm.h"
 
 class QAbstractItemModel;
 
-class CreateUserModel;
-class UpdateUserDataModel;
-
-namespace Ui {
-class AddUserView;
-}
-
-enum class UserRole;
+enum class Gender;
 enum class PasswordsHintStatus;
+enum class UserRole;
 
-class AddUserView : public QWidget {
+class UserDataForm;
+class PersonalDataForm;
+
+class AddUserView: public TemplateUserForm {
 Q_OBJECT
 
 public:
-    explicit AddUserView(const User &user, QWidget *parent = nullptr);
-    ~AddUserView();
-
-	User getUser() const;
-	void setUser(const User &user);
+    explicit AddUserView(QWidget *parent = nullptr);
+    virtual ~AddUserView() = default;
 
     QString getLogin() const;
     QString getPassword() const;
@@ -33,7 +25,7 @@ public:
 
     QString getName() const;
     Gender getGender() const;
-    QDate getBirthDate() const;
+    QDate getBirthdate() const;
     QString getProfession() const;
     int getExpertAssessment() const;
 
@@ -50,11 +42,6 @@ public:
 
     void setUserExcludedFromAsstimationMessageVisibility(bool visible);
 
-    void setSaveButtonEnabled(bool enabled);
-    void setSaveButtonToolTip(const QString &toolTip);
-
-    void showErrorMessage(const QString &message);
-
 signals:
     void loginChanged(const QString &login);
     void passwordChanged(const QString &password);
@@ -62,21 +49,12 @@ signals:
 
     void expertAssessmentChanged(int assessment);
 
-    void saveUserButtonClicked();
-    void editingCanceled();
-
 private:
-    void hideLoginData();
-	void initCreateModel();
-    void initUpdateModel();
-	void setGender(Gender gender);
+    void setGender(Gender gender);
 
-    void saveUser();
-    void updateUser();
-    void putUser();
+    void initUserDataForm();
+    void initPersonalDataForm();
 
-    User m_user;
-	CreateUserModel *m_createModel;
-	UpdateUserDataModel *m_updateModel;
-    Ui::AddUserView *ui;
+    UserDataForm *getUserDataForm() const;
+    PersonalDataForm *getPersonalDataForm() const;
 };

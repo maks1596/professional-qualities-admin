@@ -1,201 +1,132 @@
 #include "AddUserView.h"
-#include "ui_AddUserView.h"
 
 #include <QDate>
-#include <QMessageBox>
-#include <QRadioButton>
 
 #include "Entities/Gender/Gender.h"
 
-#include "Modules/CreateUser/Model/CreateUserModel.h"
-#include "Modules/UpdateUserData/Model/UpdateUserDataModel.h"
+#include "Forms/PersonalDataForm/PersonalDataForm.h"
+#include "Forms/UserDataForm/UserDataForm.h"
+
+//  :: Constants ::
+
+const QString TITLE = "Создание учётной записи";
 
 //  :: Lifecycle ::
 
-AddUserView::AddUserView(const User &user, QWidget *parent) :
-    QWidget(parent),
-	m_user(user),
-    ui(new Ui::AddUserView)
+AddUserView::AddUserView(QWidget *parent) :
+    TemplateUserForm(new UserDataForm,
+                     new PersonalDataForm,
+                     parent)
 {
-    ui->setupUi(this);
-
-	initUpdateModel();
-    initCreateModel();
-
-	if(m_user.getId()) {
-		ui->title->setText("Редактирование профиля");
-        hideLoginData();
-    } else {
-		ui->title->setText("Создание учётной записи");
-
-        connect(ui->userDataForm, &UserDataForm::loginChanged,
-                this, &AddUserView::loginChanged);
-        connect(ui->userDataForm, &UserDataForm::passwordChanged,
-                this, &AddUserView::passwordChanged);
-        connect(ui->userDataForm, &UserDataForm::repeatPasswordChanged,
-                this, &AddUserView::repeatPasswordChanged);
-
-    }
-
-    connect(ui->personalDataForm, &PersonalDataForm::expertAssessmentChanged,
-            this, &AddUserView::expertAssessmentChanged);
-
-    connect(ui->saveBtn, &QPushButton::clicked,
-            this, &AddUserView::saveUserButtonClicked);
-    connect(ui->cancelBtn, &QPushButton::clicked,
-            this, &AddUserView::editingCanceled);
-
-	setUser(m_user);
-}
-
-AddUserView::~AddUserView() {
-    delete ui;
+    setTitle(TITLE);
+    initUserDataForm();
+    initPersonalDataForm();
 }
 
 //  :: Public accessors ::
-//  :: User ::
-User AddUserView::getUser() const {
-	return m_user;
-}
-void AddUserView::setUser(const User &user) {
-	m_user = user;
-    ui->userDataForm->setLogin(m_user.getLogin());
-
-//	ui->name->setText(m_user.getName());
-//	setGender(m_user.getGender());
-//	ui->birthday->setDate(m_user.getBirthday());
-//	ui->profession->setCurrentText(m_user.getProfession());
-//  ui->assessment->setValue(m_user.getExpertAssessment());
-}
-
 //  :: Login ::
 QString AddUserView::getLogin() const {
-    return ui->userDataForm->getLogin();
+    return getUserDataForm()->getLogin();
 }
 
 //  :: Password ::
 QString AddUserView::getPassword() const {
-    return ui->userDataForm->getPassword();
+    return getUserDataForm()->getPassword();
 }
 
 //  :: Repeat password ::
 QString AddUserView::getRepeatPassword() const {
-    return ui->userDataForm->getRepeatPassword();
+    return getUserDataForm()->getRepeatPassword();
 }
 
 //  :: Role ::
 UserRole AddUserView::getRole() const {
-    return ui->userDataForm->getRole();
+    return getUserDataForm()->getRole();
 }
 
 //  :: Name ::
 QString AddUserView::getName() const {
-    return ui->personalDataForm->getName();
+    return getPersonalDataForm()->getName();
 }
 
 //  :: Gender ::
 Gender AddUserView::getGender() const {
-    return ui->personalDataForm->getGender();
+    return getPersonalDataForm()->getGender();
 }
 
 //  :: Birtdate ::
-QDate AddUserView::getBirthDate() const {
-    return ui->personalDataForm->getBirthdate();
+QDate AddUserView::getBirthdate() const {
+    return getPersonalDataForm()->getBirthdate();
 }
 
 //  :: Profession ::
 QString AddUserView::getProfession() const {
-    return ui->personalDataForm->getProfession();
+    return getPersonalDataForm()->getProfession();
 }
 
 //  :: Expert assessment ::
 int AddUserView::getExpertAssessment() const {
-    return ui->personalDataForm->getExpertAssessment();
+    return getPersonalDataForm()->getExpertAssessment();
 }
 
 //  :: Passwords hint ::
 void AddUserView::setPasswordsHintStatus(PasswordsHintStatus status) {
-    ui->userDataForm->setPasswordsHintStatus(status);
+    getUserDataForm()->setPasswordsHintStatus(status);
 }
 
 //  :: Birthdate range ::
 void AddUserView::setMaximumBirtdate(const QDate &maxDate) {
-    ui->personalDataForm->setMaximumBirtdate(maxDate);
+    getPersonalDataForm()->setMaximumBirtdate(maxDate);
 }
 void AddUserView::setMinimumBirtdate(const QDate &minDate) {
-    ui->personalDataForm->setMinimumBirtdate(minDate);
+    getPersonalDataForm()->setMinimumBirtdate(minDate);
 }
 
 //  :: Expert assessment range ::
 void AddUserView::setMaximumExpertAssessment(int maxAssessment) {
-    ui->personalDataForm->setMaximumExpertAssessment(maxAssessment);
+    getPersonalDataForm()->setMaximumExpertAssessment(maxAssessment);
 }
 void AddUserView::setMinimumExpertAssessment(int minAssessment) {
-    ui->personalDataForm->setMinimumExpertAssessment(minAssessment);
+    getPersonalDataForm()->setMinimumExpertAssessment(minAssessment);
 }
 
 //  :: Professions model ::
 QAbstractItemModel *AddUserView::getProfessionsModel() const {
-    return ui->personalDataForm->getProfessionsModel();
+    return getPersonalDataForm()->getProfessionsModel();
 }
 void AddUserView::setProfessionsModel(QAbstractItemModel *model) {
-    ui->personalDataForm->setProfessionsModel(model);
+    getPersonalDataForm()->setProfessionsModel(model);
 }
 
 void AddUserView::setUserExcludedFromAsstimationMessageVisibility(bool visible) {
-    ui->personalDataForm
+    getPersonalDataForm()
             ->setUserExcludedFromAsstimationMessageVisibility(visible);
-}
-
-//  :: Public methods ::
-
-void AddUserView::setSaveButtonEnabled(bool enabled) {
-    ui->saveBtn->setEnabled(enabled);
-}
-
-void AddUserView::setSaveButtonToolTip(const QString &toolTip) {
-    ui->saveBtn->setToolTip(toolTip);
-}
-
-void AddUserView::showErrorMessage(const QString &message) {
-    QMessageBox::critical(this, "Ошибка", message);
 }
 
 //  :: Private methods ::
 
-void AddUserView::hideLoginData() {
-    ui->loginDataTitle->hide();
-    ui->userDataForm->hide();
+inline
+void AddUserView::initUserDataForm() {
+    connect(getUserDataForm(), &UserDataForm::loginChanged,
+            this, &AddUserView::loginChanged);
+    connect(getUserDataForm(), &UserDataForm::passwordChanged,
+            this, &AddUserView::passwordChanged);
+    connect(getUserDataForm(), &UserDataForm::repeatPasswordChanged,
+            this, &AddUserView::repeatPasswordChanged);
 }
 
-void AddUserView::initCreateModel() {
-	m_createModel = new CreateUserModel(this);
-	connect(m_createModel, SIGNAL(userPut()),
-			this, SIGNAL(editingCanceled()));
-	connect(m_createModel, &CreateUserModel::error,
-            this, &AddUserView::showErrorMessage);
+inline
+void AddUserView::initPersonalDataForm() {
+    connect(getPersonalDataForm(), &PersonalDataForm::expertAssessmentChanged,
+            this, &AddUserView::expertAssessmentChanged);
 }
 
-void AddUserView::initUpdateModel() {
-	m_updateModel = new UpdateUserDataModel(this);
-	connect(m_updateModel, SIGNAL(userPatched()),
-			this, SIGNAL(editingCanceled()));
-	connect(m_updateModel, &UpdateUserDataModel::error,
-            this, &AddUserView::showErrorMessage);
+inline
+UserDataForm *AddUserView::getUserDataForm() const {
+    return static_cast<UserDataForm *>(getUserDataWidget());
 }
 
-void AddUserView::saveUser() {
-	if(m_user.getId()) {
-        updateUser();
-    } else {
-        putUser();
-    }
-}
-
-void AddUserView::updateUser() {
-	m_updateModel->patchUser(m_user);
-}
-
-void AddUserView::putUser() {
-	m_createModel->putUser(m_user);
+inline
+PersonalDataForm *AddUserView::getPersonalDataForm() const {
+    return static_cast<PersonalDataForm *>(getPersonalDataWidget());
 }

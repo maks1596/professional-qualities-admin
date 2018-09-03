@@ -1,22 +1,15 @@
-#ifndef EDITUSERVIEW_H
-#define EDITUSERVIEW_H
+#pragma once
 
-#include <QWidget>
+#include "Forms/TemplateUserForm/TemplateUserForm.h"
 
-namespace Ui {
-class EditUserView;
-}
+class User;
 
-class EditUserView : public QWidget
-{
+class EditUserView: public TemplateUserForm {
     Q_OBJECT
 
 public:
-    explicit EditUserView(QWidget *parent = nullptr);
-    ~EditUserView();
+    explicit EditUserView(const User &user, QWidget *parent = nullptr);
+    virtual ~EditUserView() = default;
 
 private:
-    Ui::EditUserView *ui;
 };
-
-#endif // EDITUSERVIEW_H

@@ -1,14 +1,14 @@
 #include "EditUserView.h"
-#include "ui_EditUserView.h"
 
-EditUserView::EditUserView(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::EditUserView)
-{
-    ui->setupUi(this);
-}
+#include "Forms/EditUserDataForm/EditUserDataForm.h"
+#include "Forms/PersonalDataForm/PersonalDataForm.h"
 
-EditUserView::~EditUserView()
+//  :: Lifecycle ::
+
+EditUserView::EditUserView(const User &user, QWidget *parent) :
+    TemplateUserForm(new EditUserDataForm,
+                     new PersonalDataForm,
+                     parent)
 {
-    delete ui;
+
 }
