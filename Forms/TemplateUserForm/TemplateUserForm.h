@@ -10,8 +10,15 @@ class TemplateUserForm : public QWidget {
     Q_OBJECT
 
 public:
-    explicit TemplateUserForm(QWidget *parent = nullptr);
+    explicit TemplateUserForm(QWidget *userDataWidget,
+                              QWidget *personalDataWidget,
+                              QWidget *parent = nullptr);
     ~TemplateUserForm();
+
+    void setSaveButtonEnabled(bool enabled);
+    void setSaveButtonToolTip(const QString &toolTip);
+
+    void showErrorMessageBox(const QString &message);
 
 signals:
     void saveButtonClicked();
@@ -21,12 +28,12 @@ protected:
     QString getTitle() const;
     void setTitle(const QString &title);
 
-    QWidget *getUserDataForm() const;
-    void setUserDataForm(QWidget *userDataForm);
+    QWidget *getUserDataWidget() const;
+    QWidget *getPersonalDataWidget() const;
 
-    QWidget *getPersonalDataForm() const;
-    void setPersonalDataForm(QWidget *personalDataForm);
+private:    
+    QWidget *m_userDataWidget;
+    QWidget *m_personalDataWidget;
 
-private:
     Ui::TemplateUserForm *ui;
 };
