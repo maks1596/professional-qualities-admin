@@ -243,10 +243,8 @@ FORMS    += MainWindow/MainWindow.ui \
     Modules/PassedTest/View/PassedTestForm.ui \
     Modules/ScaleStatistics/View/ScaleStatisticsForm.ui \
     Forms/UserDataForm/UserDataForm.ui \
-    Modules/AddUser/View/AddUserView.ui \
     Forms/PersonalDataForm/PersonalDataForm.ui \
     Forms/EditUserDataForm/EditUserDataForm.ui \
-    Modules/EditUser/View/EditUserView.ui \
     Forms/TemplateUserForm/TemplateUserForm.ui
 
 # Для статической сборки
