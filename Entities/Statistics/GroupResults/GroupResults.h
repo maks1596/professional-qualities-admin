@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../ResultStatistics/ResultStatistics.h"
+#include "Entities/Statistics/ResultStatistics/ResultStatistics.h"
 #include "Serializable/Object/SerializableObject.h"
 #include "Tree.h"
 
