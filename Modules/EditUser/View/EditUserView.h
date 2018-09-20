@@ -2,6 +2,8 @@
 
 #include "Forms/TemplateUserForm/TemplateUserForm.h"
 
+class EditUserDataForm;
+class PersonalDataForm;
 class User;
 
 class EditUserView: public TemplateUserForm {
@@ -12,4 +14,9 @@ public:
     virtual ~EditUserView() = default;
 
 private:
+    EditUserDataForm *getEditUserDataForm();
+    EditUserDataForm *getEditUserDataForm() const;
+
+    PersonalDataForm *getPersonalDataForm();
+    PersonalDataForm *getPersonalDataForm() const;
 };
