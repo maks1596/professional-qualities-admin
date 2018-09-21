@@ -27,7 +27,7 @@ struct User::Implementation {
 
 	QString name;
 	Gender gender = Gender::Male;
-	QDate birthday = QDate::currentDate();
+    QDate birthdate = QDate::currentDate();
 	QString profession;
 	int expertAssessment = -1;
 };
@@ -111,20 +111,20 @@ void User::setGenderString(const QString &genderString) {
 }
 
 //  :: Birthday ::
-QDate User::getBirthday() const {
-	return pimpl->birthday;
+QDate User::getBirthdate() const {
+    return pimpl->birthdate;
 }
-void User::setBirthday(const QDate &birthday) {
-	pimpl->birthday = birthday;
+void User::setBirthdate(const QDate &birthdate) {
+    pimpl->birthdate = birthdate;
 }
 //  :: Age ::
 uint User::getAge() const {
 	QDate currentDate = QDate::currentDate();
-	int age = currentDate.year() - getBirthday().year();
+	int age = currentDate.year() - getBirthdate().year();
 
-	if (getBirthday().month() > currentDate.month() ||
-		(getBirthday().month() == currentDate.month() &&
-			getBirthday().day() > currentDate.day())) {
+	if (getBirthdate().month() > currentDate.month() ||
+		(getBirthdate().month() == currentDate.month() &&
+			getBirthdate().day() > currentDate.day())) {
 		age--;
 	}
 	return age;
@@ -157,7 +157,7 @@ QJsonObject User::toJson() const {
     json[ROLE_JSON_KEY] = userRoleToJson(getRole());
 	json[NAME_JSON_KEY] = getName();
 	json[GENDER_JSON_KEY] = genderToJson(getGender());
-	json[BIRTHDAY_JSON_KEY] = getBirthday().toString(Qt::DateFormat::ISODate);
+	json[BIRTHDAY_JSON_KEY] = getBirthdate().toString(Qt::DateFormat::ISODate);
 	json[PROFESSION_JSON_KEY] = getProfession();
 	json[EXPERT_ASSESSMENT_JSON_KEY] = getExpertAssessment();
 
@@ -191,7 +191,7 @@ void User::initWithJsonObject(const QJsonObject &json) {
 		auto birthdayString = json[BIRTHDAY_JSON_KEY].toString();
 		auto birthday = QDate::fromString(birthdayString,
 										  Qt::DateFormat::ISODate);
-		setBirthday(birthday);
+		setBirthdate(birthday);
     }
 	if (json.contains(PROFESSION_JSON_KEY) && json[PROFESSION_JSON_KEY].isString()) {
 		setProfession(json[PROFESSION_JSON_KEY].toString());

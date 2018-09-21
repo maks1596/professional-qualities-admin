@@ -118,7 +118,9 @@ SOURCES += main.cpp\
     Modules/Professions/Assembler/ProfessionsAssembler.cpp \
     Forms/EditUserDataForm/EditUserDataForm.cpp \
     Modules/EditUser/View/EditUserView.cpp \
-    Forms/TemplateUserForm/TemplateUserForm.cpp
+    Forms/TemplateUserForm/TemplateUserForm.cpp \
+    Modules/EditUser/Controller/EditUserController.cpp \
+    Entities/User/Builder/UserBuilder.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -223,7 +225,9 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/Professions/Assembler/ProfessionsAssembler.h \
     Forms/EditUserDataForm/EditUserDataForm.h \
     Modules/EditUser/View/EditUserView.h \
-    Forms/TemplateUserForm/TemplateUserForm.h
+    Forms/TemplateUserForm/TemplateUserForm.h \
+    Modules/EditUser/Controller/EditUserController.h \
+    Entities/User/Builder/UserBuilderXMacros.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \

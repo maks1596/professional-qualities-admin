@@ -1,11 +1,11 @@
 #pragma once
 
+#include <QDate>
 #include <QObject>
 #include <QScopedPointer>
 
 #include "Entities/Entity/Entity.h"
 
-class QDate;
 class QString;
 
 enum class Gender;
@@ -43,7 +43,7 @@ public:
     void setRole(UserRole role);
 
     QString getName() const;
-    void setName(const QString &getName);
+    void setName(const QString &name);
 
 	Gender getGender() const;
 	void setGender(Gender gender);
@@ -51,8 +51,8 @@ public:
 	QString getGenderString() const;
 	void setGenderString(const QString &genderString);
 
-	QDate getBirthday() const;
-	void setBirthday(const QDate &birthday);
+    QDate getBirthdate() const;
+    void setBirthdate(const QDate &birthdate);
 	uint getAge() const;
 
 
@@ -64,6 +64,18 @@ public slots:
 	void setExpertAssessment(int expertAssessment);
 
 public:
+    class Builder {
+    #define PROCESS(name, Name, type, parameterType) \
+        public: Builder& set##Name(parameterType name); \
+        private: type m_##name;
+
+    #include "Builder/UserBuilderXMacros.h"
+
+    #undef PROCESS
+
+        public: User build() const;
+    };
+
     //  :: Serializable ::
 	virtual QJsonObject toJson() const override;
 	virtual void initWithJsonObject(const QJsonObject &json) override;
