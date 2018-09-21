@@ -33,6 +33,36 @@ EditUserView::EditUserView(const User &user, QWidget *parent) :
     personalDataForm->setExpertAssessment(user.getExpertAssessment());
 }
 
+//  :: Public accessors ::
+//  :: Edit user data form
+QString EditUserView::getLogin() const {
+    return getEditUserDataForm()->getLogin();
+}
+QString EditUserView::getPassword() const {
+    return getEditUserDataForm()->getPassword();
+}
+UserRole EditUserView::getRole() const {
+    return getEditUserDataForm()->getRole();
+}
+
+//  :: Personal data form
+QString EditUserView::getName() const {
+    return getPersonalDataForm()->getName();
+}
+Gender EditUserView::getGender() const {
+    return getPersonalDataForm()->getGender();
+}
+QDate EditUserView::getBirtdate() const {
+    return getPersonalDataForm()->getBirthdate();
+}
+QString EditUserView::getProfession() const {
+    return getPersonalDataForm()->getProfession();
+}
+
+int EditUserView::getExpertAssessment() const {
+    return getPersonalDataForm()->getExpertAssessment();
+}
+
 //  :: Private methods ::
 
 inline
