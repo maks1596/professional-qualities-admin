@@ -63,6 +63,14 @@ int EditUserView::getExpertAssessment() const {
     return getPersonalDataForm()->getExpertAssessment();
 }
 
+//  :: Professions model ::
+QAbstractItemModel *EditUserView::getProfessionsModel() const {
+    return getPersonalDataForm()->getProfessionsModel();
+}
+void EditUserView::setProfessionsModel(QAbstractItemModel *model) {
+    getPersonalDataForm()->setProfessionsModel(model);
+}
+
 //  :: Private methods ::
 
 inline

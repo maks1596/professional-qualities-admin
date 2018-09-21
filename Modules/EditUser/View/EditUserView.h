@@ -2,6 +2,7 @@
 
 #include "Forms/TemplateUserForm/TemplateUserForm.h"
 
+class QAbstractItemModel;
 class QDate;
 
 class EditUserDataForm;
@@ -29,6 +30,9 @@ public:
     QDate getBirtdate() const;
     QString getProfession() const;
     int getExpertAssessment() const;
+
+    QAbstractItemModel *getProfessionsModel() const;
+    void setProfessionsModel(QAbstractItemModel *model);
 
 private:
     EditUserDataForm *getEditUserDataForm();
