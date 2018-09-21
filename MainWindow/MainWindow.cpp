@@ -8,6 +8,7 @@
 #include "Modules/AddUser/Assembler/AddUserAssembler.h"
 #include "Modules/AddUser/View/AddUserView.h"
 
+#include "Modules/EditUser/Assembler/EditUserAssembler.h"
 #include "Modules/EditUser/View/EditUserView.h"
 
 #include "Modules/Users/View/UsersForm.h"
@@ -86,7 +87,7 @@ void MainWindow::pushAddUserViewToStack() {
 }
 
 void MainWindow::pushEditUserViewToStack(const User &user) {
-    auto editUserView = new EditUserView(user, this);
+    auto editUserView = EditUserAssembler::assembly(user, this);
     connect(editUserView, &EditUserView::cancelButtonClicked,
             this, &MainWindow::onCancelUserEditing);
     pushWidget(editUserView);
