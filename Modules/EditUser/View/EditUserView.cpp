@@ -28,7 +28,7 @@ EditUserView::EditUserView(const User &user, QWidget *parent) :
     auto personalDataForm = getPersonalDataForm();
     personalDataForm->setName(user.getName());
     personalDataForm->setGender(user.getGender());
-    personalDataForm->setBirthdate(user.getBirthday());
+    personalDataForm->setBirthdate(user.getBirthdate());
     personalDataForm->setProfession(user.getProfession());
     personalDataForm->setExpertAssessment(user.getExpertAssessment());
 }
