@@ -121,7 +121,8 @@ SOURCES += main.cpp\
     Forms/TemplateUserForm/TemplateUserForm.cpp \
     Modules/EditUser/Controller/EditUserController.cpp \
     Entities/User/Builder/UserBuilder.cpp \
-    Modules/EditUser/Service/EditUserService.cpp
+    Modules/EditUser/Service/EditUserService.cpp \
+    Modules/EditUser/Assembler/EditUserAssembler.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -229,7 +230,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Forms/TemplateUserForm/TemplateUserForm.h \
     Modules/EditUser/Controller/EditUserController.h \
     Entities/User/Builder/UserBuilderXMacros.h \
-    Modules/EditUser/Service/EditUserService.h
+    Modules/EditUser/Service/EditUserService.h \
+    Modules/EditUser/Assembler/EditUserAssembler.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
