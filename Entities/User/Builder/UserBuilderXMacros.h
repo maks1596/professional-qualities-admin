@@ -1,3 +1,5 @@
+PROCESS(id, Id, int, int)
+
 PROCESS(login, Login, QString, const QString&)
 PROCESS(password, Password, QString, const QString&)
 PROCESS(role, Role, UserRole, UserRole)

@@ -9,7 +9,7 @@
 
 EditUserView *EditUserAssembler::assembly(const User &user, QWidget *parent) {
     auto view = new EditUserView(user, parent);
-    auto controller = new EditUserController(view);
+    auto controller = new EditUserController(user, view);
     auto service = new EditUserService(controller);
 
     view->setProfessionsModel(ProfessionsAssembler::assemblyAndStart(view));

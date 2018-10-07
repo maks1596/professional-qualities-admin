@@ -70,7 +70,6 @@ SOURCES += main.cpp\
     Entities/Entity/Entity.cpp \
     Entities/Gender/Gender.cpp \
     Modules/CreateUser/Model/CreateUserModel.cpp \
-    Modules/UpdateUserData/Model/UpdateUserDataModel.cpp \
     Modules/Tests/Model/TestsModel.cpp \
     Entities/ShortTestInfo/ShortTestInfo.cpp \
     Modules/TestEditing/Model/TestEditingModel.cpp \
@@ -173,7 +172,6 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/Entity/Entity.h \
     Entities/Gender/Gender.h \
     Modules/CreateUser/Model/CreateUserModel.h \
-    Modules/UpdateUserData/Model/UpdateUserDataModel.h \
     Modules/Tests/Model/TestsModel.h \
     Entities/ShortTestInfo/ShortTestInfo.h \
     Modules/TestEditing/Model/TestEditingModel.h \

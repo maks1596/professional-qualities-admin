@@ -9,7 +9,7 @@ class User;
 class EditUserController : public QObject {
     Q_OBJECT
 public:
-    EditUserController(QObject *parent = nullptr);
+    EditUserController(const User &user, QObject *parent = nullptr);
 
     //  :: Accessors ::
 
@@ -23,6 +23,7 @@ private slots:
     void saveChanges() const;
 
 private:
+    int m_id = 0;
     EditUserView *m_view;
     EditUserService *m_service;
 };

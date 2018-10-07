@@ -9,8 +9,8 @@ class EditUserService : public BaseService {
 public:
     EditUserService(QObject *parent = nullptr);
 
-    void patchUser(const User &user);
+    void updateUser(const User &user);
 
 signals:
-    void userPatched();
+    void userUpdated();
 };

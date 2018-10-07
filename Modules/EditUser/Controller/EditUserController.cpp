@@ -6,11 +6,10 @@
 #include "Entities/User/User.h"
 
 //  :: Lifecycle ::
-EditUserController::EditUserController(QObject *parent)
-    : QObject(parent)
-{
-
-}
+EditUserController::EditUserController(const User &user, QObject *parent)
+    : QObject(parent),
+      m_id(user.getId())
+{ }
 
 //  :: Public accessors ::
 //  :: View ::
@@ -31,14 +30,15 @@ EditUserService *EditUserController::getService() const {
 void EditUserController::setService(EditUserService *service) {
     m_service = service;
 
-    connect(m_service, &EditUserService::userPatched,
+    connect(m_service, &EditUserService::userUpdated,
             m_view, &EditUserView::cancelButtonClicked);
 }
 
 //  :: Private slots ::
 
 void EditUserController::saveChanges() const {
-    m_service->patchUser(User::Builder()
+    m_service->updateUser(User::Builder()
+                          .setId(m_id)
                          .setPassword(getView()->getPassword())
                          .setRole(getView()->getRole())
                          .setName(getView()->getName())

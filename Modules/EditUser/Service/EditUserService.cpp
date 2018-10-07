@@ -5,7 +5,7 @@
 
 //  :: Constatns ::
 
-const QString PATCH_USER_API = "users";
+const QString UPDATE_USER_API = "users";
 
 //  :: Lifecycle ::
 
@@ -14,10 +14,10 @@ EditUserService::EditUserService(QObject *parent)
 
 //  :: Public methods ::
 
-void EditUserService::patchUser(const User &user) {
+void EditUserService::updateUser(const User &user) {
     auto requester = makeRequesterWithDefaultErrorOutput();
-    connect(requester, SIGNAL(success()), SIGNAL(userPatched()));
-    requester->sendRequest(PATCH_USER_API,
-                           RequestType::PATCH,
+    connect(requester, SIGNAL(success()), SIGNAL(userUpdated()));
+    requester->sendRequest(UPDATE_USER_API,
+                           RequestType::PUT,
                            user.toJson());
 }
