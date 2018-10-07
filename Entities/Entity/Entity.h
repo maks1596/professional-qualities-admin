@@ -15,19 +15,19 @@ public:
 	Entity &operator=(const Entity &other);
 
 	//  :: Move ::
-	Entity(Entity &&other);
-	Entity &operator=(Entity &&other);
+    Entity(Entity &&other) noexcept;
+    Entity &operator=(Entity &&other) noexcept;
 
 	//  :: Destructor ::
-	virtual ~Entity() noexcept;
+     ~Entity() noexcept override;
 
 	//  :: Accessors ::
 	int getId() const;
 	void setId(int id);
 
 	//  :: Serializable ::
-	virtual QJsonObject toJson() const override;
-	virtual void initWithJsonObject(const QJsonObject &json) override;
+     QJsonObject toJson() const override;
+     void initWithJsonObject(const QJsonObject &json) override;
 
 private:
 	struct Implementation;

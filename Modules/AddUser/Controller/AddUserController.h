@@ -26,6 +26,6 @@ private:
 
     void addUser() const;
 
-    AddUserView *m_view;
-    AddUserService *m_service;
+    AddUserView *m_view = nullptr;
+    AddUserService *m_service = nullptr;
 };

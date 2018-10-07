@@ -113,9 +113,7 @@ void AddUserController::onExpertAssessmentChanged(int assessement) {
 void AddUserController::onSaveUserButtonClicked() const {
     QString password = getView()->getPassword();
     QString repeatPassword = getView()->getRepeatPassword();
-    if(password.isEmpty() && repeatPassword.isEmpty()) {
-        addUser();
-    } else if (password == repeatPassword) {
+    if(password == repeatPassword) {
         addUser();
     } else {
         getView()->setPasswordsHintStatus(PasswordsHintStatus::NotMatch);
@@ -123,8 +121,14 @@ void AddUserController::onSaveUserButtonClicked() const {
 }
 
 void AddUserController::addUser() const {
-    User user;
-    user.setLogin(getView()->getLogin());
-    user.setPassword(getView()->getPassword());
-    user.setRole(getView()->getRole());
+    getService()->addUser(User::Builder()
+      .setLogin(getView()->getLogin())
+      .setPassword(getView()->getPassword())
+      .setRole(getView()->getRole())
+      .setName(getView()->getName())
+      .setGender(getView()->getGender())
+      .setBirthdate(getView()->getBirthdate())
+      .setProfession(getView()->getProfession())
+      .setExpertAssessment(getView()->getExpertAssessment())
+      .build());
 }

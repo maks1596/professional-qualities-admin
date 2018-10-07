@@ -25,8 +25,8 @@ public:
 	User &operator=(const User &other);
 
 	//  :: Move ::
-	User(User &&other);
-	User &operator=(User &&other);
+    User(User &&other) noexcept;
+    User &operator=(User &&other) noexcept;
 
 	//  :: Destructor ::
 	virtual ~User() noexcept override;

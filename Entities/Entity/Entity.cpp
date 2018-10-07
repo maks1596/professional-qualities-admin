@@ -28,14 +28,16 @@ Entity &Entity::operator=(const Entity &other) {
 }
 
 //  :: Move ::
-Entity::Entity(Entity &&other) : pimpl(other.pimpl.take()) {}
-Entity &Entity::operator=(Entity &&other) {
+Entity::Entity(Entity &&other) noexcept
+    : pimpl(other.pimpl.take())
+{ }
+Entity &Entity::operator=(Entity &&other) noexcept {
 	pimpl.swap(other.pimpl);
 	return *this;
 }
 
 //  :: Destructor ::
-Entity::~Entity() {}
+Entity::~Entity() = default;
 
 //  :: Accessors ::
 

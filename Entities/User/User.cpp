@@ -51,10 +51,10 @@ User &User::operator=(const User &other) {
 }
 
 //  :: Move ::
-User::User(User &&other)
+User::User(User &&other) noexcept
 	: Entity(other),
 	  pimpl(other.pimpl.take()) {}
-User &User::operator=(User &&other) {
+User &User::operator=(User &&other) noexcept {
 	pimpl.swap(other.pimpl);
 	return *this;
 }
