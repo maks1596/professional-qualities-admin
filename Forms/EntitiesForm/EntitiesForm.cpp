@@ -3,12 +3,6 @@
 
 #include <QMessageBox>
 
-//  :: Conststants ::
-
-const QString DELETE_HEADER_NAME = "Удалить";
-
-const uint UPDATE_TIMING = 1000;
-
 //  :: Lifecycle ::
 
 EntitiesForm::EntitiesForm(QWidget *parent) :
@@ -17,132 +11,60 @@ EntitiesForm::EntitiesForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->toMainMenuBtn, &QPushButton::clicked,
-			[&](){ stopUpdating(); emit toMainMenuBtnClicked();});
-    connect(ui->addBtn, &QPushButton::clicked,
-			[&](){ stopUpdating(); onAddBtnClicked();});
+    connect(ui->backButton, &QPushButton::clicked,
+            this, &EntitiesForm::backButtonClicked);
+    connect(ui->addButton, &QPushButton::clicked,
+            this, &EntitiesForm::addButtonClicked);
 
-	connect(ui->entitiesTableWidget, &QTableWidget::clicked,
-            this, &EntitiesForm::onEntityClicked);
-	connect(ui->entitiesTableWidget, &QTableView::doubleClicked,
-            this, &EntitiesForm::onEntityDoubleClicked);
-    ui->entitiesTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    connect(ui->entitiesTableView, &QTableView::clicked,
+            this, &EntitiesForm::entityClicked);
+    connect(ui->entitiesTableView, &QTableView::doubleClicked,
+            this, &EntitiesForm::entityDoubleClicked);
 
-	connect(&m_timer, &QTimer::timeout,
-            this, &EntitiesForm::update);
-	m_timer.start(UPDATE_TIMING);
+    setTitle(getTitle());
+    setAddButtonIcon(getAddButtonIconName());
+    setAddButtonToolTip(getAddButtonToolTip());
 }
 
 EntitiesForm::~EntitiesForm() {
-	delete ui;
+    delete ui;
+}
+
+//  :: Public methods ::
+
+QAbstractItemModel *EntitiesForm::getModel() const {
+    return ui->entitiesTableView->model();
+}
+void EntitiesForm::setModel(QAbstractItemModel *model) {
+    ui->entitiesTableView->setModel(model);
 }
 
 //  :: Public slots ::
 
-void EntitiesForm::startUpdating() {
-	update();
-	m_timer.start(UPDATE_TIMING);
-}
-void EntitiesForm::stopUpdating() {
-	m_timer.stop();
-}
-
-//  :: Protected accessors ::
-
-QList<Entity> EntitiesForm::getEntities() const {
-	return m_entites;
-}
-void EntitiesForm::setEntities(const QList<Entity> &entities) {
-	m_entites = entities;
-}
-
-//  :: Protected methods ::
-
-void EntitiesForm::setTitle(const QString &title) {
-    ui->title->setText(title);
-}
-
-void EntitiesForm::setAddButtonIconName(const QString &iconName) {
-    ui->addBtn->setIcon(QIcon(iconName));
-}
-
-void EntitiesForm::setAddButtonToolTip(const QString &toolTip) {
-    ui->addBtn->setToolTip(toolTip);
-}
-
-void EntitiesForm::setHeaderLabels(const QStringList &labels) {
-	QStringList actualHeaders(labels);
-	actualHeaders.append(DELETE_HEADER_NAME);
-
-	ui->entitiesTableWidget->setColumnCount(actualHeaders.size());
-	ui->entitiesTableWidget->setHorizontalHeaderLabels(actualHeaders);
-	resizeTable();
-}
-
-void EntitiesForm::setContent(const QList<QStringList> &content) {
-	setRowCount(content.size());
-	for (int i = 0; i < content.size(); ++i) {
-		setRow(i, content.at(i));
-	}
-	resizeTable();
-}
-
-//  :: Protected slots ::
-
 void EntitiesForm::showCriticalMessage(const QString &error) {
-	QMessageBox::critical(this, "Ошибка", error);
+    QMessageBox::critical(this, "Ошибка", error);
 }
 
-//  :: Private slots ::
+//  :: Private methods ::
 
-void EntitiesForm::onEntityDoubleClicked(const QModelIndex &idx) {
-    if(idx.isValid()) {
-		if(idx.column() != deleteColumnIndex()) {
-			stopUpdating();
-			editEntity(getEntityID(idx));
-        }
-    }
-}
-
-void EntitiesForm::onEntityClicked(const QModelIndex &idx) {
-    if(idx.isValid()) {
-		if(idx.column() == deleteColumnIndex()) {
-            removeEntity(getEntityID(idx));
-        }
-    }
-}
-
-//  :: Private methods
-
-void EntitiesForm::setRowCount(uint count) {
-	ui->entitiesTableWidget->setRowCount(count);
-}
-
-void EntitiesForm::setRow(uint row, const QStringList &texts) {
-	for (int column = 0; column < texts.size(); ++column) {
-		setItem(row, column, texts[column]);
-	}
-	setItem(row, texts.size(), DELETE_HEADER_NAME);
-}
-
-void EntitiesForm::setItem(uint row, uint column, const QString &text) {
-	ui->entitiesTableWidget->setItem(row, column, new QTableWidgetItem(text));
+inline
+void EntitiesForm::setTitle(const QString &title) {
+    ui->titleLabel->setText(title);
 }
 
 inline
-int EntitiesForm::getEntityID(const QModelIndex &idx) const {
-    if (!idx.isValid()) { return 0; }
-	return m_entites.at(idx.row()).getId();
+void EntitiesForm::setAddButtonIcon(const QString &iconName) {
+    ui->addButton->setIcon(QIcon(iconName));
+}
+
+inline
+void EntitiesForm::setAddButtonToolTip(const QString &toolTip) {
+    ui->addButton->setToolTip(toolTip);
 }
 
 inline
 void EntitiesForm::resizeTable() {
-	ui->entitiesTableWidget->resizeColumnsToContents();
-	ui->entitiesTableWidget->horizontalHeader()
+    ui->entitiesTableView->resizeColumnsToContents();
+    ui->entitiesTableView->horizontalHeader()
 				->setSectionResizeMode(0, QHeaderView::Stretch);
-}
-
-inline
-int EntitiesForm::deleteColumnIndex() const {
-	return ui->entitiesTableWidget->columnCount() - 1;
 }

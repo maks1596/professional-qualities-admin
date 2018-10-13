@@ -6,6 +6,7 @@
 
 #include "Entities/Entity/Entity.h"
 
+class QAbstractItemModel;
 class QString;
 
 namespace Ui {
@@ -16,50 +17,32 @@ class EntitiesForm : public QWidget {
 Q_OBJECT
 
 public:
-	EntitiesForm(QWidget *parent = nullptr);
-    ~EntitiesForm();
+    EntitiesForm(QWidget *parent = nullptr);
+    ~EntitiesForm() override;
 
-signals:
-    void toMainMenuBtnClicked();
-	void error(const QString &errorMessage);
+    QAbstractItemModel *getModel() const;
+    void setModel(QAbstractItemModel *model);
 
 public slots:
-	virtual void update() = 0;
-
-	void startUpdating();
-	void stopUpdating();
-
-protected slots:
     void showCriticalMessage(const QString &error);
-    virtual void onAddBtnClicked() = 0;
+
+signals:
+    void backButtonClicked();
+    void addButtonClicked();
+    void entityClicked(const QModelIndex &idx);
+    void entityDoubleClicked(const QModelIndex &idx);
 
 protected:
-
-	QList<Entity> getEntities() const;
-	void setEntities(const QList<Entity> &entities);
-
-	void setTitle(const QString &title);
-    void setAddButtonIconName(const QString &iconName);
-    void setAddButtonToolTip(const QString &toolTip);
-	void setHeaderLabels(const QStringList &labels);
-	void setContent(const QList<QStringList> &content);
-
-    virtual void removeEntity(const int &id) = 0;
-    virtual void editEntity(const int &id) = 0;
-
-private slots:
-    void onEntityClicked(const QModelIndex &idx);
-    void onEntityDoubleClicked(const QModelIndex &idx);
+    virtual QString getTitle() const = 0;
+    virtual QString getAddButtonIconName() const = 0;
+    virtual QString getAddButtonToolTip() const = 0;
 
 private:
-	void setRowCount(uint count);
-	void setRow(uint row, const QStringList &texts);
-	void setItem(uint row, uint column, const QString &text);
-    int getEntityID(const QModelIndex &idx) const;
-	void resizeTable();
-	int deleteColumnIndex() const;
+    void setTitle(const QString &title);
+    void setAddButtonIcon(const QString &iconName);
+    void setAddButtonToolTip(const QString &toolTip);
 
-	QTimer m_timer;
-	QList<Entity> m_entites;
+    void resizeTable();
+
     Ui::EntitiesForm *ui;
 };
