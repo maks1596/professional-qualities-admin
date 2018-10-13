@@ -27,7 +27,6 @@
 
 //  :: Constants ::
 
-const int MAIN_MENU_STACK_INDEX = 0;
 const int CLEAR_STATUS_BAR_TIMING = 5000;
 
 //  :: Lifecycle  ::
@@ -37,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->stackedWidget->setCurrentIndex(MAIN_MENU_STACK_INDEX);
+    ui->stackedWidget->setCurrentIndex(0);
 
     connect(ui->usersBtn, &QCommandLinkButton::clicked,
             this, &MainWindow::onUsersBtnClicked);
