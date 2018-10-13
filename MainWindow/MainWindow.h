@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
+#include "Navigation/INavigation.h"
 
 #include "Entities/Test/Test.h"
 
@@ -12,18 +13,23 @@ class User;
 class PassedTest;
 class ScaleStatistics;
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow,
+                   public INavigation {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit MainWindow(QWidget *parent = nullptr);
+    ~MainWindow() override;
+
+    //  :: INavigation interface ::
+    void push(QWidget *widget) override;
+    void pop() override;
 
 signals:
     void aboutToClose();
 
 protected:
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void onUsersBtnClicked();
@@ -47,8 +53,6 @@ private slots:
     void showStatusMessage(const QString &message);
 
 private:
-    void pushWidget(QWidget *newWidget);
-    void popWidget();
     template<class T>
     T *currentWidget();
 

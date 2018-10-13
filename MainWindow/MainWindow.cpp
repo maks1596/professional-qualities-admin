@@ -56,6 +56,22 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+//  :: INavigation interface ::
+
+void MainWindow::push(QWidget *widget) {
+    ui->stackedWidget->addWidget(widget);
+    ui->stackedWidget->setCurrentWidget(widget);
+    widget->show();
+    clearStatusBar();
+}
+
+void MainWindow::pop() {
+    QWidget *currentWidget = ui->stackedWidget->currentWidget();
+    ui->stackedWidget->removeWidget(currentWidget);
+    currentWidget->deleteLater();
+    clearStatusBar();
+}
+
 //  :: Protected methods ::
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -67,7 +83,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 //  :: Пользователи ::
 
 void MainWindow::onUsersBtnClicked() {
-    UsersForm *usersForm = new UsersForm(this);
+    auto usersForm = new UsersForm(this);
     connect(usersForm, &UsersForm::toMainMenuBtnClicked,
             this, &MainWindow::onBackToMainMenu);
     connect(usersForm, SIGNAL(createUserForm(User)),
@@ -76,25 +92,25 @@ void MainWindow::onUsersBtnClicked() {
             this, &MainWindow::pushAddUserViewToStack);
     connect(usersForm, &TestsForm::error,
 			this, &MainWindow::showStatusMessage);
-    pushWidget(usersForm);
+    push(usersForm);
 }
 
 void MainWindow::pushAddUserViewToStack() {
     auto addUserView = AddUserAssembler::assembly(this);
     connect(addUserView, &AddUserView::cancelButtonClicked,
             this, &MainWindow::onCancelUserEditing);
-    pushWidget(addUserView);
+    push(addUserView);
 }
 
 void MainWindow::pushEditUserViewToStack(const User &user) {
     auto editUserView = EditUserAssembler::assembly(user, this);
     connect(editUserView, &EditUserView::cancelButtonClicked,
             this, &MainWindow::onCancelUserEditing);
-    pushWidget(editUserView);
+    push(editUserView);
 }
 
 void MainWindow::onCancelUserEditing() {
-    popWidget();
+    pop();
     if(!ui->stackedWidget->currentWidget()) {
        currentWidget<UsersForm>()->startUpdating();
     } else {
@@ -105,28 +121,28 @@ void MainWindow::onCancelUserEditing() {
 //  :: Тесты ::
 
 void MainWindow::onTestsBtnClicked() {
-    TestsForm *tests = new TestsForm(this);
+    auto tests = new TestsForm(this);
     connect(tests, &TestsForm::toMainMenuBtnClicked,
             this, &MainWindow::onBackToMainMenu);
     connect(tests, &TestsForm::createTestForm,
             this, &MainWindow::pushTestFormToStack);
 	connect(tests, &TestsForm::error,
 			this, &MainWindow::showStatusMessage);
-    pushWidget(tests);
+    push(tests);
 }
 
 void MainWindow::pushTestFormToStack(const Test &test) {
-    Test *ptest = new Test(test);
-    TestEditingForm *testForm = new TestEditingForm(ptest, this);
+    auto ptest = new Test(test);
+    auto testForm = new TestEditingForm(ptest, this);
     connect(testForm, &TestEditingForm::cancelBtnClicked,
             this, &MainWindow::onCancelTestEditing);
     connect(testForm, &TestEditingForm::testRead,
             this, &MainWindow::onTestRead);
-    pushWidget(testForm);
+    push(testForm);
 }
 
 void MainWindow::onCancelTestEditing() {
-    popWidget();
+    pop();
     if(!ui->stackedWidget->currentWidget()) {
        currentWidget<TestsForm>()->startUpdating();
     } else {
@@ -135,7 +151,7 @@ void MainWindow::onCancelTestEditing() {
 }
 
 void MainWindow::onTestRead(const Test &test) {
-    popWidget();
+    pop();
     pushTestFormToStack(test);
 }
 
@@ -151,7 +167,7 @@ void MainWindow::onStatisticsButtonClicled() {
     connect(passedTestsForm, &PassedTestsForm::error,
             this, &MainWindow::showStatusMessage);
 
-    pushWidget(passedTestsForm);
+    push(passedTestsForm);
     passedTestsForm->startUpdating();
 }
 
@@ -196,22 +212,8 @@ void MainWindow::showCriticalMessage(const QString &error) {
 // :: Private methods ::
 
 void MainWindow::onBackToMainMenu() {
-    popWidget();
+    pop();
     ui->stackedWidget->setCurrentIndex(MAIN_MENU_STACK_INDEX);
-}
-
-void MainWindow::pushWidget(QWidget *newWidget) {
-    ui->stackedWidget->addWidget(newWidget);
-    ui->stackedWidget->setCurrentWidget(newWidget);
-    newWidget->show();
-	clearStatusBar();
-}
-
-void MainWindow::popWidget() {
-    QWidget *curWidget = ui->stackedWidget->currentWidget();
-    ui->stackedWidget->removeWidget(curWidget);
-    curWidget->deleteLater();
-	clearStatusBar();
 }
 
 template<class T>
