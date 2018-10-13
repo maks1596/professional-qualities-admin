@@ -126,6 +126,7 @@ SOURCES += main.cpp\
     Modules/Users/Controller/UsersController.cpp \
     Modules/Users/Model/UsersModel.cpp \
     Modules/Users/Service/UsersService.cpp \
+    Modules/Users/Assembler/UsersAssembler.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -239,6 +240,7 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/Users/Controller/UsersController.h \
     Modules/Users/Model/UsersModel.h \
     Modules/Users/Service/UsersService.h \
+    Modules/Users/Assembler/UsersAssembler.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
