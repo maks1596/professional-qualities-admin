@@ -2,32 +2,19 @@
 
 #include "Forms/EntitiesForm/EntitiesForm.h"
 
-class User;
-class UsersModel;
-
 class UsersForm : public EntitiesForm {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit UsersForm(QWidget *parent = nullptr);
 
-public slots:
-	virtual void update() override;
+    void showRemoveUserDialog(uint userIndex);
 
 signals:
-    void addUserButtonClicked();
-    void createUserForm(const User &user);
-
-protected slots:
-	virtual void onAddBtnClicked() override;
+    void removeUser(uint userIndex);
 
 protected:
-	virtual void removeEntity(const int &id) override;
-	virtual void editEntity(const int &id) override;
-
-private slots:
-	void updateUsersTable(const QList<User> &users);
-
-private:
-	UsersModel *m_model;
+    QString getTitle() const override;
+    QString getAddButtonIconName() const override;
+    QString getAddButtonToolTip() const override;
 };
