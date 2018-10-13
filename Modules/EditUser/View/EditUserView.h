@@ -17,7 +17,7 @@ class EditUserView: public TemplateUserForm {
 
 public:
     explicit EditUserView(const User &user, QWidget *parent = nullptr);
-    virtual ~EditUserView() = default;
+     ~EditUserView() override;
 
     //  :: Accessors ::
 
@@ -31,8 +31,8 @@ public:
     QString getProfession() const;
     int getExpertAssessment() const;
 
-    QAbstractItemModel *getProfessionsModel() const;
-    void setProfessionsModel(QAbstractItemModel *model);
+    QStringList getProfessions() const;
+    void setProfessions(const QStringList &professions);
 
 private:
     EditUserDataForm *getEditUserDataForm();

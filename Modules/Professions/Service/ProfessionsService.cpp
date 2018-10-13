@@ -22,6 +22,21 @@ void ProfessionsService::getProfessions() const {
     requester->sendRequest(GET_PROFESSIONS_API);
 }
 
+void ProfessionsService::getProfessions(const std::function<void (const QStringList &)> &receiver) {
+    auto service = new ProfessionsService();
+
+    connect(service, &ProfessionsService::professionsGot, receiver);
+    connect(service, &ProfessionsService::error,
+            [receiver](){ receiver(QStringList()); });
+
+    connect(service, &ProfessionsService::professionsGot,
+            service, &ProfessionsService::deleteLater);
+    connect(service, &ProfessionsService::error,
+            service, &ProfessionsService::deleteLater);
+
+    service->getProfessions();
+}
+
 //  :: Private slots ::
 
 void ProfessionsService::onProfessionsJsonGot(const QJsonArray &jsonProfessions) const {

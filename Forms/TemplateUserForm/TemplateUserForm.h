@@ -13,7 +13,7 @@ public:
     explicit TemplateUserForm(QWidget *userDataWidget,
                               QWidget *personalDataWidget,
                               QWidget *parent = nullptr);
-    ~TemplateUserForm();
+    ~TemplateUserForm() override;
 
     void setSaveButtonEnabled(bool enabled);
     void setSaveButtonToolTip(const QString &toolTip);

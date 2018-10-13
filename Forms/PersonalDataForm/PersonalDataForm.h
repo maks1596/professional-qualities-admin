@@ -15,7 +15,7 @@ class PersonalDataForm : public QWidget {
 
 public:
     explicit PersonalDataForm(QWidget *parent = nullptr);
-    ~PersonalDataForm();
+    ~PersonalDataForm() override;
 
     QString getName() const;
     void setName(const QString &name);
@@ -38,8 +38,8 @@ public:
     void setMaximumExpertAssessment(int maxAssessment);
     void setMinimumExpertAssessment(int minAssessment);
 
-    QAbstractItemModel *getProfessionsModel() const;
-    void setProfessionsModel(QAbstractItemModel *model);
+    QStringList getProfessions() const;
+    void setProfessions(const QStringList &professions);
 
     void setUserExcludedFromAsstimationMessageVisibility(bool visible);
 

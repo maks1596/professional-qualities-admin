@@ -4,15 +4,16 @@
 #include "../Service/EditUserService.h"
 #include "../View/EditUserView.h"
 
-#include "Modules/Professions/Assembler/ProfessionsAssembler.h"
-#include "Modules/Professions/Model/ProfessionsListModel.h"
+#include "Modules/Professions/Service/ProfessionsService.h"
 
 EditUserView *EditUserAssembler::assembly(const User &user, QWidget *parent) {
     auto view = new EditUserView(user, parent);
     auto controller = new EditUserController(user, view);
     auto service = new EditUserService(controller);
 
-    view->setProfessionsModel(ProfessionsAssembler::assemblyAndStart(view));
+    ProfessionsService::getProfessions(
+                [view](const QStringList &professions)
+                { view->setProfessions(professions); });
 
     controller->setView(view);
     controller->setService(service);

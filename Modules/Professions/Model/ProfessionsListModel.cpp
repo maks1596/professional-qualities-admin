@@ -41,8 +41,8 @@ ProfessionsService *ProfessionsListModel::getService() const {
 void ProfessionsListModel::setService(ProfessionsService *service) {
     m_service = service;
 
-    connect(m_timer, &QTimer::timeout,
-            m_service, &ProfessionsService::getProfessions);
+    connect(m_timer, SIGNAL(timeout()),
+            m_service, SLOT(getProfessions()));
     connect(m_service, &ProfessionsService::professionsGot,
             this, &ProfessionsListModel::setProfessions);
 }

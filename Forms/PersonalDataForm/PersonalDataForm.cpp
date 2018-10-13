@@ -52,11 +52,11 @@ void PersonalDataForm::setName(const QString &name) {
 Gender PersonalDataForm::getGender() const {
     if (ui->maleRadioButton->isChecked()) {
         return Gender::Male;
-    } else if (ui->femaleRadioButton->isChecked()) {
-        return Gender::Female;
-    } else {
-        return Gender::None;
     }
+    if (ui->femaleRadioButton->isChecked()) {
+        return Gender::Female;
+    }
+    return Gender::None;
 }
 void PersonalDataForm::setGender(const Gender &gender) {
     switch (gender) {
@@ -116,12 +116,18 @@ void PersonalDataForm::setMinimumExpertAssessment(int minAssessment) {
     setMinimumExpertAssessmentToolTip(minAssessment);
 }
 
-//  :: Professions model ::
-QAbstractItemModel *PersonalDataForm::getProfessionsModel() const {
-    return ui->professionComboBox->model();
+//  :: Professions ::
+QStringList PersonalDataForm::getProfessions() const {
+    QStringList professions;
+    uint count = ui->professionComboBox->count();
+    for (uint i = 0; i < count; ++i) {
+        professions << ui->professionComboBox->itemText(i);
+    }
+    return professions;
 }
-void PersonalDataForm::setProfessionsModel(QAbstractItemModel *model) {
-    ui->professionComboBox->setModel(model);
+void PersonalDataForm::setProfessions(const QStringList &professions) {
+    ui->professionComboBox->clear();
+    ui->professionComboBox->addItems(professions);
 }
 
 //  :: Public methods ::

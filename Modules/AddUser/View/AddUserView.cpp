@@ -91,11 +91,11 @@ void AddUserView::setMinimumExpertAssessment(int minAssessment) {
 }
 
 //  :: Professions model ::
-QAbstractItemModel *AddUserView::getProfessionsModel() const {
-    return getPersonalDataForm()->getProfessionsModel();
+QStringList AddUserView::getProfessions() const {
+    return getPersonalDataForm()->getProfessions();
 }
-void AddUserView::setProfessionsModel(QAbstractItemModel *model) {
-    getPersonalDataForm()->setProfessionsModel(model);
+void AddUserView::setProfessions(const QStringList &professions) {
+    getPersonalDataForm()->setProfessions(professions);
 }
 
 void AddUserView::setUserExcludedFromAsstimationMessageVisibility(bool visible) {
@@ -123,10 +123,10 @@ void AddUserView::initPersonalDataForm() {
 
 inline
 UserDataForm *AddUserView::getUserDataForm() const {
-    return static_cast<UserDataForm *>(getUserDataWidget());
+    return dynamic_cast<UserDataForm *>(getUserDataWidget());
 }
 
 inline
 PersonalDataForm *AddUserView::getPersonalDataForm() const {
-    return static_cast<PersonalDataForm *>(getPersonalDataWidget());
+    return dynamic_cast<PersonalDataForm *>(getPersonalDataWidget());
 }

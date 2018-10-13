@@ -2,6 +2,8 @@
 
 #include "BaseService/BaseService.h"
 
+#include <functional>
+
 class ProfessionsService : public BaseService {
     Q_OBJECT
 public:
@@ -9,6 +11,7 @@ public:
 
     void getProfessions() const;
 
+    static void getProfessions(const std::function<void (const QStringList &)> &receiver);
 signals:
     void professionsGot(const QStringList &professions) const;
 

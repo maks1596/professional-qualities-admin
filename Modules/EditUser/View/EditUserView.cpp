@@ -33,6 +33,8 @@ EditUserView::EditUserView(const User &user, QWidget *parent) :
     personalDataForm->setExpertAssessment(user.getExpertAssessment());
 }
 
+EditUserView::~EditUserView() = default;
+
 //  :: Public accessors ::
 //  :: Edit user data form
 QString EditUserView::getLogin() const {
@@ -64,29 +66,29 @@ int EditUserView::getExpertAssessment() const {
 }
 
 //  :: Professions model ::
-QAbstractItemModel *EditUserView::getProfessionsModel() const {
-    return getPersonalDataForm()->getProfessionsModel();
+QStringList EditUserView::getProfessions() const {
+    return getPersonalDataForm()->getProfessions();
 }
-void EditUserView::setProfessionsModel(QAbstractItemModel *model) {
-    getPersonalDataForm()->setProfessionsModel(model);
+void EditUserView::setProfessions(const QStringList &professions) {
+    getPersonalDataForm()->setProfessions(professions);
 }
 
 //  :: Private methods ::
 
 inline
 EditUserDataForm *EditUserView::getEditUserDataForm() {
-    return static_cast<EditUserDataForm *>(getUserDataWidget());
+    return dynamic_cast<EditUserDataForm *>(getUserDataWidget());
 }
 inline
 EditUserDataForm *EditUserView::getEditUserDataForm() const {
-    return static_cast<EditUserDataForm *>(getUserDataWidget());
+    return dynamic_cast<EditUserDataForm *>(getUserDataWidget());
 }
 
 inline
 PersonalDataForm *EditUserView::getPersonalDataForm() {
-    return static_cast<PersonalDataForm *>(getPersonalDataWidget());
+    return dynamic_cast<PersonalDataForm *>(getPersonalDataWidget());
 }
 inline
 PersonalDataForm *EditUserView::getPersonalDataForm() const {
-    return static_cast<PersonalDataForm *>(getPersonalDataWidget());
+    return dynamic_cast<PersonalDataForm *>(getPersonalDataWidget());
 }

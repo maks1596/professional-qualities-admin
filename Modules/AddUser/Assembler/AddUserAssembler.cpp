@@ -4,8 +4,7 @@
 #include "../Service/AddUserService.h"
 #include "../View/AddUserView.h"
 
-#include "Modules/Professions/Assembler/ProfessionsAssembler.h"
-#include "Modules/Professions/Model/ProfessionsListModel.h"
+#include "Modules/Professions/Service/ProfessionsService.h"
 
 AddUserView *AddUserAssembler::assembly(QWidget *parent) {
     auto view = new AddUserView(parent);
@@ -15,7 +14,10 @@ AddUserView *AddUserAssembler::assembly(QWidget *parent) {
     controller->setView(view);
     controller->setService(service);
 
-    view->setProfessionsModel(ProfessionsAssembler::assemblyAndStart(view));
+    ProfessionsService::getProfessions(
+                [view](const QStringList &professions)
+                { view->setProfessions(professions); });
+
 
     return view;
 }
