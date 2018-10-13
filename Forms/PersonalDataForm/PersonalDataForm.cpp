@@ -126,8 +126,10 @@ QStringList PersonalDataForm::getProfessions() const {
     return professions;
 }
 void PersonalDataForm::setProfessions(const QStringList &professions) {
+    auto currentProfession = ui->professionComboBox->currentText();
     ui->professionComboBox->clear();
     ui->professionComboBox->addItems(professions);
+    ui->professionComboBox->setCurrentText(currentProfession);
 }
 
 //  :: Public methods ::
