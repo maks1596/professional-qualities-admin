@@ -1,5 +1,7 @@
 #include "UsersForm.h"
 
+#include <QMessageBox>
+
 //  :: Constants ::
 
 const QString TITLE = "Тестируемые";
@@ -18,8 +20,18 @@ void UsersForm::showRemoveUserDialog(uint userIndex) {
                                     "Вы действительно хотите удалить пользователя?",
                                     QMessageBox::Yes, QMessageBox::No);
     if(btn == QMessageBox::Yes) {
-        emit removeUser(userIndex);
+        emit removeUserClicked(userIndex);
     }
+}
+
+void UsersForm::showEditUserView(const User &user)
+{
+
+}
+
+void UsersForm::showAddUserView()
+{
+
 }
 
 //  :: Protected methods ::

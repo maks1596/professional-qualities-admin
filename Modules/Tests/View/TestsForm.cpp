@@ -24,7 +24,7 @@ TestsForm::TestsForm(QWidget *parent) :
 	EntitiesForm(parent)
 {
     setTitle(TITLE);
-    setAddButtonIconName(ADD_BUTTON_ICON_NAME);
+    setAddButtonIcon(ADD_BUTTON_ICON_NAME);
     setAddButtonToolTip(ADD_BUTTON_TOOL_TIP);
     setHeaderLabels(kHeaderLabels);
 	initModel();

@@ -83,7 +83,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 void MainWindow::onUsersBtnClicked() {
     auto usersForm = new UsersForm(this);
-    connect(usersForm, &UsersForm::toMainMenuBtnClicked,
+    connect(usersForm, &UsersForm::backButtonClicked,
             this, &MainWindow::onBackToMainMenu);
     connect(usersForm, SIGNAL(createUserForm(User)),
             this, SLOT(pushEditUserViewToStack(User)));
@@ -98,6 +98,7 @@ void MainWindow::pushAddUserViewToStack() {
     auto addUserView = AddUserAssembler::assembly(this);
     connect(addUserView, &AddUserView::cancelButtonClicked,
             this, &MainWindow::onCancelUserEditing);
+
     push(addUserView);
 }
 
@@ -121,7 +122,7 @@ void MainWindow::onCancelUserEditing() {
 
 void MainWindow::onTestsBtnClicked() {
     auto tests = new TestsForm(this);
-    connect(tests, &TestsForm::toMainMenuBtnClicked,
+    connect(tests, &TestsForm::backButtonClicked,
             this, &MainWindow::onBackToMainMenu);
     connect(tests, &TestsForm::createTestForm,
             this, &MainWindow::pushTestFormToStack);
@@ -212,7 +213,7 @@ void MainWindow::showCriticalMessage(const QString &error) {
 
 void MainWindow::onBackToMainMenu() {
     pop();
-    ui->stackedWidget->setCurrentIndex(MAIN_MENU_STACK_INDEX);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 template<class T>
