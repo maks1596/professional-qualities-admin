@@ -3,52 +3,30 @@
 #include <QModelIndex>
 
 #include "../View/UsersForm.h"
+#include "../Service/UsersService.h"
+#include "../Model/UsersModel.h"
+
+#include "Entities/User/User.h"
 
 //  :: Lifecycle ::
 
-UsersController::UsersController(QObject *parent)
-    : QObject(parent) { }
-
-//  :: Public accessors ::
-//  :: View ::
-UsersForm *UsersController::getView() const {
-    return m_view;
-}
-void UsersController::setView(UsersForm *view) {
-    m_view = view;
-
-    connect(view, &UsersForm::entityClicked,
-            this, &UsersController::onUserClicked);
-    connect(view, &UsersForm::entityDoubleClicked,
-            this, &UsersController::onUserDoubleClicked);
-
-    connect(view, &UsersForm::addButtonClicked,
-            view, &UsersForm::showAddUserView);
-    connect(view, &UsersForm::removeUserClicked,
-            this, &UsersController::onRemoveUserClicked);
+UsersController::UsersController(UsersForm *view,
+                                 UsersModel *model,
+                                 UsersService *service)
+    : QObject(view),
+      m_view(view),
+      m_model(model),
+      m_service(service)
+{
+    connectView();
+    connectService();
 }
 
-//  :: Model ::
-UsersModel *UsersController::getModel() const {
-    return m_model;
-}
-void UsersController::setModel(UsersModel *model) {
-    m_model = model;
-}
-
-//  :: Service ::
-UsersService *UsersController::getService() const {
-    return m_service;
-}
-void UsersController::setService(UsersService *service) {
-    m_service = service;
-}
-
-//  :: Private methods ::
+//  :: Private slots ::
 
 void UsersController::onUserClicked(const QModelIndex &idx) {
     if (idx.isValid()) {
-        if (idx.column() == m_model->removeColumnIndex()) {
+        if (idx.column() == m_model->getRemoveColumnIndex()) {
             m_view->showRemoveUserDialog(idx.row());
         }
     }
@@ -57,7 +35,7 @@ void UsersController::onUserClicked(const QModelIndex &idx) {
 void UsersController::onUserDoubleClicked(const QModelIndex &idx) {
     if (idx.isValid()) {
         auto userIndex = idx.row();
-        if (idx.column() == m_model->removeColumnIndex()) {
+        if (idx.column() == m_model->getRemoveColumnIndex()) {
             m_view->showRemoveUserDialog(userIndex);
         } else {
             m_view->showEditUserView(m_model->getUser(userIndex));
@@ -67,4 +45,25 @@ void UsersController::onUserDoubleClicked(const QModelIndex &idx) {
 
 void UsersController::onRemoveUserClicked(uint index) {
     m_service->removeUser(m_model->getUserId(index));
+}
+
+//  :: Private methods ::
+
+void UsersController::connectView() {
+    connect(m_view, &UsersForm::entityClicked,
+            this, &UsersController::onUserClicked);
+    connect(m_view, &UsersForm::entityDoubleClicked,
+            this, &UsersController::onUserDoubleClicked);
+
+    connect(m_view, &UsersForm::addButtonClicked,
+            m_view, &UsersForm::showAddUserView);
+    connect(m_view, &UsersForm::removeUserClicked,
+            this, &UsersController::onRemoveUserClicked);
+}
+
+void UsersController::connectService() {
+    connect(m_service, &UsersService::usersGot,
+            m_model, &UsersModel::setUsers);
+    connect(m_service, &UsersService::error,
+            m_view, &UsersForm::showCriticalMessage);
 }

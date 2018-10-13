@@ -7,22 +7,20 @@ class UsersModel;
 class UsersService;
 
 class UsersController : public QObject {
+    Q_OBJECT
 public:
-    UsersController(QObject *parent = nullptr);
+    UsersController(UsersForm *view,
+                    UsersModel *model,
+                    UsersService *service);
 
-    UsersForm *getView() const;
-    void setView(UsersForm *view);
-
-    UsersModel *getModel() const;
-    void setModel(UsersModel *model);
-
-    UsersService *getService() const;
-    void setService(UsersService *service);
-
-private:
+private slots:
     void onUserClicked(const QModelIndex &idx);
     void onUserDoubleClicked(const QModelIndex &idx);
     void onRemoveUserClicked(uint index);
+
+private:
+    void connectView();
+    void connectService();
 
     UsersForm *m_view = nullptr;
     UsersModel *m_model = nullptr;
