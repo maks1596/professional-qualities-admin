@@ -1,26 +1,30 @@
 #pragma once
 
-#include "BaseService/BaseService.h"
+#include <QAbstractTableModel>
+#include <QList>
 
 class User;
 
-class UsersModel : public BaseService {
-Q_OBJECT
-
+class UsersModel : public QAbstractTableModel {
 public:
-	UsersModel(QObject *parent = nullptr);
+    UsersModel(QObject *parent = nullptr);
 
-public:
-	void getUsers() const;
-	void getUser(int userId) const;
-	void deleteUser(int userId) const;
+    // QAbstractItemModel interface
+    int rowCount(const QModelIndex &parent) const override;
+    int columnCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
 
-signals:
-	void usersGot(const QList<User> &users);
-	void userGot(const User &user);
-	void userDeleted();
+    QVariant headerData(int section,
+                        Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
 
-private slots:
-	void jsonUsersGot(const QJsonArray &jsonUsers);
-	void jsonUserGot(const QJsonObject &jsonUser);
+    const QList<User> &getUsers() const;
+    void setUsers(const QList<User> &users);
+
+    User getUser(uint index) const;
+    int getUserId(uint index) const;
+    int getRemoveColumnIndex() const;
+
+private:
+    QList<User> m_users;
 };

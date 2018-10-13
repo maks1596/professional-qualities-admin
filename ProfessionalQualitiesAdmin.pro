@@ -124,7 +124,8 @@ SOURCES += main.cpp\
     Modules/EditUser/Assembler/EditUserAssembler.cpp \
     Navigation/NavigationView.cpp \
     Modules/Users/Controller/UsersController.cpp \
-    Modules/Users/Service/UsersService.cpp
+    Modules/Users/Model/UsersModel.cpp \
+    Modules/Users/Service/UsersService.cpp \
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -236,7 +237,8 @@ HEADERS  += MainWindow/MainWindow.h \
     Navigation/INavigation.h \
     Navigation/NavigationView.h \
     Modules/Users/Controller/UsersController.h \
-    Modules/Users/Service/UsersService.h
+    Modules/Users/Model/UsersModel.h \
+    Modules/Users/Service/UsersService.h \
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \
