@@ -2,9 +2,7 @@
 
 #include "Forms/EntitiesForm/EntitiesForm.h"
 
-class ShortTestInfo;
 class Test;
-class TestsModel;
 
 class TestsForm : public EntitiesForm {
 Q_OBJECT
@@ -12,25 +10,16 @@ Q_OBJECT
 public:
     explicit TestsForm(QWidget *parent = nullptr);
 
-public slots:
-	virtual void update() override;
+    void showRemoveTestDialog(uint testIndex);
+    void showEditTestView(const Test &test);
+    void showAddTestView() const;
+    void showTestIsUsedMessage();
 
 signals:
-    void createTestForm(const Test &test);
-
-protected slots:
-	virtual void onAddBtnClicked() override;
+    void removeTestClicked(uint testIndex);
 
 protected:
-	virtual void removeEntity(const int &testId) override;
-	virtual void editEntity(const int &testId) override;
-
-private slots:
-	void updateTestsTable(const QList<ShortTestInfo> &tests);
-	void showTestIsUsedMessage();
-
-private:
-	void initModel();
-
-	TestsModel *m_model;
+    QString getTitle() const override;
+    QString getAddButtonIconName() const override;
+    QString getAddButtonToolTip() const override;
 };
