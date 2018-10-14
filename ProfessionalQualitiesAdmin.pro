@@ -126,7 +126,12 @@ SOURCES += main.cpp\
     Modules/Users/Controller/UsersController.cpp \
     Modules/Users/Model/UsersModel.cpp \
     Modules/Users/Service/UsersService.cpp \
-    Modules/Users/Assembler/UsersAssembler.cpp
+    Modules/Users/Assembler/UsersAssembler.cpp \
+    Modules/Tests/Assembler/TestsAssembler.cpp \
+    Modules/Tests/Controller/TestsController.cpp \
+    Modules/Tests/Model/TestsModel.cpp \
+    Modules/Tests/Service/TestsService.cpp \
+    Modules/Tests/View/TestsForm.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -240,7 +245,12 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/Users/Controller/UsersController.h \
     Modules/Users/Model/UsersModel.h \
     Modules/Users/Service/UsersService.h \
-    Modules/Users/Assembler/UsersAssembler.h
+    Modules/Users/Assembler/UsersAssembler.h \
+    Modules/Tests/Assembler/TestsAssembler.h \
+    Modules/Tests/Controller/TestsController.h \
+    Modules/Tests/Model/TestsModel.h \
+    Modules/Tests/Service/TestsService.h \
+    Modules/Tests/View/TestsForm.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \

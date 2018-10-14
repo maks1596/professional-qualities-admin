@@ -11,10 +11,10 @@
 #include "Modules/EditUser/Assembler/EditUserAssembler.h"
 #include "Modules/EditUser/View/EditUserView.h"
 
-#include "Modules/Users/View/UsersForm.h"
+#include "Modules/Users/Assembler/UsersAssembler.h"
 
 #include "Modules/TestEditing/View/TestEditingForm.h"
-#include "Modules/Tests/View/TestsForm.h"
+#include "Modules/Tests/Assembler/TestsAssembler.h"
 
 #include "Modules/PassedTests/Assembler/PassedTestsAssembler.h"
 #include "Modules/PassedTests/View/PassedTestsForm.h"
@@ -39,16 +39,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->setCurrentIndex(0);
 
     connect(ui->usersBtn, &QCommandLinkButton::clicked,
-            this, &MainWindow::onUsersBtnClicked);
-    connect(ui->testsBtn, &QCommandLinkButton::clicked,
-            this, &MainWindow::onTestsBtnClicked);
-    connect(ui->statisticsButton, &QCommandLinkButton::clicked,
-            this, &MainWindow::onStatisticsButtonClicled);
-
-    connect(ui->addTestBtn, SIGNAL(clicked()),
-            this, SLOT(pushTestFormToStack()));
+            [this](){ UsersAssembler::assembly(this); });
     connect(ui->addUserBtn, &QPushButton::clicked,
             this, &MainWindow::pushAddUserViewToStack);
+
+    connect(ui->testsBtn, &QCommandLinkButton::clicked,
+            [this](){ TestsAssembler::assembly(this); });
+    connect(ui->addTestBtn, SIGNAL(clicked()),
+            this, SLOT(pushTestFormToStack()));
+
+    connect(ui->statisticsButton, &QCommandLinkButton::clicked,
+            this, &MainWindow::onStatisticsButtonClicled);
 }
 
 MainWindow::~MainWindow() {
@@ -81,19 +82,6 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 //  :: Private slots ::
 //  :: Пользователи ::
 
-void MainWindow::onUsersBtnClicked() {
-    auto usersForm = new UsersForm(this);
-    connect(usersForm, &UsersForm::backButtonClicked,
-            this, &MainWindow::onBackToMainMenu);
-    connect(usersForm, SIGNAL(createUserForm(User)),
-            this, SLOT(pushEditUserViewToStack(User)));
-    connect(usersForm, &UsersForm::addUserButtonClicked,
-            this, &MainWindow::pushAddUserViewToStack);
-    connect(usersForm, &TestsForm::error,
-			this, &MainWindow::showStatusMessage);
-    push(usersForm);
-}
-
 void MainWindow::pushAddUserViewToStack() {
     auto addUserView = AddUserAssembler::assembly(this);
     connect(addUserView, &AddUserView::cancelButtonClicked,
@@ -102,34 +90,7 @@ void MainWindow::pushAddUserViewToStack() {
     push(addUserView);
 }
 
-void MainWindow::pushEditUserViewToStack(const User &user) {
-    auto editUserView = EditUserAssembler::assembly(user, this);
-    connect(editUserView, &EditUserView::cancelButtonClicked,
-            this, &MainWindow::onCancelUserEditing);
-    push(editUserView);
-}
-
-void MainWindow::onCancelUserEditing() {
-    pop();
-    if(!ui->stackedWidget->currentWidget()) {
-       currentWidget<UsersForm>()->startUpdating();
-    } else {
-        onUsersBtnClicked();
-    }
-}
-
 //  :: Тесты ::
-
-void MainWindow::onTestsBtnClicked() {
-    auto tests = new TestsForm(this);
-    connect(tests, &TestsForm::backButtonClicked,
-            this, &MainWindow::onBackToMainMenu);
-    connect(tests, &TestsForm::createTestForm,
-            this, &MainWindow::pushTestFormToStack);
-	connect(tests, &TestsForm::error,
-			this, &MainWindow::showStatusMessage);
-    push(tests);
-}
 
 void MainWindow::pushTestFormToStack(const Test &test) {
     auto ptest = new Test(test);
@@ -139,20 +100,6 @@ void MainWindow::pushTestFormToStack(const Test &test) {
     connect(testForm, &TestEditingForm::testRead,
             this, &MainWindow::onTestRead);
     push(testForm);
-}
-
-void MainWindow::onCancelTestEditing() {
-    pop();
-    if(!ui->stackedWidget->currentWidget()) {
-       currentWidget<TestsForm>()->startUpdating();
-    } else {
-        onTestsBtnClicked();
-    }
-}
-
-void MainWindow::onTestRead(const Test &test) {
-    pop();
-    pushTestFormToStack(test);
 }
 
 //  :: Статистика ::
