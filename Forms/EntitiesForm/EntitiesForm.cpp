@@ -1,12 +1,13 @@
 #include "EntitiesForm.h"
 #include "ui_EntitiesForm.h"
 
-#include <QMessageBox>
-
 //  :: Lifecycle ::
 
-EntitiesForm::EntitiesForm(QWidget *parent) :
-    QWidget(parent),
+EntitiesForm::EntitiesForm(const QString &title,
+                           const QString &addButtonIconName,
+                           const QString &addButtonToolTip,
+                           QWidget *parent) :
+    NavigationView(parent),
     ui(new Ui::EntitiesForm)
 {
     ui->setupUi(this);
@@ -21,9 +22,9 @@ EntitiesForm::EntitiesForm(QWidget *parent) :
     connect(ui->entitiesTableView, &QTableView::doubleClicked,
             this, &EntitiesForm::entityDoubleClicked);
 
-    setTitle(getTitle());
-    setAddButtonIcon(getAddButtonIconName());
-    setAddButtonToolTip(getAddButtonToolTip());
+    setTitle(title);
+    setAddButtonIcon(addButtonIconName);
+    setAddButtonToolTip(addButtonToolTip);
 }
 
 EntitiesForm::~EntitiesForm() {
@@ -37,12 +38,9 @@ QAbstractItemModel *EntitiesForm::getModel() const {
 }
 void EntitiesForm::setModel(QAbstractItemModel *model) {
     ui->entitiesTableView->setModel(model);
-}
-
-//  :: Public slots ::
-
-void EntitiesForm::showCriticalMessage(const QString &error) {
-    QMessageBox::critical(this, "Ошибка", error);
+    connect(model, &QAbstractItemModel::dataChanged,
+            this, &EntitiesForm::resizeTable);
+    resizeTable();
 }
 
 //  :: Private methods ::

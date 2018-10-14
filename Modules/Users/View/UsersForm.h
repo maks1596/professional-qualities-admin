@@ -16,9 +16,5 @@ public:
 
 signals:
     void removeUserClicked(uint userIndex);
-
-protected:
-    QString getTitle() const override;
-    QString getAddButtonIconName() const override;
-    QString getAddButtonToolTip() const override;
+    void error(const QString &errorMessage);
 };
