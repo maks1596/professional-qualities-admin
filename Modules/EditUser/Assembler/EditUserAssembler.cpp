@@ -6,7 +6,7 @@
 
 #include "Modules/Professions/Service/ProfessionsService.h"
 
-EditUserView *EditUserAssembler::assembly(const User &user, QWidget *parent) {
+std::tuple<QWidget *, EditUserOutput *> EditUserAssembler::assembly(const User &user, QWidget *parent) {
     auto view = new EditUserView(user, parent);
     auto controller = new EditUserController(user, view);
     auto service = new EditUserService(controller);
@@ -18,8 +18,5 @@ EditUserView *EditUserAssembler::assembly(const User &user, QWidget *parent) {
     controller->setView(view);
     controller->setService(service);
 
-    QObject::connect(service, &EditUserService::error,
-                     view, &EditUserView::showErrorMessageBox);
-
-    return view;
+    return std::make_tuple(view, controller);
 }

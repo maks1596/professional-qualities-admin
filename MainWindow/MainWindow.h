@@ -3,15 +3,17 @@
 #include <QMainWindow>
 #include "Navigation/INavigation.h"
 
-#include "Entities/Test/Test.h"
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
 }
 
+class EntitiesOutput;
 class User;
 class PassedTest;
 class ScaleStatistics;
+class Test;
 
 class MainWindow : public QMainWindow,
                    public INavigation {
@@ -32,18 +34,14 @@ protected:
     void closeEvent(QCloseEvent *event) override;
 
 private slots:
-    void onUsersBtnClicked();
-    void onTestsBtnClicked();
-    void onStatisticsButtonClicled();
-    void onBackToMainMenu();
+    void showUsersView();
+    void showAddUserView();
 
-    void pushAddUserViewToStack();
-    void pushEditUserViewToStack(const User &user);
-    void onCancelUserEditing();
+    void showTestsView();
+    void showAddTestView();
+    void showEditTestView(const Test &test);
 
-    void pushTestFormToStack(const Test &test = Test());
-    void onCancelTestEditing();
-    void onTestRead(const Test &test);
+    void showStatisticsView();
 
     void showTestStatisticsForm(const PassedTest &passedTest);
     void showScaleStatisticsForm(int testId,
@@ -53,10 +51,9 @@ private slots:
     void showStatusMessage(const QString &message);
 
 private:
-    template<class T>
-    T *currentWidget();
-
 	void clearStatusBar();
+    void connectEntitiesOutput(EntitiesOutput *output);
 
+    QTimer m_timer;
     Ui::MainWindow *ui;
 };

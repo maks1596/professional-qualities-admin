@@ -1,7 +1,10 @@
 #pragma once
 
+#include <tuple>
+
 class QWidget;
+class EntitiesOutput;
 
 namespace UsersAssembler {
-    QWidget *assembly(QWidget *parent);
+    std::tuple<QWidget *, EntitiesOutput *> assembly(QWidget *parent);
 }

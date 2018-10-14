@@ -1,9 +1,10 @@
 #pragma once
 
-class QWidget;
+#include <tuple>
 
-class AddUserView;
+class QWidget;
+class AddUserOutput;
 
 namespace AddUserAssembler {
-    AddUserView *assembly(QWidget *parent = nullptr);
+    std::tuple<QWidget *, AddUserOutput *> assembly(QWidget *parent = nullptr);
 }

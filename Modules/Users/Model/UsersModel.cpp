@@ -39,7 +39,7 @@ QVariant UsersModel::data(const QModelIndex &index, int role) const {
 
         switch (index.column()) {
         case NAME_COLUMN_INDEX:
-            return user.getName();
+            return user.getName().isEmpty() ? user.getLogin() : user.getName();
         case GENDER_COLUMN_INDEX:
             return user.getGenderString();
         case AGE_COLUMN_INDEX:
@@ -62,7 +62,7 @@ QVariant UsersModel::headerData(int section,
         if (orientation == Qt::Horizontal) {
             switch (section) {
             case NAME_COLUMN_INDEX:
-                return "Название теста";
+                return "Имя";
             case GENDER_COLUMN_INDEX:
                 return "Пол";
             case AGE_COLUMN_INDEX:
@@ -85,22 +85,53 @@ const QList<User> &UsersModel::getUsers() const {
     return m_users;
 }
 void UsersModel::setUsers(const QList<User> &users) {
-    m_users = users;
+    if (m_users.isEmpty()) {
+        beginResetModel();
+        m_users = users;
+        endResetModel();
+    } else {
+        updateData(users);
+    }
+    emitAllDataChanged();
 }
 
 //  :: Public methods ::
 
-User UsersModel::getUser(uint index) const {
+User UsersModel::getUser(int index) const {
     if (index < m_users.size()) {
         return m_users[index];
     }
     return User();
 }
 
-int UsersModel::getUserId(uint index) const {
+int UsersModel::getUserId(int index) const {
     return getUser(index).getId();
 }
 
 int UsersModel::getRemoveColumnIndex() const {
     return REMOVE_COLUMN_INDEX;
+}
+
+//  :: Private methods ::
+
+inline
+void UsersModel::updateData(const QList<User> &users) {
+    if (users.size() < m_users.size()) {
+        beginRemoveRows(QModelIndex(), users.size(), m_users.size() - 1);
+        m_users = users;
+        endRemoveRows();
+    } else if (users.size() > m_users.size()) {
+        beginInsertRows(QModelIndex(), m_users.size(), users.size() - 1);
+        m_users = users;
+        endInsertRows();
+    } else {
+        m_users = users;
+    }
+}
+
+inline
+void UsersModel::emitAllDataChanged() {
+    emit dataChanged(index(0, 0),
+                     index(m_users.size() - 1,
+                           COLUMNS_COUNT - 1));
 }

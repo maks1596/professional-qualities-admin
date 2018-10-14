@@ -16,7 +16,7 @@ Q_OBJECT
 
 public:
     explicit AddUserView(QWidget *parent = nullptr);
-    virtual ~AddUserView() = default;
+     ~AddUserView() override = default;
 
     QString getLogin() const;
     QString getPassword() const;

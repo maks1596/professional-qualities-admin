@@ -64,22 +64,53 @@ const QList<ShortTestInfo> &TestsModel::getTests() const {
     return m_tests;
 }
 void TestsModel::setTests(const QList<ShortTestInfo> &tests) {
-    m_tests = tests;
+    if (m_tests.isEmpty()) {
+        beginResetModel();
+        m_tests = tests;
+        endResetModel();
+    } else {
+        updateData(tests);
+    }
+    emitAllDataChanged();
 }
 
 //  :: Public methods ::
 
-ShortTestInfo TestsModel::getTest(uint index) const {
+ShortTestInfo TestsModel::getTest(int index) const {
     if (index < m_tests.size()) {
         return m_tests[index];
     }
     return ShortTestInfo();
 }
 
-int TestsModel::getTestId(uint index) const {
+int TestsModel::getTestId(int index) const {
     return getTest(index).getId();
 }
 
 int TestsModel::getRemoveColumnIndex() const {
     return REMOVE_COLUMN_INDEX;
+}
+
+//  :: Private methods ::
+
+inline
+void TestsModel::updateData(const QList<ShortTestInfo> &tests) {
+    if (tests.size() < m_tests.size()) {
+        beginRemoveRows(QModelIndex(), tests.size(), m_tests.size() - 1);
+        m_tests = tests;
+        endRemoveRows();
+    } else if (tests.size() > m_tests.size()) {
+        beginInsertRows(QModelIndex(), m_tests.size(), tests.size() - 1);
+        m_tests = tests;
+        endInsertRows();
+    } else {
+        m_tests = tests;
+    }
+}
+
+inline
+void TestsModel::emitAllDataChanged() {
+    emit dataChanged(index(0, 0),
+                     index(m_tests.size() - 1,
+                           COLUMNS_COUNT - 1));
 }

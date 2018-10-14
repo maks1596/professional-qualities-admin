@@ -19,8 +19,7 @@ const int MAXIMUM_EXPERT_ASSESSMENT = 100;
 //  :: Lifecycle ::
 
 AddUserController::AddUserController(QObject *parent)
-    : QObject(parent)
-{ }
+    : AddUserOutput(parent) { }
 
 //  :: Public accessors ::
 //  :: View ::
@@ -47,6 +46,8 @@ void AddUserController::setView(AddUserView *view) {
 
     connect(view, &AddUserView::saveButtonClicked,
             this, &AddUserController::onSaveUserButtonClicked);
+    connect(view, &AddUserView::cancelButtonClicked,
+            view, &AddUserView::pop);
 }
 
 //  :: Serivce ::
@@ -57,9 +58,9 @@ void AddUserController::setService(AddUserService *service) {
     m_service = service;
 
     connect(m_service, &AddUserService::error,
-            m_view, &AddUserView::showErrorMessageBox);
+            this, &AddUserController::error);
     connect(m_service, &AddUserService::userAdded,
-            m_view, &AddUserView::cancelButtonClicked);
+            [this](){ m_view->pop(); emit userAdded(); });
 }
 
 //  :: Private methods ::

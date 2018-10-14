@@ -21,10 +21,13 @@ public:
     const QList<User> &getUsers() const;
     void setUsers(const QList<User> &users);
 
-    User getUser(uint index) const;
-    int getUserId(uint index) const;
+    User getUser(int index) const;
+    int getUserId(int index) const;
     int getRemoveColumnIndex() const;
 
 private:
+    void updateData(const QList<User> &users);
+    void emitAllDataChanged();
+
     QList<User> m_users;
 };

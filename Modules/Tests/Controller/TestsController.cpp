@@ -8,18 +8,29 @@
 
 #include "Entities/Test/Test.h"
 
+//  :: Constants ::
+
+const int UPDATE_TIMING = 5000;
+
 //  :: Lifecycle ::
 
 TestsController::TestsController(TestsForm *view,
                                  TestsModel *model,
                                  TestsService *service)
-    : QObject(view),
+    : EntitiesOutput(view),
       m_view(view),
       m_model(model),
       m_service(service)
 {
     connectView();
     connectService();
+
+    m_timer.setInterval(UPDATE_TIMING);
+    connect(&m_timer, &QTimer::timeout,
+            m_service, &TestsService::getTests);
+    m_timer.start();
+
+    m_service->getTests();
 }
 
 //  :: Private slots ::
@@ -59,13 +70,19 @@ void TestsController::connectView() {
             m_view, &TestsForm::showAddTestView);
     connect(m_view, &TestsForm::removeTestClicked,
             this, &TestsController::onRemoveTestClicked);
+
+    connect(m_view, &TestsForm::backButtonClicked,
+            m_view, &TestsForm::pop);
+    connect(m_view, &TestsForm::error,
+            this, &TestsController::error);
 }
 
 void TestsController::connectService() {
     connect(m_service, &TestsService::testsGot,
             m_model, &TestsModel::setTests);
     connect(m_service, &TestsService::error,
-            m_view, &TestsForm::showCriticalMessage);
+            this, &TestsController::statusMessage);
+
     connect(m_service, &TestsService::testGot,
             m_view, &TestsForm::showEditTestView);
     connect(m_service, &TestsService::testIsUsed,

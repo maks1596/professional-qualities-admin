@@ -7,7 +7,7 @@
 
 //  :: Lifecycle ::
 EditUserController::EditUserController(const User &user, QObject *parent)
-    : QObject(parent),
+    : EditUserOutput(parent),
       m_id(user.getId())
 { }
 
@@ -21,6 +21,8 @@ void EditUserController::setView(EditUserView *view) {
 
     connect(view, &EditUserView::saveButtonClicked,
             this, &EditUserController::saveChanges);
+    connect(view, &EditUserView::cancelButtonClicked,
+            view, &EditUserView::pop);
 }
 
 //  :: Service ::
@@ -31,7 +33,7 @@ void EditUserController::setService(EditUserService *service) {
     m_service = service;
 
     connect(m_service, &EditUserService::userUpdated,
-            m_view, &EditUserView::cancelButtonClicked);
+            m_view, &EditUserView::pop);
 }
 
 //  :: Private slots ::

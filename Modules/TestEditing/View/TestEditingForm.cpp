@@ -14,7 +14,7 @@
 //  :: Lifecycle ::
 
 TestEditingForm::TestEditingForm(Test *test, QWidget *parent) :
-    QWidget(parent),
+    NavigationView(parent),
     m_test(test),
     m_testMainForm(new TestMainForm(test, this)),
     m_scalesContainer(new ScalesContainer(test, this)),
@@ -29,7 +29,7 @@ TestEditingForm::TestEditingForm(Test *test, QWidget *parent) :
     connect(ui->saveBtn, &QPushButton::clicked,
             this, &TestEditingForm::onSaveTestBtnClicked);
     connect(ui->cancelBtn, &QPushButton::clicked,
-            this, &TestEditingForm::cancelBtnClicked);
+            this, &TestEditingForm::pop);
     connect(ui->loadFromFileBtn, &QPushButton::clicked,
             this, &TestEditingForm::onLoadFromFileClicked);
 
@@ -56,17 +56,17 @@ void TestEditingForm::initModel() {
 	m_model = new TestEditingModel(this);
 
 	connect(m_model, &TestEditingModel::error,
-			this, &TestEditingForm::showCriticalMessage);
+            this, &TestEditingForm::error);
 
 	connect(m_model, &TestEditingModel::testNameIsFree,
 			this, &TestEditingForm::putTest);
 	connect(m_model, &TestEditingModel::testPut,
-			this, &TestEditingForm::cancelBtnClicked);
+            [this](){ pop(); emit testAdded(); });
 
 	connect(m_model, &TestEditingModel::testNameAlreadyTaken,
 			this, &TestEditingForm::showReplaceTestDialog);
 	connect(m_model, &TestEditingModel::testReplaced,
-			this, &TestEditingForm::cancelBtnClicked);
+            [this](){ pop(); emit testReplaced(); });
 	connect(m_model, &TestEditingModel::testIsUsed,
 			this, &TestEditingForm::showTestIsUsedMessage);
 }
@@ -90,8 +90,8 @@ void TestEditingForm::onLoadFromFileClicked() {
                                                     "", "*.txt *.tst");
     if(fileName.isEmpty()) { return; }
 
-    QThread *thread = new QThread();
-    TestReader *testReader = new TestReader();
+    auto thread = new QThread();
+    auto testReader = new TestReader();
     testReader->moveToThread(thread);
 
     connect(thread, &QThread::started,
@@ -100,7 +100,7 @@ void TestEditingForm::onLoadFromFileClicked() {
     connect(testReader, &TestReader::testRead,
             this, &TestEditingForm::testRead);
     connect(testReader, &TestReader::error,
-			this, &TestEditingForm::showCriticalMessage);
+            this, &TestEditingForm::error);
 
     connect(testReader, &TestReader::testRead,
             thread, &QThread::quit);
@@ -130,8 +130,4 @@ void TestEditingForm::showTestIsUsedMessage() {
 	QMessageBox::warning(this, "Тест уже используется",
 						 "Данный тест уже используется\n"
 						 "Замена теста невозможна");
-}
-
-void TestEditingForm::showCriticalMessage(const QString &error) {
-    QMessageBox::critical(this, "Ошибка", error);
 }

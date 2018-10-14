@@ -2,6 +2,9 @@
 
 #include <QMessageBox>
 
+#include "Entities/Test/Test.h"
+#include "Modules/TestEditing/View/TestEditingForm.h"
+
 //  :: Constatns ::
 
 const QString TITLE = "Тесты";
@@ -13,7 +16,10 @@ const QString TEST_IS_USED_MESSAGE = "Удаление теста невозмо
 //  :: Lifecycle ::
 
 TestsForm::TestsForm(QWidget *parent) :
-    EntitiesForm(parent) { }
+    EntitiesForm(TITLE,
+                 ADD_BUTTON_ICON_NAME,
+                 ADD_BUTTON_TOOL_TIP,
+                 parent) { }
 
 //  :: Public methods ::
 
@@ -26,30 +32,20 @@ void TestsForm::showRemoveTestDialog(uint testIndex) {
     }
 }
 
-void TestsForm::showEditTestView(const Test &test)
-{
-
+void TestsForm::showEditTestView(const Test &test) {
+    auto view = new TestEditingForm(new Test(test), this);
+    connect(view, &TestEditingForm::error,
+            this, &TestsForm::error);
+    connect(view, &TestEditingForm::testRead,
+            [this](const Test &test)
+            { pop(); emit showEditTestView(test); });
+    push(view);
 }
 
-void TestsForm::showAddTestView() const
-{
-
+void TestsForm::showAddTestView() {
+    showEditTestView(Test());
 }
 
 void TestsForm::showTestIsUsedMessage() {
-    showCriticalMessage(TEST_IS_USED_MESSAGE);
-}
-
-//  :: Protected methods ::
-
-QString TestsForm::getTitle() const {
-    return TITLE;
-}
-
-QString TestsForm::getAddButtonIconName() const {
-    return ADD_BUTTON_ICON_NAME;
-}
-
-QString TestsForm::getAddButtonToolTip() const {
-    return  ADD_BUTTON_TOOL_TIP;
+    emit error(TEST_IS_USED_MESSAGE);
 }

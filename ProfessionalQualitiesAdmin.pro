@@ -50,7 +50,6 @@ SOURCES += main.cpp\
     Modules/Autorization/View/LoginForm.cpp \
     Entities/AnswerOption/AnswerOption.cpp \
     Forms/AnswerOptionForm/AnswerOptionForm.cpp \
-    Modules/Tests/View/TestsForm.cpp \
     Entities/User/User.cpp \
     Forms/EntitiesForm/EntitiesForm.cpp \
     Requester/Requester.cpp \
@@ -65,12 +64,9 @@ SOURCES += main.cpp\
     Entities/Key/PartOfKey/PartOfKey.cpp \
     Entities/Key/GeneralAnswerOptions/PartOfKey/PartOfGeneralAnswerOptionsKey.cpp \
     Entities/Key/UniqueAnswerOptions/PartOfKey/PartOfUniqueAnswerOptionsKey.cpp \
-    Modules/Users/Model/UsersModel.cpp \
     Modules/Users/View/UsersForm.cpp \
     Entities/Entity/Entity.cpp \
     Entities/Gender/Gender.cpp \
-    Modules/CreateUser/Model/CreateUserModel.cpp \
-    Modules/Tests/Model/TestsModel.cpp \
     Entities/ShortTestInfo/ShortTestInfo.cpp \
     Modules/TestEditing/Model/TestEditingModel.cpp \
     Modules/Autorization/Model/AutorizationModel.cpp \
@@ -131,7 +127,10 @@ SOURCES += main.cpp\
     Modules/Tests/Controller/TestsController.cpp \
     Modules/Tests/Model/TestsModel.cpp \
     Modules/Tests/Service/TestsService.cpp \
-    Modules/Tests/View/TestsForm.cpp
+    Modules/Tests/View/TestsForm.cpp \
+    Modules/AddUser/Output/AddUserOutput.cpp \
+    Modules/EditUser/Output/EditUserOutput.cpp \
+    EntitesOutput/EntitiesOutput.cpp
 
 HEADERS  += MainWindow/MainWindow.h \
     TestReader/TestReader.h \
@@ -159,7 +158,6 @@ HEADERS  += MainWindow/MainWindow.h \
     Configurator/Configurator.h \
     Modules/Autorization/View/LoginForm.h \
     Forms/AnswerOptionForm/AnswerOptionForm.h \
-    Modules/Tests/View/TestsForm.h \
     Entities/User/User.h \
     Forms/EntitiesForm/EntitiesForm.h \
     Requester/Requester.h \
@@ -177,12 +175,9 @@ HEADERS  += MainWindow/MainWindow.h \
     Entities/Key/PartOfKey/PartOfKey.h \
     Entities/Key/GeneralAnswerOptions/PartOfKey/PartOfGeneralAnswerOptionsKey.h \
     Entities/Key/UniqueAnswerOptions/PartOfKey/PartOfUniqueAnswerOptionsKey.h \
-    Modules/Users/Model/UsersModel.h \
     Modules/Users/View/UsersForm.h \
     Entities/Entity/Entity.h \
     Entities/Gender/Gender.h \
-    Modules/CreateUser/Model/CreateUserModel.h \
-    Modules/Tests/Model/TestsModel.h \
     Entities/ShortTestInfo/ShortTestInfo.h \
     Modules/TestEditing/Model/TestEditingModel.h \
     Modules/Autorization/Model/AutorizationModel.h \
@@ -250,7 +245,10 @@ HEADERS  += MainWindow/MainWindow.h \
     Modules/Tests/Controller/TestsController.h \
     Modules/Tests/Model/TestsModel.h \
     Modules/Tests/Service/TestsService.h \
-    Modules/Tests/View/TestsForm.h
+    Modules/Tests/View/TestsForm.h \
+    Modules/AddUser/Output/AddUserOutput.h \
+    Modules/EditUser/Output/EditUserOutput.h \
+    EntitesOutput/EntitiesOutput.h
 
 FORMS    += MainWindow/MainWindow.ui \
     Forms/FormulationForm/FormulationForm.ui \

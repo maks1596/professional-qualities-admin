@@ -21,10 +21,13 @@ public:
     const QList<ShortTestInfo> &getTests() const;
     void setTests(const QList<ShortTestInfo> &tests);
 
-    ShortTestInfo getTest(uint index) const;
-    int getTestId(uint index) const;
+    ShortTestInfo getTest(int index) const;
+    int getTestId(int index) const;
     int getRemoveColumnIndex() const;
 
 private:
+    void updateData(const QList<ShortTestInfo> &users);
+    void emitAllDataChanged();
+
     QList<ShortTestInfo> m_tests;
 };

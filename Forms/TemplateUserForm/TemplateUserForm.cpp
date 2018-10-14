@@ -12,7 +12,7 @@ const QString ERROR_MESSAGE_BOX_TITLE = "Ошибка";
 TemplateUserForm::TemplateUserForm(QWidget *userDataWidget,
                                    QWidget *personalDataWidget,
                                    QWidget *parent) :
-    QWidget(parent),
+    NavigationView(parent),
     m_userDataWidget(userDataWidget),
     m_personalDataWidget(personalDataWidget),
     ui(new Ui::TemplateUserForm)
@@ -37,8 +37,12 @@ TemplateUserForm::~TemplateUserForm() {
 
 //  :: Public methods ::
 
-void TemplateUserForm::showErrorMessageBox(const QString &message) {
-    QMessageBox::critical(this, ERROR_MESSAGE_BOX_TITLE, message);
+void TemplateUserForm::setSaveButtonEnabled(bool enabled) {
+    ui->saveButton->setEnabled(enabled);
+}
+
+void TemplateUserForm::setSaveButtonToolTip(const QString &toolTip) {
+    ui->saveButton->setToolTip(toolTip);
 }
 
 //  :: Protected accessors ::
@@ -66,15 +70,4 @@ QWidget *TemplateUserForm::getPersonalDataWidget() {
 }
 QWidget *TemplateUserForm::getPersonalDataWidget() const {
     return m_personalDataWidget;
-}
-
-//  :: Public methods ::
-
-
-void TemplateUserForm::setSaveButtonEnabled(bool enabled) {
-    ui->saveButton->setEnabled(enabled);
-}
-
-void TemplateUserForm::setSaveButtonToolTip(const QString &toolTip) {
-    ui->saveButton->setToolTip(toolTip);
 }

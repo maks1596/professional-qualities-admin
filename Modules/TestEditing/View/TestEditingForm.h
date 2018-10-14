@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QWidget>
+#include "Navigation/NavigationView.h"
 
 class ScalesContainer;
 class ShortTestInfo;
@@ -12,16 +12,18 @@ namespace Ui {
 class TestEditingForm;
 }
 
-class TestEditingForm : public QWidget {
-Q_OBJECT
+class TestEditingForm : public NavigationView {
+    Q_OBJECT
 
 public:
     explicit TestEditingForm(Test *test, QWidget *parent = nullptr);
-    ~TestEditingForm();
+    ~TestEditingForm() override;
 
 signals:
-    void cancelBtnClicked();
+    void testAdded();
+    void testReplaced();
     void testRead(const Test &test);
+    void error(const QString &errorMessage);
 
 private slots:
     void onSaveTestBtnClicked();
@@ -29,16 +31,15 @@ private slots:
 	void showReplaceTestDialog(const ShortTestInfo &shortTestInfo);
 	void showTestIsUsedMessage();
 
-	void showCriticalMessage(const QString &error);
 
 private:
 	void initModel();
 	void replaceTest();
     void putTest();
 
-    Test *m_test;
-	TestEditingModel *m_model;
-    TestMainForm *m_testMainForm;
-    ScalesContainer *m_scalesContainer;
+    Test *m_test = nullptr;
+    TestEditingModel *m_model = nullptr;
+    TestMainForm *m_testMainForm = nullptr;
+    ScalesContainer *m_scalesContainer = nullptr;
     Ui::TestEditingForm *ui;
 };

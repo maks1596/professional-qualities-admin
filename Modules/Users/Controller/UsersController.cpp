@@ -8,18 +8,29 @@
 
 #include "Entities/User/User.h"
 
+//  :: Constants ::
+
+const int UPDATE_TIMING = 5000;
+
 //  :: Lifecycle ::
 
 UsersController::UsersController(UsersForm *view,
                                  UsersModel *model,
                                  UsersService *service)
-    : QObject(view),
+    : EntitiesOutput(view),
       m_view(view),
       m_model(model),
       m_service(service)
 {
     connectView();
     connectService();
+
+    m_timer.setInterval(UPDATE_TIMING);
+    connect(&m_timer, &QTimer::timeout,
+            m_service, &UsersService::getUsers);
+    m_timer.start();
+
+    m_service->getUsers();
 }
 
 //  :: Private slots ::
@@ -59,11 +70,16 @@ void UsersController::connectView() {
             m_view, &UsersForm::showAddUserView);
     connect(m_view, &UsersForm::removeUserClicked,
             this, &UsersController::onRemoveUserClicked);
+
+    connect(m_view, &UsersForm::backButtonClicked,
+            m_view, &UsersForm::pop);
+    connect(m_view, &UsersForm::error,
+            this, &UsersController::error);
 }
 
 void UsersController::connectService() {
     connect(m_service, &UsersService::usersGot,
             m_model, &UsersModel::setUsers);
     connect(m_service, &UsersService::error,
-            m_view, &UsersForm::showCriticalMessage);
+            this, &UsersController::statusMessage);
 }

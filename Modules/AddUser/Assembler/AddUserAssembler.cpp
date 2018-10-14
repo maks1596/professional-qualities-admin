@@ -6,7 +6,7 @@
 
 #include "Modules/Professions/Service/ProfessionsService.h"
 
-AddUserView *AddUserAssembler::assembly(QWidget *parent) {
+std::tuple<QWidget *, AddUserOutput *> AddUserAssembler::assembly(QWidget *parent) {
     auto view = new AddUserView(parent);
     auto controller = new AddUserController(view);
     auto service = new AddUserService(controller);
@@ -19,5 +19,5 @@ AddUserView *AddUserAssembler::assembly(QWidget *parent) {
                 { view->setProfessions(professions); });
 
 
-    return view;
+    return std::make_tuple(view, controller);
 }

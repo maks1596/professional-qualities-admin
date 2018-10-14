@@ -1,12 +1,12 @@
 #pragma once
 
-#include <QWidget>
+#include "Navigation/NavigationView.h"
 
 namespace Ui {
 class TemplateUserForm;
 }
 
-class TemplateUserForm : public QWidget {
+class TemplateUserForm : public NavigationView {
     Q_OBJECT
 
 public:
@@ -17,8 +17,6 @@ public:
 
     void setSaveButtonEnabled(bool enabled);
     void setSaveButtonToolTip(const QString &toolTip);
-
-    void showErrorMessageBox(const QString &message);
 
 signals:
     void saveButtonClicked();

@@ -4,9 +4,11 @@
 #include <QMessageBox>
 
 #include "Entities/User/User.h"
+#include "Entities/Test/Test.h"
+#include "EntitesOutput/EntitiesOutput.h"
 
 #include "Modules/AddUser/Assembler/AddUserAssembler.h"
-#include "Modules/AddUser/View/AddUserView.h"
+#include "Modules/AddUser/Output/AddUserOutput.h"
 
 #include "Modules/EditUser/Assembler/EditUserAssembler.h"
 #include "Modules/EditUser/View/EditUserView.h"
@@ -39,17 +41,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->setCurrentIndex(0);
 
     connect(ui->usersBtn, &QCommandLinkButton::clicked,
-            [this](){ UsersAssembler::assembly(this); });
+            this, &MainWindow::showUsersView);
     connect(ui->addUserBtn, &QPushButton::clicked,
-            this, &MainWindow::pushAddUserViewToStack);
+            this, &MainWindow::showAddUserView);
 
     connect(ui->testsBtn, &QCommandLinkButton::clicked,
-            [this](){ TestsAssembler::assembly(this); });
-    connect(ui->addTestBtn, SIGNAL(clicked()),
-            this, SLOT(pushTestFormToStack()));
+            this, &MainWindow::showTestsView);
+    connect(ui->addTestBtn, &QPushButton::clicked,
+            this, &MainWindow::showAddTestView);
 
     connect(ui->statisticsButton, &QCommandLinkButton::clicked,
-            this, &MainWindow::onStatisticsButtonClicled);
+            this, &MainWindow::showStatisticsView);
+
+    m_timer.setInterval(CLEAR_STATUS_BAR_TIMING);
+    connect(&m_timer, &QTimer::timeout,
+            this, &MainWindow::clearStatusBar);
 }
 
 MainWindow::~MainWindow() {
@@ -82,33 +88,63 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 //  :: Private slots ::
 //  :: Пользователи ::
 
-void MainWindow::pushAddUserViewToStack() {
-    auto addUserView = AddUserAssembler::assembly(this);
-    connect(addUserView, &AddUserView::cancelButtonClicked,
-            this, &MainWindow::onCancelUserEditing);
+void MainWindow::showUsersView() {
+    QWidget *view = nullptr;
+    EntitiesOutput *output = nullptr;
+    std::tie(view, output) = UsersAssembler::assembly(this);
 
-    push(addUserView);
+    connectEntitiesOutput(output);
+    push(view);
+}
+
+void MainWindow::showAddUserView() {
+    QWidget *view = nullptr;
+    AddUserOutput *output = nullptr;
+    std::tie(view, output) = AddUserAssembler::assembly(this);
+
+    connect(output, &AddUserOutput::userAdded,
+            this, &MainWindow::showUsersView);
+    connect(output, &AddUserOutput::error,
+            this, &MainWindow::showCriticalMessage);
+
+    push(view);
 }
 
 //  :: Тесты ::
 
-void MainWindow::pushTestFormToStack(const Test &test) {
+void MainWindow::showTestsView() {
+    QWidget *view = nullptr;
+    EntitiesOutput *output = nullptr;
+    std::tie(view, output) = TestsAssembler::assembly(this);
+
+    connectEntitiesOutput(output);
+    push(view);
+}
+
+void MainWindow::showAddTestView() {
+    showEditTestView(Test());
+}
+
+void MainWindow::showEditTestView(const Test &test) {
     auto ptest = new Test(test);
     auto testForm = new TestEditingForm(ptest, this);
-    connect(testForm, &TestEditingForm::cancelBtnClicked,
-            this, &MainWindow::onCancelTestEditing);
+
     connect(testForm, &TestEditingForm::testRead,
-            this, &MainWindow::onTestRead);
+            [this](const Test &test)
+            { pop(); emit showEditTestView(test); });
+    connect(testForm, &TestEditingForm::testReplaced,
+            this, &MainWindow::showTestsView);
+
     push(testForm);
 }
 
 //  :: Статистика ::
 
-void MainWindow::onStatisticsButtonClicled() {
+void MainWindow::showStatisticsView() {
     auto passedTestsForm = PassedTestsAssembler::assembly(this);
 
     connect(passedTestsForm, &PassedTestsForm::backButtonClicked,
-            this, &MainWindow::onBackToMainMenu);
+            this, &MainWindow::pop);
     connect(passedTestsForm, SIGNAL(passedTestSelected(PassedTest)),
             SLOT(showTestStatisticsForm(PassedTest)));
     connect(passedTestsForm, &PassedTestsForm::error,
@@ -148,8 +184,9 @@ void MainWindow::showScaleStatisticsForm(int testId, const ScaleStatistics &scal
 
 void MainWindow::showStatusMessage(const QString &message) {
 	ui->statusBar->showMessage(message);
-	QTimer::singleShot(CLEAR_STATUS_BAR_TIMING,
-					   this , &MainWindow::clearStatusBar);
+
+    m_timer.stop();
+    m_timer.start();
 }
 
 void MainWindow::showCriticalMessage(const QString &error) {
@@ -158,16 +195,14 @@ void MainWindow::showCriticalMessage(const QString &error) {
 
 // :: Private methods ::
 
-void MainWindow::onBackToMainMenu() {
-    pop();
-    ui->stackedWidget->setCurrentIndex(0);
-}
-
-template<class T>
-T *MainWindow::currentWidget() {
-    return dynamic_cast<T *>(ui->stackedWidget->currentWidget());
-}
-
 void MainWindow::clearStatusBar() {
-	showStatusMessage("");
+    showStatusMessage("");
+}
+
+inline
+void MainWindow::connectEntitiesOutput(EntitiesOutput *output) {
+    connect(output, &EntitiesOutput::statusMessage,
+            this, &MainWindow::showStatusMessage);
+    connect(output, &EntitiesOutput::error,
+            this, &MainWindow::showCriticalMessage);
 }

@@ -1,10 +1,12 @@
 #pragma once
 
+#include <tuple>
+
 class QWidget;
 
-class EditUserView;
+class EditUserOutput;
 class User;
 
 namespace EditUserAssembler {
-EditUserView *assembly(const User &user, QWidget *parent = nullptr);
+std::tuple<QWidget *, EditUserOutput *> assembly(const User &user, QWidget *parent = nullptr);
 }

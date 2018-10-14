@@ -17,7 +17,7 @@ TestEditingModel::TestEditingModel(QObject *parent/*= nullptr*/)
 
 //  :: Public methods ::
 
-void TestEditingModel::checkTestName(const QString testName) const {
+void TestEditingModel::checkTestName(const QString &testName) const {
     auto requester = makeRequester();
 	connect(requester, SIGNAL(success(QJsonObject)),
 			SLOT(jsonShortTestInfoReceived(QJsonObject)));

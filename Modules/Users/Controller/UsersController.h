@@ -1,12 +1,14 @@
 #pragma once
 
-#include <QObject>
+#include "EntitesOutput/EntitiesOutput.h"
+
+#include <QTimer>
 
 class UsersForm;
 class UsersModel;
 class UsersService;
 
-class UsersController : public QObject {
+class UsersController : public EntitiesOutput {
     Q_OBJECT
 public:
     UsersController(UsersForm *view,
@@ -25,4 +27,5 @@ private:
     UsersForm *m_view = nullptr;
     UsersModel *m_model = nullptr;
     UsersService *m_service = nullptr;
+    QTimer m_timer;
 };

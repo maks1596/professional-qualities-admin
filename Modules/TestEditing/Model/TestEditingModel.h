@@ -11,7 +11,7 @@ Q_OBJECT
 public:
 	TestEditingModel(QObject *parent = nullptr);
 
-	void checkTestName(const QString testName) const;
+    void checkTestName(const QString &testName) const;
 	void putTest(const Test &test) const;
 	void replaceTest(const Test &test) const;
 

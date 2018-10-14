@@ -2,10 +2,12 @@
 
 #include <QObject>
 
+#include "../Output/AddUserOutput.h"
+
 class AddUserView;
 class AddUserService;
 
-class AddUserController : public QObject {
+class AddUserController : public AddUserOutput {
 public:
     explicit AddUserController(QObject *parent = nullptr);
 
