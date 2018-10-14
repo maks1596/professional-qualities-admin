@@ -1,60 +1,85 @@
 #include "TestsModel.h"
 
-#include <QJsonArray>
-#include <QJsonValue>
-
 #include "Entities/ShortTestInfo/ShortTestInfo.h"
-#include "Entities/Test/Test.h"
-#include "Requester/Requester.h"
-#include "JsonArraySerialization.h"
 
 //  :: Constants ::
 
-const QString GET_TESTS_API = "tests";
-const QString GET_TEST_API = "tests/with-scales/%1";
-const QString DELETE_TEST_API = "tests/%1";
+enum ColumnIndex {
+    NAME_COLUMN_INDEX,
+    REMOVE_COLUMN_INDEX,
+    COLUMNS_COUNT
+};
 
-//  :: Lifeccyle ::
+//  :: Lifecycle ::
 
-TestsModel::TestsModel(QObject *parent/*= nullptr*/)
-	: BaseService(parent) {}
+TestsModel::TestsModel(QObject *parent)
+    : QAbstractTableModel(parent)
+{ }
+
+//  :: QAbstractTableModel ::
+
+int TestsModel::rowCount(const QModelIndex &parent) const {
+    if (parent.isValid()) {
+        return 0;
+    }
+    return m_tests.size();
+}
+
+int TestsModel::columnCount(const QModelIndex &) const {
+    return COLUMNS_COUNT;
+}
+
+QVariant TestsModel::data(const QModelIndex &index, int role) const {
+    if (role == Qt::DisplayRole && index.isValid()) {
+        auto test = m_tests[index.row()];
+
+        switch (index.column()) {
+        case NAME_COLUMN_INDEX:
+            return test.getName();
+        case REMOVE_COLUMN_INDEX:
+            return "Удалить";
+        }
+    }
+    return QVariant();
+}
+
+QVariant TestsModel::headerData(int section,
+                                Qt::Orientation orientation,
+                                int role) const {
+    if (role == Qt::DisplayRole) {
+        if (orientation == Qt::Horizontal) {
+            if (section == NAME_COLUMN_INDEX) {
+                return "Название теста";
+            }
+        } else {
+            return section + 1;
+        }
+    }
+    return QVariant();
+}
+
+//  :: Public accessors ::
+
+const QList<ShortTestInfo> &TestsModel::getTests() const {
+    return m_tests;
+}
+void TestsModel::setTests(const QList<ShortTestInfo> &tests) {
+    m_tests = tests;
+}
 
 //  :: Public methods ::
 
-void TestsModel::getTests() const {
-	auto requester = makeRequesterWithDefaultErrorOutput();
-	connect(requester, SIGNAL(success(QJsonArray)),
-			SLOT(jsonTestsGot(QJsonArray)));
-	requester->sendRequest(GET_TESTS_API);
+ShortTestInfo TestsModel::getTest(uint index) const {
+    if (index < m_tests.size()) {
+        return m_tests[index];
+    }
+    return ShortTestInfo();
 }
 
-void TestsModel::getTest(int id) const {
-	auto requester = makeRequesterWithDefaultErrorOutput();
-	connect(requester, SIGNAL(success(QJsonObject)),
-			SLOT(jsonTestGot(QJsonObject)));
-	requester->sendRequest(GET_TEST_API.arg(id));
+int TestsModel::getTestId(uint index) const {
+    return getTest(index).getId();
 }
 
-void TestsModel::deleteTest(int id) const {
-    auto requester = makeRequester();
-
-    connect(requester, SIGNAL(success()),
-			SIGNAL(testDeleted()));
-	connect(requester, &Requester::failure,
-			this, &TestsModel::testIsUsed);
-
-	requester->sendRequest(DELETE_TEST_API.arg(id),
-						   RequestType::DELET);
-}
-
-//  :: Private slots ::
-
-void TestsModel::jsonTestsGot(const QJsonArray &jsonArray) {
-    auto tests = serializableObjectsFromJsonArray<QList, ShortTestInfo>(jsonArray);
-	emit testsGot(tests);
-}
-
-void TestsModel::jsonTestGot(const QJsonObject &jsonObject) {
-    auto test = makeWithJsonObject<Test>(jsonObject);
-	emit testGot(test);
+int TestsModel::getRemoveColumnIndex() const {
+    return REMOVE_COLUMN_INDEX;
 }

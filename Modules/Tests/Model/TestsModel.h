@@ -1,27 +1,30 @@
 #pragma once
 
-#include "BaseService/BaseService.h"
+#include <QAbstractTableModel>
+#include <QList>
 
 class ShortTestInfo;
-class Test;
 
-class TestsModel : public BaseService {
-Q_OBJECT
-
+class TestsModel : public QAbstractTableModel {
 public:
-	TestsModel(QObject *parent = nullptr);
+    TestsModel(QObject *parent = nullptr);
 
-	void getTests() const;
-	void getTest(int id) const;
-	void deleteTest(int id) const;
+    // QAbstractItemModel interface
+    int rowCount(const QModelIndex &parent) const override;
+    int columnCount(const QModelIndex &parent) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
 
-signals:
-	void testsGot(const QList<ShortTestInfo> &tests);
-	void testGot(const Test &test);
-	void testDeleted();
-	void testIsUsed();
+    QVariant headerData(int section,
+                        Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
 
-private slots:
-	void jsonTestsGot(const QJsonArray &jsonArray);
-	void jsonTestGot(const QJsonObject &jsonObject);
+    const QList<ShortTestInfo> &getTests() const;
+    void setTests(const QList<ShortTestInfo> &tests);
+
+    ShortTestInfo getTest(uint index) const;
+    int getTestId(uint index) const;
+    int getRemoveColumnIndex() const;
+
+private:
+    QList<ShortTestInfo> m_tests;
 };
